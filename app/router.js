@@ -6,6 +6,7 @@ const Router = Ember.Router.extend({
 });
 
 Router.map(function() {
+  this.route('podcast', { path: '/podcasts/:podcast_id' });
 });
 
 export default Router;
