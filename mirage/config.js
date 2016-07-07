@@ -24,33 +24,10 @@ export default function() {
     http://www.ember-cli-mirage.com/docs/v0.2.x/shorthands/
   */
 
-  this.get('/podcasts', () => {
-    return {
-      data: [{
-        type: 'podcasts',
-        id: 1,
-        attributes: {
-          title: "Hello Internet"
-        }
-      }, {
-        type: 'podcasts',
-        id: 2,
-        attributes: {
-          title: "Stuff You Should Know"
-        }
-      }, {
-        type: 'podcasts',
-        id: 4,
-        attributes: {
-          title: "Golang Show"
-        }
-      }, {
-        type: 'podcasts',
-        id: 3,
-        attributes: {
-          title: "Cortex"
-        }
-      }]
-    };
+  this.get('/podcasts');
+  this.get('/podcasts/:id');
+  this.get('/podcasts/:id/episodes', (schema, request) => {
+    let podcast = schema.podcasts.find(request.params.id);
+    return podcast.episodes;
   });
 }
