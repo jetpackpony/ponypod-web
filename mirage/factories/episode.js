@@ -1,5 +1,6 @@
 import { Factory, faker } from 'ember-cli-mirage';
 
 export default Factory.extend({
-  title() { return faker.random.words(); }
+  title() { return faker.random.words(); },
+  publishedAt() { return faker.date.past(); }
 });
