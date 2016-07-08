@@ -9,4 +9,10 @@ export default function(server) {
 
   let podcast = server.create('podcast');
   server.createList('episode', 5, {podcast});
+
+  podcast = server.create('podcast');
+  server.createList('episode', 5, {podcast});
+
+  podcast = server.create('podcast');
+  server.createList('episode', 5, {podcast});
 }
