@@ -1,7 +1,9 @@
 <h3 class='podcast-title'>{{model.title}}</h3>
 <ul>
 {{#each model.episodes as |episode|}}
-  <li class='episode-title'>{{episode.title}}</li> ({{episode.published-at}})
+  {{#link-to "episode" episode}}
+    <li class='episode-title'>{{episode.title}}</li> ({{episode.published-at}})
+  {{/link-to}}
 {{/each}}
 </ul>
 

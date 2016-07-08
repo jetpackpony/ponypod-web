@@ -30,4 +30,5 @@ export default function() {
     let podcast = schema.podcasts.find(request.params.id);
     return podcast.episodes;
   });
+  this.get('/episodes/:id');
 }
