@@ -24,3 +24,17 @@ test('should list all episodes of a podcast', function(assert) {
     assert.ok(episodeExists(episodes[2].title), 'should see "' + episodes[2].title + '"');
   });
 });
+
+test('should not list episodes of other podcasts', (assert) => {
+  let podcast = server.create('podcast');
+  let other_podcast = server.create('podcast');
+  let episodes = server.createList('episode', 3, {podcast});
+
+  visitPodcast(other_podcast);
+
+  andThen(function () {
+    assert.notOk(episodeExists(episodes[0].title), 'should not see "' + episodes[0].title + '"');
+    assert.notOk(episodeExists(episodes[1].title), 'should not see "' + episodes[1].title + '"');
+    assert.notOk(episodeExists(episodes[2].title), 'should not see "' + episodes[2].title + '"');
+  });
+});
