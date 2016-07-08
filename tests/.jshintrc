@@ -23,9 +23,9 @@
     "currentURL",
     "currentPath",
     "currentRouteName",
-    "visitPodcast",
-    "podcastExists",
-    "episodeExists"
+    "visit_podcast",
+    "podcast_exists",
+    "episode_exists"
   ],
   "node": false,
   "browser": false,

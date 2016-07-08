@@ -9,8 +9,8 @@ test('should list all existing podcasts', function(assert) {
   visit('/');
 
   andThen(function () {
-    assert.ok(podcastExists(podcasts[0].title), 'should see "' + podcasts[0].title + '"');
-    assert.ok(podcastExists(podcasts[1].title), 'should see "' + podcasts[1].title + '"');
-    assert.ok(podcastExists(podcasts[2].title), 'should see "' + podcasts[2].title + '"');
+    assert.ok(podcast_exists(podcasts[0].title), 'should see "' + podcasts[0].title + '"');
+    assert.ok(podcast_exists(podcasts[1].title), 'should see "' + podcasts[1].title + '"');
+    assert.ok(podcast_exists(podcasts[2].title), 'should see "' + podcasts[2].title + '"');
   });
 });

@@ -1,9 +1,9 @@
 import Ember from 'ember';
 import Application from '../../app';
 import config from '../../config/environment';
-import visitPodcast from './visit-podcast';
-import podcastExists from './finder-helpers';
-import episodeExists from './finder-helpers';
+import visit_podcast from './visit-podcast';
+import podcast_exists from './finder-helpers';
+import episode_exists from './finder-helpers';
 
 export default function startApp(attrs) {
   let application;
