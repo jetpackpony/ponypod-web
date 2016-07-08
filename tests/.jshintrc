@@ -22,7 +22,10 @@
     "andThen",
     "currentURL",
     "currentPath",
-    "currentRouteName"
+    "currentRouteName",
+    "visitPodcast",
+    "podcastExists",
+    "episodeExists"
   ],
   "node": false,
   "browser": false,
