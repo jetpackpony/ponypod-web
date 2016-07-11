@@ -2,6 +2,7 @@ import Ember from 'ember';
 import Application from '../../app';
 import config from '../../config/environment';
 import visit_podcast from './visit-podcast';
+import visit_episode from './visit-podcast';
 import podcast_exists from './finder-helpers';
 import episode_exists from './finder-helpers';
 
