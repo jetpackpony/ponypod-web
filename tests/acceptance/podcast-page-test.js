@@ -39,15 +39,3 @@ test('should not list episodes of other podcasts', (assert) => {
   });
 });
 
-test('should list newer episodes first', (assert) => {
-  let podcast = server.create('podcast');
-  server.create('episode', {podcast, title: '<Last>', published_at: new Date("2016-07-08")});
-  server.create('episode', {podcast, title: '<First>', published_at: new Date("2016-07-06")});
-  server.create('episode', {podcast, title: '<Middle>', published_at: new Date("2016-07-07")});
-
-  visit_podcast(podcast);
-
-  andThen(() => {
-    assert.equal(find('.episode-title').text(), '<Last><Middle><First>', 'should see episodes sorted by publish date: Last, Middle, First');
-  });
-});
