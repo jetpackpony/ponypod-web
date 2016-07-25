@@ -1,5 +1,7 @@
 This is index
 
 {{#each model as |podcast|}}
-  <h3 class='podcast-title'>{{podcast.title}}</h3>
+  {{#link-to "podcast" podcast}}
+    <h3 class='podcast-title'>{{podcast.title}}</h3>
+  {{/link-to}}
 {{/each}}
