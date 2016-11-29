@@ -1,1 +1,8 @@
-{{outlet}}
+{{#each model as |podcast|}}
+
+  <div class="podcast" id="podcast-{{podcast.id}}">
+    {{#link-to 'podcast' podcast}}
+      <img src="{{podcast.image}}">
+    {{/link-to}}
+  </div>
+{{/each}}
