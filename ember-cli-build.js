@@ -17,6 +17,9 @@ module.exports = function(defaults) {
         js: '/assets/js/vendor.js',
         css: '/assets/css/vendor.css'
       }
+    },
+    sassOptions: {
+      includePaths: ['bower_components/materialize/sass']
     }
   });
 
