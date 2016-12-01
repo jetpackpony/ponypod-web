@@ -30,5 +30,25 @@ test('it shows a title when passed a title', function(assert) {
   assert.equal(this.$('.nav-title').text().trim(), 'Testme', 'should display nav titile');
 });
 
-test('changes menuOpen binding when menu button is clicked');
-test('calls back function when back arrow is clicked');
+test('changes menuOpen binding when menu button is clicked', function(assert) {
+  assert.expect(1);
+  this.on('onOpenMenuClick', () => assert.ok(1));
+
+  this.render(hbs`{{
+    nav-bar
+    onOpenMenuClick=(action 'onOpenMenuClick')
+  }}`);
+  this.$('#toggle-menu').click();
+});
+
+test('calls back function when back arrow is clicked', function(assert) {
+  assert.expect(1);
+  this.on('onBackButtonClick', () => assert.ok(1));
+
+  this.render(hbs`{{
+    nav-bar
+    backArrowButton=true
+    onBackButtonClick=(action 'onBackButtonClick')
+  }}`);
+  this.$('#back-button').click();
+});

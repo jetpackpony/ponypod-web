@@ -11,6 +11,11 @@ test('is displayed', function(assert) {
   });
 });
 
-skip('shows hamburger button when on home page');
-skip('shows back arrow button when not on home page');
-
+test('shows toggle menu button when on home page', function(assert) {
+  visit('/');
+  andThen(() => {
+    assert.equal(find('#toggle-menu').length, 1, 'should show menu button');
+    assert.equal(find('#back-button').length, 0, 'should not show back button');
+  });
+});
+skip('shows back arrow button when on inner page');

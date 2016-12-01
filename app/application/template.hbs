@@ -1,7 +1,12 @@
 <div id="app-container" class={{if menuOpen 'menu-open' ''}}>
   <div id="body-shadow"></div>
   {{!> side-menu}}
-  {{nav-bar}}
+  {{nav-bar
+    title=menuTitle
+    backArrowButton=showBackArrow
+    onBackButtonClick=(action 'onBackButtonClick')
+    onOpenMenuClick=(action 'onOpenMenuClick')
+  }}
   <main>{{outlet}}</main>
   {{!> player}}
 </div>

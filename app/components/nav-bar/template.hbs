@@ -2,11 +2,11 @@
   <div class="left-side">
     <div class="nav-item">
       {{#if backArrowButton}}
-      <a href="#!" id="back-button">
+      <a href="#!" id="back-button" {{action 'onBackButtonClick' on='click'}}>
         <i class="material-icons">arrow_back</i>
       </a>
       {{else}}
-      <a href="#!" id="toggle-menu">
+      <a href="#!" id="toggle-menu" {{action 'onOpenMenuClick' on='click'}}>
         <i class="material-icons">menu</i>
       </a>
       {{/if}}
