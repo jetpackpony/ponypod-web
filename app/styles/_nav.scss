@@ -1,0 +1,97 @@
+// Layout
+nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: inherit;
+  z-index: 777;
+  @media (min-width: $open-menu-breakpoint) {
+    left: $side-menu-width;
+    a#toggle-menu {
+      visibility: hidden;
+    }
+  }
+
+  .nav-wrapper {
+    display: flex;
+    justify-content: space-between;
+
+    .nav-search {
+      display: none;
+    }
+    &.search-open {
+      .left-side {
+        display: none;
+      }
+      .right-side {
+        width: 100%;
+      }
+      .nav-search {
+        display: block;
+      }
+    }
+  }
+  .left-side, .right-side {
+    display: flex;
+    width: 60%;
+  }
+  .right-side {
+    justify-content: flex-end;
+  }
+  .nav-item a {
+    display: block;
+    padding: 0 15px;
+  }
+  .nav-title {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .nav-search {
+    width: 100%;
+    margin-right: 1rem;
+    position: relative;
+    i {
+      position: absolute;
+      top: 0;
+      right: 0;
+    }
+    input[type=search] {
+      margin: 0;
+    }
+  }
+}
+
+// Pretty styles
+nav {
+  background-color: color($primary, "darken-4");
+
+  .nav-item a {
+    transition: background-color .3s;
+    font-size: 1rem;
+    color: #fff;
+    cursor: pointer;
+
+    &:hover {
+      background-color: rgba(#fff, 0.1);
+    }
+  }
+  .nav-title {
+    font-size: 1.25rem;
+  }
+  .nav-search {
+    i {
+      cursor: pointer;
+    }
+    input[type=search] {
+      font-size: 1.25rem;
+      border-bottom: 1px solid color($secondary, "lighten-3");
+
+      &:focus {
+        border-bottom: 1px solid color($secondary, "lighten-3");
+        box-shadow: 0 1px 0 0 color($secondary, "lighten-3");
+      }
+    }
+  }
+}
