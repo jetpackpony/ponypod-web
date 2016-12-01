@@ -1,1 +1,7 @@
-{{outlet}}
+<div id="app-container" class={{if menuOpen 'menu-open' ''}}>
+  <div id="body-shadow"></div>
+  {{!> side-menu}}
+  {{nav-bar}}
+  <main>{{outlet}}</main>
+  {{!> player}}
+</div>
