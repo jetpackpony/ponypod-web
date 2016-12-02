@@ -25,16 +25,16 @@ aside {
   .nav li {
     height: 3rem;
     line-height: 3rem;
-    padding-left: 2rem;
     font-weight: 600;
     cursor: pointer;
 
-    &:hover, &.active {
-      background-color: rgba(#000, .1);
-    }
     a {
       display: block;
       color: rgba(#000, .87);
+      padding-left: 2rem;
+      &:hover, &.active {
+        background-color: rgba(#000, .1);
+      }
     }
   }
 }
