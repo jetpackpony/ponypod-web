@@ -29,4 +29,8 @@ export default function() {
   this.get('/podcasts', function(schema) {
     return schema.podcasts.all();
   });
+
+  this.get('/podcasts/:id', function({ podcasts }, request) {
+    return podcasts.find(request.params.id);
+  });
 }
