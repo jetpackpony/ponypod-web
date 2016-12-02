@@ -1,14 +1,16 @@
+/* global $ */
+
 import Ember from 'ember';
 
 export default Ember.Controller.extend({
   menuTitle: "PonyPod",
   showBackArrow: false,
   actions: {
-    onBackButtonClick() {
+    back() {
       console.log('back click');
     },
-    onOpenMenuClick() {
-      console.log('menu click');
+    openMenu() {
+      $('#app-container').addClass('menu-open');
     }
   }
 });
