@@ -1,6 +1,6 @@
 <div id="app-container" class={{if menuOpen 'menu-open' ''}}>
-  <div id="body-shadow"></div>
-  {{!> side-menu}}
+  <div id="body-shadow" {{action 'closeMenu' on="click"}}></div>
+  {{side-menu}}
   {{nav-bar
     title=menuTitle
     backArrowButton=showBackArrow

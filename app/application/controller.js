@@ -11,6 +11,9 @@ export default Ember.Controller.extend({
     },
     openMenu() {
       $('#app-container').addClass('menu-open');
+    },
+    closeMenu() {
+      $('#app-container').removeClass('menu-open');
     }
   }
 });
