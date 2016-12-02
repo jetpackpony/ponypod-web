@@ -1,3 +1,5 @@
+/* globals server */
+
 import { skip, test } from 'qunit';
 import moduleForAcceptance from 'ponypod-frontend/tests/helpers/module-for-acceptance';
 
@@ -18,7 +20,7 @@ test('shows toggle menu button when on home page', function(assert) {
   });
 });
 
-test('shows back arrow button when on inner page', function(assert) {
+skip('shows back arrow button when on inner page', function(assert) {
   server.create('podcast');
   visit('/podcast/1');
   andThen(() => {
