@@ -59,11 +59,7 @@
 main {
   padding-bottom: $mini-player-height;
 }
-@media (min-width: $open-menu-breakpoint) {
-  main {
-    margin-left: $side-menu-width;
-  }
-}
+// _media-queries
 
 .flex-row {
   display: flex;
@@ -77,14 +73,10 @@ main {
       width: 100%;
     }
     &.md8 {
-      @media #{$medium-and-up} {
-        width: (100% / 12 * 8);
-      }
+      // _media-queries
     }
     &.lg5 {
-      @media #{$large-and-up} {
-        width: (100% / 12 * 6);
-      }
+      // _media-queries
     }
   }
 }

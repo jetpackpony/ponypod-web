@@ -6,12 +6,7 @@ nav {
   right: 0;
   width: inherit;
   z-index: 777;
-  @media (min-width: $open-menu-breakpoint) {
-    left: $side-menu-width;
-    a#toggle-menu {
-      visibility: hidden;
-    }
-  }
+  // _media-queries
 
   .nav-wrapper {
     display: flex;
