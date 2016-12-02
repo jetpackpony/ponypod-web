@@ -1,13 +1,27 @@
+import Ember from 'ember';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 
-moduleForComponent('nav-bar', 'Integration | Component | nav bar', {
-  integration: true
+const navigationService = Ember.Service.extend({
+  menuOpen: false,
+  navTitle: "PonyPod",
+  showBackArrow: false,
+  back() { }
 });
 
-test('it renders a back arrow when the attribute is set', function(assert) {
-  this.render(hbs`{{nav-bar backArrowButton=true}}`);
+moduleForComponent('nav-bar', 'Integration | Component | nav bar', {
+  integration: true,
+  beforeEach() {
+    this.register('service:navigation', navigationService);
+    this.inject.service('navigation', { as: 'navigation' });
+  }
+});
 
+
+
+test('it renders a back arrow when setup', function(assert) {
+  this.set('navigation.showBackArrow', true);
+  this.render(hbs`{{nav-bar}}`);
   let backButtonExists = this.$('#back-button').length > 0;
   let menuButtonExists = this.$('#toggle-menu').length > 0;
   assert.ok(backButtonExists, 'back button should exist');
@@ -15,6 +29,7 @@ test('it renders a back arrow when the attribute is set', function(assert) {
 });
 
 test('it renders a menu button by default', function(assert) {
+  this.set('navigation.showBackArrow', false);
   this.render(hbs`{{nav-bar}}`);
   let backButtonExists = this.$('#back-button').length > 0;
   let menuButtonExists = this.$('#toggle-menu').length > 0;
@@ -23,30 +38,24 @@ test('it renders a menu button by default', function(assert) {
 });
 
 test('it shows a title when passed a title', function(assert) {
-  this.render(hbs`{{nav-bar title="Testme"}}`);
+  this.set('navigation.navTitle', 'Testme');
+  this.render(hbs`{{nav-bar}}`);
   let text = this.$('.nav-title').text().trim();
   assert.equal(text, 'Testme', 'should display nav titile');
 });
 
-test('changes menuOpen binding when menu button is clicked', function(assert) {
-  assert.expect(1);
-  this.on('onOpenMenuClick', () => assert.ok(1));
-
-  this.render(hbs`{{
-    nav-bar
-    onOpenMenuClick=(action 'onOpenMenuClick')
-  }}`);
+test('changes menuOpen when menu button is clicked', function(assert) {
+  this.render(hbs`{{nav-bar}}`);
   this.$('#toggle-menu').click();
+
+  assert.equal(this.get('navigation.menuOpen'), true, 'menu should be open');
 });
 
 test('calls back function when back arrow is clicked', function(assert) {
   assert.expect(1);
-  this.on('onBackButtonClick', () => assert.ok(1));
+  this.set('navigation.showBackArrow', true);
+  this.set('navigation.back', () => assert.ok(1));
 
-  this.render(hbs`{{
-    nav-bar
-    backArrowButton=true
-    onBackButtonClick=(action 'onBackButtonClick')
-  }}`);
+  this.render(hbs`{{nav-bar}}`);
   this.$('#back-button').click();
 });

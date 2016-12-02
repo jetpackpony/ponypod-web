@@ -1,15 +1,14 @@
 import Ember from 'ember';
 
 export default Ember.Component.extend({
+  navigation: Ember.inject.service(),
   tagName: 'nav',
-  backArrowButton: false,
-  title: 'PonyPod',
   actions: {
     onOpenMenuClick() {
-      this.get('onOpenMenuClick')();
+      this.set('navigation.menuOpen', true);
     },
     onBackButtonClick() {
-      this.get('onBackButtonClick')();
+      this.get('navigation').back();
     }
   }
 });

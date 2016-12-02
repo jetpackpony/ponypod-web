@@ -1,7 +1,7 @@
 <div class="nav-wrapper">
   <div class="left-side">
     <div class="nav-item">
-      {{#if backArrowButton}}
+      {{#if navigation.showBackArrow}}
       <a href="#!" id="back-button" {{action 'onBackButtonClick' on='click'}}>
         <i class="material-icons">arrow_back</i>
       </a>
@@ -11,7 +11,7 @@
       </a>
       {{/if}}
     </div>
-    <div class="nav-item nav-title">{{title}}</div>
+    <div class="nav-item nav-title">{{navigation.navTitle}}</div>
   </div>
 
   <div class="right-side">
