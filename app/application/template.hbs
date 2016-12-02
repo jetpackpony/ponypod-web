@@ -1,12 +1,7 @@
-<div id="app-container" class={{if menuOpen 'menu-open' ''}}>
-  <div id="body-shadow" {{action 'closeMenu' on="click"}}></div>
+<div id="app-container" class={{if navigation.menuOpen 'menu-open' ''}}>
+  {{body-shadow}}
   {{side-menu}}
-  {{nav-bar
-    title=menuTitle
-    backArrowButton=showBackArrow
-    onBackButtonClick=(action 'back')
-    onOpenMenuClick=(action 'openMenu')
-  }}
+  {{nav-bar}}
   <main>{{outlet}}</main>
   {{!> player}}
 </div>
