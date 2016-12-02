@@ -4,16 +4,17 @@ import Ember from 'ember';
 
 export default Ember.Controller.extend({
   menuTitle: "PonyPod",
+  menuOpen: false,
   showBackArrow: false,
   actions: {
     back() {
       console.log('back click');
     },
     openMenu() {
-      $('#app-container').addClass('menu-open');
+      this.set('menuOpen', true);
     },
     closeMenu() {
-      $('#app-container').removeClass('menu-open');
+      this.set('menuOpen', false);
     }
   }
 });
