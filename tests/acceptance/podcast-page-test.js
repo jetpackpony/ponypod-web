@@ -24,7 +24,22 @@ test('displays the podcast title in the nav bar', function(assert) {
     assert.equal(title, "Very test podcast", 'title should mathc');
   });
 });
+
 test('displays the podcast cover image', function(assert) {
+  server.create('podcast', { image: "testme.png" });
+  visit('/podcast/1');
+  andThen(() => {
+    let imageURL = find('img').attr('src');
+    assert.equal(imageURL, 'testme.png', 'image isn\'t there');
+  });
 });
+
 test('displays the podcast description', function(assert) {
+  server.create('podcast', { description: "Full description" });
+  visit('/podcast/1');
+  click('a:contains("Read More")');
+  andThen(() => {
+    let descr = find('.description p:visible').text().trim();
+    assert.equal(descr, 'Full description', 'description does not match');
+  });
 });
