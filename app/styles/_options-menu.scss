@@ -1,0 +1,26 @@
+.options-container {
+  @extend .z-depth-2;
+  position: fixed;
+  top: .5rem;
+  right: .5rem;
+  background: #fff;
+  max-width: 50%;
+  min-width: 30%;
+  z-index: 888;
+  ul {
+    margin: 0;
+    li {
+      padding: 1rem 2rem;
+      cursor: pointer;
+      &:hover, &:active {
+        background-color: rgba(#000, .1);
+      }
+
+    }
+  }
+  a { color: rgba(0,0,0,.87); }
+
+  &.hidden {
+    display: none;
+  }
+}

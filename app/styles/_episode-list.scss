@@ -1,0 +1,80 @@
+.episode-list {
+  @extend .card;
+  padding: 0;
+  .card-content {
+    padding: 0 .5rem;
+  }
+
+  ul.collection {
+    border: none;
+    margin: 0;
+
+    .collection-header h4 {
+      margin: 0;
+      font-size: 1rem;
+      font-weight: 600;
+      text-transform: lowercase;
+      font-stretch: ultra-expanded;
+      text-align: center;
+    }
+
+    a.play-button {
+      position: absolute;
+      overflow: hidden;
+      left: 0;
+      display: inline-block;
+      vertical-align: middle;
+      color: $secondary-color;
+      &.hidden {
+        display: none;
+      }
+
+      i {
+        font-size: 2.5rem;
+      }
+
+      &:focus, &:active {
+        outline: 0;
+        background-color: rgba($secondary-color, .26);
+        border-radius: 50%;
+      }
+    }
+    p.secondary {
+      font-size: .9rem;
+      color: rgba(0,0,0,.54);
+    }
+    li.collection-item.avatar {
+      cursor: pointer;
+      padding: 1rem 3rem;
+      min-height: inherit;
+      a.secondary-content {
+        color: rgba(#000, .5);
+        right: 0;
+        &:focus, &:active {
+          outline: 0;
+          background-color: rgba(#000, .12);
+          border-radius: 50%;
+        }
+      }
+      .episode-options {
+        position: absolute;
+        top: 16px;
+        right: 1rem;
+      }
+      .title {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+    }
+  }
+  &.dimmed {
+    li.collection-item.avatar {
+      opacity: .28;
+      &:hover, &:active {
+        opacity: 1;
+        background-color: rgba(#000, .1);
+      }
+    }
+  }
+}
