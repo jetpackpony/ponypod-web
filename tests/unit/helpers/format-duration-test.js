@@ -17,3 +17,8 @@ test('it formats very short duration', function(assert) {
   let result = formatDuration([15]);
   assert.equal(result, '15 seconds', 'formatted output is incorrect');
 });
+
+test('it works normally when passed multiple arguments', function(assert) {
+  let result = formatDuration([15]);
+  assert.equal(result, '15 seconds', 'formatted output is incorrect');
+});
