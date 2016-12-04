@@ -26,11 +26,6 @@ export default function() {
 
   this.namespace = "/api";
 
-  this.get('/podcasts', function(schema) {
-    return schema.podcasts.all();
-  });
-
-  this.get('/podcasts/:id', function({ podcasts }, request) {
-    return podcasts.find(request.params.id);
-  });
+  this.get('/podcasts');
+  this.get('/podcasts/:id');
 }
