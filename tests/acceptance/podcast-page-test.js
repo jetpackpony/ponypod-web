@@ -76,3 +76,15 @@ test('shows a correct episode air date', function(assert) {
     assert.equal(date, '4 Nov 2016', 'date should match');
   });
 });
+
+test('links to an episode page', function(assert) {
+  let podcast = server.create('podcast');
+  server.create('episode', { podcast, title: "Test episode 1" });
+  server.create('episode', { podcast, title: "Test episode 2" });
+  visit('/podcast/1');
+  click('.title span:contains("Test episode 1")');
+  andThen(() => {
+    let title = find('.episode-details h2').text().trim();
+    assert.equal(title, "Test episode 1", 'the episode title doesn\'t match');
+  });
+});
