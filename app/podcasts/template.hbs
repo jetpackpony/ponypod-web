@@ -1,7 +1,1 @@
-{{#each model as |podcast|}}
-  <div class="podcast" id="podcast-{{podcast.id}}">
-    {{#link-to 'podcast' podcast title=podcast.title}}
-      <img src="{{podcast.image}}">
-    {{/link-to}}
-  </div>
-{{/each}}
+{{podcast-grid podcasts=model}}

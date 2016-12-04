@@ -1,0 +1,27 @@
+<div class="card-content">
+  <ul class="collection with-header">
+    {{#if title}}
+      <li class="collection-header"><h4>{{title}}</h4></li>
+    {{/if}}
+    {{#each episodes as |ep|}}
+      <li class="episode collection-item avatar">
+        <a href="#!" class="play-button">
+          <i class="material-icons">play_arrow</i>
+        </a>
+        <a href="#!" class="play-button hidden">
+          <i class="material-icons">pause</i>
+        </a>
+        <div class="title">
+          <span>{{ep.title}}</span>
+          <p class="secondary">{{format-date ep.pubDate}}</p>
+        </div>
+        {{!--
+        <a href="#!" class="secondary-content">
+          <i class="material-icons">more_vert</i>
+        </a>
+        {{> options-menu class="episode-options" options=../episodeOptions}}
+        --}}
+      </li>
+    {{/each}}
+  </ul>
+</div>
