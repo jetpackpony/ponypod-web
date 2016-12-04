@@ -1,0 +1,37 @@
+<div class="nav-wrapper">
+  <div class="left-side">
+    <div class="nav-item">
+      {{#if navigation.showBackArrow}}
+      <a href="#!" id="back-button" {{action 'onBackButtonClick' on='click'}}>
+        <i class="material-icons">arrow_back</i>
+      </a>
+      {{else}}
+      <a href="#!" id="toggle-menu" {{action 'onOpenMenuClick' on='click'}}>
+        <i class="material-icons">menu</i>
+      </a>
+      {{/if}}
+    </div>
+    <div class="nav-item nav-title">{{navigation.navTitle}}</div>
+  </div>
+
+  <div class="right-side">
+    {{#if navBarSearch}}
+    <div class="nav-item">
+      <a href="#!" id="open-search">
+        <i class="material-icons">search</i>
+      </a>
+    </div>
+    <div class="nav-search">
+      <input id="search" type="search" required>
+      <i id="close-search" class="material-icons">close</i>
+    </div>
+    {{/if}}
+    {{#if options}}
+    <div class="nav-item">
+      <a href="#!" id="toggle-options">
+        <i class="material-icons">more_vert</i>
+      </a>
+    </div>
+    {{/if}}
+  </div>
+</div>

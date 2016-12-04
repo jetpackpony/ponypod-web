@@ -1,0 +1,22 @@
+.podcast-details {
+  @extend .card;
+  .card-image {
+    position: relative;
+    .subscribe-button {
+      @extend .fab-button;
+      &.unsubscribe { background-color: $success-color; }
+    }
+
+  }
+
+  .podcast-description {
+    @extend .card-content;
+  }
+  .podcast-action {
+    @extend .card-action;
+    text-align: center;
+    a {
+      color: color($secondary, "darken-2");
+    }
+  }
+}

@@ -1,0 +1,36 @@
+#player {
+  @extend .z-depth-1-up;
+  visibility: visible;
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  transition: height .3s;
+  background-color: #fff;
+  z-index: 888;
+
+  // _media-queries
+
+  &.hidden {
+    display: none;
+    height: 0;
+  }
+  .mini-player, .maxi-player {
+    display: none;
+  }
+
+  &.maxi {
+    height: calc(100% - #{$maxi-player-top});
+    .maxi-player {
+      display: flex;
+    }
+  }
+  &.mini {
+    height: $mini-player-height;
+    .mini-player {
+      display: flex;
+    }
+  }
+}
+
+

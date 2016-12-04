@@ -3,22 +3,24 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>PonypodWeb</title>
+    <title>PonypodFrontend</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#006064">
 
     {{content-for "head"}}
 
-    <link rel="stylesheet" href="assets/vendor.css">
-    <link rel="stylesheet" href="assets/ponypod-web.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="{{rootURL}}assets/css/vendor.css">
+    <link rel="stylesheet" href="{{rootURL}}assets/css/ponypod-frontend.css">
 
     {{content-for "head-footer"}}
   </head>
   <body>
     {{content-for "body"}}
 
-    <script src="assets/vendor.js"></script>
-    <script src="assets/ponypod-web.js"></script>
+    <script src="{{rootURL}}assets/js/vendor.js"></script>
+    <script src="{{rootURL}}assets/js/ponypod-frontend.js"></script>
 
     {{content-for "body-footer"}}
   </body>

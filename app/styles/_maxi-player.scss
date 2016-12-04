@@ -1,0 +1,142 @@
+$thumb-outer-size: 3rem;
+$thumb-inner-size: 1rem;
+
+.maxi-player {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  header {
+    display: flex;
+    justify-content: space-between;
+    padding: .5rem 1rem;
+    .title {
+      h2 {
+        margin: .5rem 0;
+        font-size: 2rem;
+      }
+      .secondary {
+        color: rgba(0,0,0,.54);
+      }
+    }
+    .collapse-button {
+      i {
+        font-size: 3.5rem;
+      }
+    }
+  }
+  .description {
+    padding: 0 1rem;
+    p {
+      max-height: 8rem;
+      overflow: hidden;
+      margin-top: 0;
+    }
+    // _media-queries
+    .actions {
+      text-align: center;
+      .btn-flat {
+        color: $secondary-color;
+      }
+    }
+
+  }
+  // _media-queries
+
+  .playback-progress {
+    padding: .5rem;
+    .time {
+      display: flex;
+      justify-content: space-between;
+      color: rgba(0,0,0,.56);
+      font-size: .9rem;
+    }
+
+    .progress-container {
+      height: $thumb-outer-size;
+      position: relative;
+      cursor: pointer;
+      &:focus {
+        outline: 0;
+      }
+      .progress-wrapper {
+        height: 100%;
+        width: 100%;
+        display: flex;
+        align-items: center;
+      }
+      .thumb {
+        position: absolute;
+        left: calc(50% - #{$thumb-outer-size / 2});
+        height: $thumb-outer-size;
+        width: $thumb-outer-size;
+        padding: ($thumb-outer-size - $thumb-inner-size) / 2 ($thumb-outer-size - $thumb-inner-size) / 2;
+        border-radius: 50%;
+        background-color: transparent;
+        transition: background .3s;
+        z-index: 100;
+        display: flex;
+        justify-content: center;
+
+        &.focus {
+          background-color: rgba($secondary-color, .2);
+          .time-tooltip {
+            opacity: 1;
+          }
+        }
+
+        &::before {
+          content: "";
+          display: block;
+          height: $thumb-inner-size;
+          width: $thumb-inner-size;
+          background-color: $secondary-color;
+          border-radius: 50%;
+        }
+        .time-tooltip {
+          position: absolute;
+          top: -1.5rem;
+          height: 1.5rem;
+          background-color: #000;
+          color: #fff;
+          line-height: 1.5rem;
+          padding: 0 .3rem;
+          font-size: .8rem;
+          font-weight: 600;
+          border-radius: 2px;
+          opacity: 0;
+          transition: opacity .3s;
+        }
+      }
+      .progress {
+        margin: 0;
+        height: .3rem;
+        background-color: rgba($secondary-color, .1);
+        .determinate {
+          width: 50%;
+          transition: none;
+        }
+
+        &, .determinate {
+          border-radius: .3rem;
+        }
+      }
+    }
+  }
+  .controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    a {
+      @extend .icon-button;
+      color: $secondary-color;
+      margin: 1rem;
+      transition: background-color .3s;
+      i { font-size: 3rem; }
+      &.play {
+        i { font-size: 5rem; }
+      }
+    }
+  }
+}
