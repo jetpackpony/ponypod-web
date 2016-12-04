@@ -44,7 +44,6 @@
       color: rgba(0,0,0,.54);
     }
     li.collection-item.avatar {
-      cursor: pointer;
       padding: 1rem 3rem;
       min-height: inherit;
       a.secondary-content {
@@ -65,6 +64,8 @@
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
+        color: rgba(#000, .87);
+        display: block;
       }
     }
   }

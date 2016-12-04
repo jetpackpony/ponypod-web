@@ -11,10 +11,10 @@
         <a href="#!" class="play-button hidden">
           <i class="material-icons">pause</i>
         </a>
-        <div class="title">
+        {{#link-to 'episode' ep classNames='title'}}
           <span>{{ep.title}}</span>
           <p class="secondary">{{format-date ep.pubDate}}</p>
-        </div>
+        {{/link-to}}
         {{!--
         <a href="#!" class="secondary-content">
           <i class="material-icons">more_vert</i>
