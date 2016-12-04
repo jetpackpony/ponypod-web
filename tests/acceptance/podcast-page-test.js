@@ -46,23 +46,33 @@ test('displays the podcast description', function(assert) {
 
 test('shows a list on podcast\'s episodes', function(assert) {
   let podcast = server.create('podcast');
-  let episodes = server.createList('episode', { podcast }, 3);
+  server.createList('episode', 3, { podcast });
   visit('/podcast/1');
   andThen(() => {
     let epList = find('.episode-list .episode');
     assert.equal(epList.length, 3, 'should show 3 episodes');
-    assert.equal(true, false, 'should show proper titles');
   });
 });
 
 test('doesn\'t show other podcasts\' episodes', function(assert) {
   let podcasts = server.createList('podcast', 2);
-  let ep1 = server.create('episode', { podcast: podcasts[0], title: "test-1" });
-  let ep2 = server.create('episode', { podcast: podcasts[1], title: "test-2" });
+  server.create('episode', { podcast: podcasts[0], title: "test-1" });
+  server.create('episode', { podcast: podcasts[1], title: "test-2" });
   visit('/podcast/1');
   andThen(() => {
     let ep = find('.episode-list .episode');
-    assert.equal(epList.length, 1, 'should show 1 episodes');
-    assert.equal(find('.title', ep), 'test-1', 'should show proper episode');
+    let title = find('.title span', ep).text().trim();
+    assert.equal(ep.length, 1, 'should show 1 episodes');
+    assert.equal(title, 'test-1', 'should show proper episode');
+  });
+});
+
+test('shows a correct episode air date', function(assert) {
+  let podcast = server.create('podcast');
+  server.create('episode', { podcast, pubDate: new Date("Mon, 4 Nov 2016 9:57:12 +0000") });
+  visit('/podcast/1');
+  andThen(() => {
+    let date = find('.episode .title .secondary').text();
+    assert.equal(date, '4 Nov 2016', 'date should match');
   });
 });
