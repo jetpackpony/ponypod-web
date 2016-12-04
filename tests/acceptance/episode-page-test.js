@@ -6,7 +6,7 @@ import moduleForAcceptance from 'ponypod-frontend/tests/helpers/module-for-accep
 moduleForAcceptance('Acceptance | episode page');
 
 test('shows back arrow button in the navbar', function(assert) {
-  server.create('episode', { podcast: server.create('podcast') })
+  server.create('episode', { podcast: server.create('podcast') });
   visit('/episode/1');
   andThen(() => {
     let hasBackButton = find('nav #back-button').length > 0;
