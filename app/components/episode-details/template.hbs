@@ -1,0 +1,23 @@
+<div class="card-image">
+  <img src="{{episode.podcast.image}}">
+  <a class="play-button play waves-effect waves-light">
+    <i class="material-icons">play_arrow</i>
+  </a>
+  <a class="play-button pause waves-effect waves-light hidden">
+    <i class="material-icons">pause</i>
+  </a>
+</div>
+<div class="card-content">
+  <h2>{{episode.title}}</h2>
+  <div class="secondary">
+    <div class="date">{{format-date episode.pubDate}}</div>
+    <div class="duration">{{format-duration episode.duration}}</div>
+    <div class="new">
+      <i class="material-icons">new_releases</i>
+      new episode
+    </div>
+  </div>
+  <div class="description">
+    {{{episode.description}}}
+  </div>
+</div>
