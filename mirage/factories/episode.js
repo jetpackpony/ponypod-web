@@ -6,5 +6,11 @@ export default Factory.extend({
   },
   pubDate() {
     return faker.date.recent();
+  },
+  duration() {
+    return faker.random.number(1, 10000);
+  },
+  description() {
+    return faker.lorem.paragraph();
   }
 });
