@@ -28,4 +28,5 @@ export default function() {
 
   this.get('/podcasts');
   this.get('/podcasts/:id');
+  this.get('/episodes/:id');
 }
