@@ -4,7 +4,8 @@ import hbs from 'htmlbars-inline-precompile';
 
 const playerService = Ember.Service.extend({
   playingEpisode: null,
-  isPlaying: false
+  isPlaying: false,
+  showExpandedPlayer: false
 });
 
 moduleForComponent('player-container', 'Integration | Component | player container', {

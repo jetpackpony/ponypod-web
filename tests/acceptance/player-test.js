@@ -24,7 +24,7 @@ test('open mini player on episode page by default', function(assert) {
   });
 });
 
-skip('player shows correct episode info', function(assert) {
+test('player shows correct episode info', function(assert) {
   let podcast = server.create('podcast', { image: 'testme.png' });
   let ep = server.create('episode', {
     podcast,
@@ -34,7 +34,7 @@ skip('player shows correct episode info', function(assert) {
   visit('/episode/1');
   andThen(() => {
     let title = find('.mini-player .title span').text().trim();
-    let date = find('.mini-player .title secondary').text().trim();
+    let date = find('.mini-player .title .secondary').text().trim();
     assert.equal(title, 'Testme', 'title doesn\'t match');
     assert.equal(date, '4 Nov 2016', 'date doesn\'t match');
   });

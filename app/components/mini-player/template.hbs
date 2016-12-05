@@ -1,1 +1,23 @@
-This is mini player
+<div class="mini-progress">
+  <div class="bar" style="width: {{player.progress}}%"></div>
+</div>
+<div class="mini-wrapper">
+  <div class="control {{if player.isPlaying 'playing' ''}}">
+    <a href="#!" class="play-button play" {{action 'play' on='click'}}>
+      <i class="material-icons">play_arrow</i>
+    </a>
+    <a href="#!" class="play-button pause" {{action 'pause' on='click'}}>
+      <i class="material-icons">pause</i>
+    </a>
+  </div>
+  <div class="title">
+    <span>{{player.playingEpisode.title}}</span>
+    <p class="secondary">{{format-date player.playingEpisode.pubDate}}</p>
+  </div>
+  <div class="expand-button">
+    <a href="#!" class="expand-player" {{action 'expandPlayer' on='click'}}>
+      <i class="material-icons">expand_less</i>
+    </a>
+  </div>
+  <div class="logo"><img src="{{player.playingEpisode.podcast.image}}"></div>
+</div>
