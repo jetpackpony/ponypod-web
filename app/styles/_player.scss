@@ -19,16 +19,19 @@
     display: none;
   }
 
+  &.mini {
+    height: $mini-player-height;
+    .mini-player {
+      display: flex;
+    }
+  }
   &.maxi {
     height: calc(100% - #{$maxi-player-top});
     .maxi-player {
       display: flex;
     }
-  }
-  &.mini {
-    height: $mini-player-height;
     .mini-player {
-      display: flex;
+      display: none;
     }
   }
 }
