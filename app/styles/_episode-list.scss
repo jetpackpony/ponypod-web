@@ -1,25 +1,25 @@
+.episode, .control {
+  a.play {
+    display: inline-block !important;
+  }
+  a.pause {
+    display: none !important;
+  }
+  &.playing {
+    a.play {
+      display: none !important;
+    }
+    a.pause {
+      display: inline-block !important;
+    }
+  }
+}
+
 .episode-list {
   @extend .card;
   padding: 0;
   .card-content {
     padding: 0 .5rem;
-  }
-
-  .episode {
-    a.play {
-      display: inline-block;
-    }
-    a.pause {
-      display: none;
-    }
-    &.playing {
-      a.play {
-        display: none;
-      }
-      a.pause {
-        display: inline-block;
-      }
-    }
   }
 
   ul.collection {
