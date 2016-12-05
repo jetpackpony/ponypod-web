@@ -4,12 +4,40 @@ import moduleForAcceptance from 'ponypod-frontend/tests/helpers/module-for-accep
 moduleForAcceptance('Acceptance | player');
 
 test('open mini player with episode', function(assert) {
+  let podcast = server.create('podcast');
+  server.create('episode', { podcast });
+  visit('/podcast/1');
+  click('.episode a.play-button.play');
+  andThen(() => {
+    let miniPlayer = find('.mini-player:visible');
+    assert.equal(miniPlayer.length, 1, 'mini player is not visible');
+  });
 });
 
-skip('open mini player on episode page', function(assert) {
+test('open mini player on episode page by default', function(assert) {
+  let podcast = server.create('podcast');
+  server.create('episode', { podcast });
+  visit('/episode/1');
+  andThen(() => {
+    let miniPlayer = find('.mini-player:visible');
+    assert.equal(miniPlayer.length, 1, 'mini player is not visible');
+  });
 });
 
 skip('player shows correct episode info', function(assert) {
+  let podcast = server.create('podcast', { image: 'testme.png' });
+  let ep = server.create('episode', {
+    podcast,
+    title: 'Testme',
+    pubDate: new Date("Mon, 4 Nov 2016 9:57:12 +0000")
+  });
+  visit('/episode/1');
+  andThen(() => {
+    let title = find('.mini-player .title span').text().trim();
+    let date = find('.mini-player .title secondary').text().trim();
+    assert.equal(title, 'Testme', 'title doesn\'t match');
+    assert.equal(date, '4 Nov 2016', 'date doesn\'t match');
+  });
 });
 
 skip('expand to maxi player when expand button clicked', function(assert) {
