@@ -14,10 +14,11 @@ test('open mini player with episode', function(assert) {
   });
 });
 
-test('open mini player on episode page by default', function(assert) {
+test('open mini player when click play on episode page', function(assert) {
   let podcast = server.create('podcast');
   server.create('episode', { podcast });
   visit('/episode/1');
+  click('.episode-details a.play');
   andThen(() => {
     let miniPlayer = find('.mini-player:visible');
     assert.equal(miniPlayer.length, 1, 'mini player is not visible');
@@ -32,6 +33,7 @@ test('player shows correct episode info', function(assert) {
     pubDate: new Date("Mon, 4 Nov 2016 9:57:12 +0000")
   });
   visit('/episode/1');
+  click('.episode-details a.play');
   andThen(() => {
     let title = find('.mini-player .title span').text().trim();
     let date = find('.mini-player .title .secondary').text().trim();
