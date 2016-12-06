@@ -1,6 +1,6 @@
 <div class="time">
-  <span>23:40</span>
-  <span>-31:54</span>
+  <span class="passed">{{format-time player.position}}</span>
+  <span class="remaining">-{{format-time player.timeToFinish}}</span>
 </div>
 <div class="progress-container">
   <div class="thumb" style="left: {{thumbPosition}}">

@@ -4,10 +4,9 @@ export default Ember.Service.extend({
   playingEpisode: null,
   isPlaying: false,
   showExpandedPlayer: false,
-  // The position in percent
   progress: 0,
-  // The time in seconds
   posision: 0,
+  timeToFinish: 186,
   rewind(seconds) {
     console.log('TODO: implement rewind', arguments);
   },

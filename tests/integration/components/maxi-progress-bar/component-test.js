@@ -42,7 +42,14 @@ test('it shows progress thumb on progress position', function(assert) {
   assert.ok(diff < 1, 'should be withing 1% of set progress');
 });
 
-test('it shows the correct passed and negative time', function(assert) {
+test('it shows the correct passed and remaining time', function(assert) {
+  this.set('player.position', 123);
+  this.set('player.timeToFinish', 3896);
+  this.render(hbs`{{maxi-progress-bar}}`);
+  let passed = this.$('.time .passed').text().trim();
+  let remaining = this.$('.time .remaining').text().trim();
+  assert.equal(passed, '02:03', 'passed time should match');
+  assert.equal(remaining, '-1:04:56', 'remaining time should match');
 });
 
 test('it calls jump to with value when progress bar clicked', function(assert) {
