@@ -53,21 +53,48 @@ test('it shows the correct passed and remaining time', function(assert) {
 });
 
 test('it calls jump to with value when progress bar clicked', function(assert) {
-  assert.expect(1);
-  this.set('player.jumpTo', (progress) => {
-    assert.equal(progress, 33, 'should jump to the pointed progress');
-  });
   this.render(hbs`{{maxi-progress-bar}}`);
   let progress = this.$('.progress-wrapper');
   let x = progress.width() * .33 + progress.offset().left;
   let y = progress.height() / 2 + progress.offset().top;
   progress.trigger('click', { pageX: x, pageY: y });
+
+  let newValue = this.get('player.progress');
+  assert.equal(newValue, 33, 'should jump to the pointed progress');
 });
 
 test('it calls jump-to with value when progress thumb dragged', function(assert) {
+  this.set('player.progress', 50);
+  this.render(hbs`{{maxi-progress-bar}}`);
+  let progress = this.$('.progress-wrapper');
+  let thumb = this.$('.thumb')
+  let x = thumb.offset().left + thumb.outerWidth() / 2;
+  let dest = progress.offset().left + progress.width() / 4;
+  thumb.trigger('mousedown', { pageX: x });
+  while(x >= dest && x > dest) {
+    thumb.trigger('mousemove', { pageX: --x });
+  }
+  thumb.trigger('mouseup', { pageX: x });
+
+  let newValue = this.get('player.progress');
+  assert.equal(newValue, 25, 'should jump to the pointed progress');
 });
 
 test('it calls jump-to with value when progress thumb touch-dragged', function(assert) {
+  this.set('player.progress', 50);
+  this.render(hbs`{{maxi-progress-bar}}`);
+  let progress = this.$('.progress-wrapper');
+  let thumb = this.$('.thumb')
+  let x = thumb.offset().left + thumb.outerWidth() / 2;
+  let dest = progress.offset().left + progress.width() / 4;
+  thumb.trigger('touchstart');
+  while(x >= dest && x > dest) {
+    thumb.trigger('touchmove', { touches: [ { pageX: --x } ] });
+  }
+  thumb.trigger('touchend');
+
+  let newValue = this.get('player.progress');
+  assert.equal(newValue, 25, 'should jump to the pointed progress');
 });
 
 test('it diplays the time when dragging the progress thumb', function(assert) {
