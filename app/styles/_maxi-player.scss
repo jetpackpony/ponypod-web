@@ -134,9 +134,9 @@ $thumb-inner-size: 1rem;
       margin: 1rem;
       transition: background-color .3s;
       i { font-size: 3rem; }
-      &.play {
-        i { font-size: 5rem; }
-      }
+    }
+    .play-pause a i {
+      font-size: 5rem;
     }
   }
 }
