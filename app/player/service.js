@@ -7,5 +7,14 @@ export default Ember.Service.extend({
   // The position in percent
   progress: 0,
   // The time in seconds
-  posision: 0
+  posision: 0,
+  rewind(seconds) {
+    console.log('TODO: implement rewind');
+  },
+  forward(seconds) {
+    console.log('TODO: implement forward');
+  },
+  jumpTo(progress) {
+    console.log('TODO: implement jumpTo');
+  }
 });
