@@ -79,7 +79,7 @@ test('it shows the playback progress', function(assert) {
   let container = this.$('.mini-progress').width();
   let bar = this.$('.mini-progress .bar').width();
   let diff = Math.abs(bar / container * 100 - 75);
-  assert.ok(diff < 1, 'should be withing 3% of set progress');
+  assert.ok(diff < 1, 'should be withing 1% of set progress');
 });
 
 test('it sets the player to expand when click on expand', function(assert) {
