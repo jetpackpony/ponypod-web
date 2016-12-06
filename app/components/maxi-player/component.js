@@ -9,7 +9,7 @@ export default Ember.Component.extend({
     },
     readMore() {
       this.set('player.showExpandedPlayer', false);
-      this.get('transitionToEpisode')(this.get('player.playingEpisode'));
+      //this.get('transitionToEpisode')(this.get('player.playingEpisode'));
     },
     play() {
       this.set('player.isPlaying', true);
@@ -18,10 +18,10 @@ export default Ember.Component.extend({
       this.set('player.isPlaying', false);
     },
     rewind() {
-      this.get('player.rewind')(10);
+      this.get('player').rewind(10);
     },
     forward() {
-      this.get('player.forward')(30);
+      this.get('player').forward(30);
     }
   }
 });

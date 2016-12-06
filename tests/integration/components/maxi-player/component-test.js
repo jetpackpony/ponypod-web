@@ -88,15 +88,6 @@ test('it starts playback when play is clicked', function(assert) {
   assert.ok(this.get('player.isPlaying'), 'should be playing');
 });
 
-test('it shows the playback progress', function(assert) {
-  this.set('player.progress', 75);
-  this.render(hbs`{{maxi-player}}`);
-  let container = this.$('.maxi-player .progress').width();
-  let bar = this.$('.maxi-player .progress .determinate').width();
-  let diff = Math.abs(bar / container * 100 - 75);
-  assert.ok(diff < 1, 'should be withing 1% of set progress');
-});
-
 test('it calls rewind-10 when rewind is clicked', function(assert) {
   assert.expect(1);
   this.set('player.rewind', (seconds) => {

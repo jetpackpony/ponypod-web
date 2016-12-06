@@ -9,12 +9,13 @@ export default Ember.Service.extend({
   // The time in seconds
   posision: 0,
   rewind(seconds) {
-    console.log('TODO: implement rewind');
+    console.log('TODO: implement rewind', arguments);
   },
   forward(seconds) {
-    console.log('TODO: implement forward');
+    console.log('TODO: implement forward', arguments);
   },
   jumpTo(progress) {
-    console.log('TODO: implement jumpTo');
+    this.set('progress', progress);
+    console.log('TODO: implement jumpTo', arguments);
   }
 });
