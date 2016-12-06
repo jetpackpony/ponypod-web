@@ -9,7 +9,7 @@ export default Ember.Component.extend({
     },
     readMore() {
       this.set('player.showExpandedPlayer', false);
-      //this.get('transitionToEpisode')(this.get('player.playingEpisode'));
+      this.get('transitionToEpisode')(this.get('player.playingEpisode'));
     },
     play() {
       this.set('player.isPlaying', true);
