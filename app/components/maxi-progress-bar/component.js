@@ -11,7 +11,7 @@ export default Ember.Component.extend({
     let onMouseMove = (event, coords) => {
       Ember.run(() => {
         let pageX = (event.pageX === undefined) ? coords.pageX : event.pageX;
-        this.set('player.progress', this._calculateProgress(pageX));
+        this.set('_updatingProgress', this._calculateProgress(pageX));
       });
     };
     let onMouseUp = (e) => {
@@ -19,6 +19,8 @@ export default Ember.Component.extend({
         this.$(e.target).removeClass('focus');
         this.$(document).unbind('mousemove', onMouseMove);
         this.$(document).unbind('mouseup', onMouseUp);
+        this.set('player.progress', this.get('_updatingProgress'));
+        this.set('_updatingProgress', false);
       });
     };
     this.$('.thumb').on('mousedown', (e) => {
@@ -40,12 +42,14 @@ export default Ember.Component.extend({
     this.$('.thumb').on('touchmove', (e, coords) => {
       Ember.run(() => {
         let touches = e.touches === undefined ? coords.touches : e.touches;
-        this.set('player.progress', this._calculateProgress(touches[0].pageX));
+        this.set('_updatingProgress', this._calculateProgress(touches[0].pageX));
       });
     });
     this.$('.thumb').on('touchend', (e) => {
       Ember.run(() => {
         this.$(e.target).removeClass('focus');
+        this.set('player.progress', this.get('_updatingProgress'));
+        this.set('_updatingProgress', false);
       });
     });
 
@@ -58,10 +62,12 @@ export default Ember.Component.extend({
     pos = (pos < 0) ? 0 : pos;
     return pos;
   },
-  thumbPosition: Ember.computed('player.progress', 'thumbWidth', function() {
-    let progress = this.get('player.progress');
-    let width = this.get('thumbWidth');
-    return `calc(${progress}% - ${width / 2}px)`;
+  _updatingProgress: false,
+  barProgress: Ember.computed('player.progress', '_updatingProgress', function() {
+    return this.get('_updatingProgress') || this.get('player.progress');
+  }),
+  thumbPosition: Ember.computed('barProgress', 'thumbWidth', function() {
+    return `calc(${this.get('barProgress')}% - ${this.get('thumbWidth') / 2}px)`;
   }),
   actions: {
     jumpTo(event, coords) {

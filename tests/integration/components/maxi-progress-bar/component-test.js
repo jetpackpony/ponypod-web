@@ -70,31 +70,31 @@ test('it calls jump-to with value when progress thumb dragged', function(assert)
   let thumb = this.$('.thumb')
   let x = thumb.offset().left + thumb.outerWidth() / 2;
   let dest = progress.offset().left + progress.width() / 4;
-  thumb.trigger('mousedown', { pageX: x });
-  while(x >= dest && x > dest) {
-    thumb.trigger('mousemove', { pageX: --x });
-  }
-  thumb.trigger('mouseup', { pageX: x });
+  thumb.trigger('mousedown');
+  thumb.trigger('mousemove', { pageX: dest });
+  thumb.trigger('mouseup');
 
   let newValue = this.get('player.progress');
+  let diff = Math.abs(thumb.offset().left + thumb.outerWidth() / 2 - dest);
   assert.equal(newValue, 25, 'should jump to the pointed progress');
+  assert.ok(diff < 10, 'thumb should be moved to around dest');
 });
 
 test('it calls jump-to with value when progress thumb touch-dragged', function(assert) {
   this.set('player.progress', 50);
   this.render(hbs`{{maxi-progress-bar}}`);
   let progress = this.$('.progress-wrapper');
-  let thumb = this.$('.thumb')
+  let thumb = this.$('.thumb');
   let x = thumb.offset().left + thumb.outerWidth() / 2;
   let dest = progress.offset().left + progress.width() / 4;
   thumb.trigger('touchstart');
-  while(x >= dest && x > dest) {
-    thumb.trigger('touchmove', { touches: [ { pageX: --x } ] });
-  }
+  thumb.trigger('touchmove', { touches: [ { pageX: dest } ] });
   thumb.trigger('touchend');
 
   let newValue = this.get('player.progress');
+  let diff = Math.abs(thumb.offset().left + thumb.outerWidth() / 2 - dest);
   assert.equal(newValue, 25, 'should jump to the pointed progress');
+  assert.ok(diff < 10, 'thumb should be moved to around dest');
 });
 
 test('it diplays the time when dragging the progress thumb', function(assert) {
