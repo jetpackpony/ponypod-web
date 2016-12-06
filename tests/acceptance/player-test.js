@@ -85,11 +85,11 @@ test('shows correct info on maxi player', function(assert) {
     let title = find('.maxi-player .title h2:visible').text().trim();
     let date = find('.maxi-player .date:visible').text().trim();
     let duration = find('.maxi-player .duration:visible').text().trim();
-    let summary = find('.maxi-player .duration p:visible').text().trim();
+    let summary = find('.maxi-player .description p:visible').text().trim();
     assert.equal(title, 'Testme', 'title should match');
     assert.equal(date, '4 Nov 2016', 'date should match');
-    assert.equal(duration, '1 hour 56 minutes', 'duration should match');
-    assert.equal(summary, 'testme summary', 'duration should match');
+    assert.equal(duration, '1 hour 57 minutes', 'duration should match');
+    assert.equal(summary, 'testme summary', 'summary should match');
   });
 });
 

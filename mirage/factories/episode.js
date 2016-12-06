@@ -12,5 +12,8 @@ export default Factory.extend({
   },
   description() {
     return faker.lorem.paragraphs(10);
+  },
+  summary() {
+    return faker.lorem.paragraphs(1);
   }
 });
