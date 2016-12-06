@@ -1,3 +1,4 @@
+import Ember from 'ember';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 
@@ -37,7 +38,7 @@ test('it shows progress thumb on progress position', function(assert) {
   this.render(hbs`{{maxi-progress-bar}}`);
   let container = this.$('.progress').width();
   let thumb = this.$('.thumb').position().left;
-  let thumbWidth = this.$('.thumb').outerWidth()
+  let thumbWidth = this.$('.thumb').outerWidth();
   let diff = Math.abs((thumb + thumbWidth / 2) / container * 100 - 75);
   assert.ok(diff < 1, 'should be withing 1% of set progress');
 });
@@ -55,27 +56,27 @@ test('it shows the correct passed and remaining time', function(assert) {
 test('it calls jump to with value when progress bar clicked', function(assert) {
   this.render(hbs`{{maxi-progress-bar}}`);
   let progress = this.$('.progress-wrapper');
-  let x = progress.width() * .33 + progress.offset().left;
+  let x = progress.width() * 0.33 + progress.offset().left;
   let y = progress.height() / 2 + progress.offset().top;
   progress.trigger('click', { pageX: x, pageY: y });
 
-  let newValue = this.get('player.progress');
-  assert.equal(newValue, 33, 'should jump to the pointed progress');
+  let diff = Math.abs(this.get('player.progress') - 33);
+  assert.ok(diff < 1, 'should jump to the pointed progress');
 });
 
 test('it calls jump-to with value when progress thumb dragged', function(assert) {
   this.set('player.progress', 50);
   this.render(hbs`{{maxi-progress-bar}}`);
   let progress = this.$('.progress-wrapper');
-  let thumb = this.$('.thumb')
-  let x = thumb.offset().left + thumb.outerWidth() / 2;
+  let thumb = this.$('.thumb');
   let dest = progress.offset().left + progress.width() / 4;
   thumb.trigger('mousedown', { pageX: dest });
   thumb.trigger('mousemove', { pageX: dest });
   thumb.trigger('mouseup');
 
   let newValue = this.get('player.progress');
-  let diff = Math.abs(thumb.offset().left + thumb.outerWidth() / 2 - dest);
+  let newX = thumb.offset().left + thumb.outerWidth() / 2;
+  let diff = Math.abs(newX - dest);
   assert.equal(newValue, 25, 'should jump to the pointed progress');
   assert.ok(diff < 10, 'thumb should be moved to around dest');
 });
@@ -85,14 +86,14 @@ test('it calls jump-to with value when progress thumb touch-dragged', function(a
   this.render(hbs`{{maxi-progress-bar}}`);
   let progress = this.$('.progress-wrapper');
   let thumb = this.$('.thumb');
-  let x = thumb.offset().left + thumb.outerWidth() / 2;
   let dest = progress.offset().left + progress.width() / 4;
   thumb.trigger('touchstart', { touches: [ { pageX: dest } ] });
   thumb.trigger('touchmove', { touches: [ { pageX: dest } ] });
   thumb.trigger('touchend');
 
   let newValue = this.get('player.progress');
-  let diff = Math.abs(thumb.offset().left + thumb.outerWidth() / 2 - dest);
+  let newX = thumb.offset().left + thumb.outerWidth() / 2;
+  let diff = Math.abs(newX - dest);
   assert.equal(newValue, 25, 'should jump to the pointed progress');
   assert.ok(diff < 10, 'thumb should be moved to around dest');
 });
@@ -102,8 +103,7 @@ test('it diplays the time when dragging the progress thumb', function(assert) {
   this.set('player.duration', 100);
   this.render(hbs`{{maxi-progress-bar}}`);
   let progress = this.$('.progress-wrapper');
-  let thumb = this.$('.thumb')
-  let x = thumb.offset().left + thumb.outerWidth() / 2;
+  let thumb = this.$('.thumb');
   let dest = progress.offset().left + progress.width() / 4;
   thumb.trigger('mousedown', { pageX: dest });
   thumb.trigger('mousemove', { pageX: dest });
@@ -120,7 +120,6 @@ test('it diplays the time when touch-dragging the progress thumb', function(asse
   this.render(hbs`{{maxi-progress-bar}}`);
   let progress = this.$('.progress-wrapper');
   let thumb = this.$('.thumb');
-  let x = thumb.offset().left + thumb.outerWidth() / 2;
   let dest = progress.offset().left + progress.width() / 4;
   thumb.trigger('touchstart', { touches: [ { pageX: dest } ] });
   thumb.trigger('touchmove', { touches: [ { pageX: dest } ] });

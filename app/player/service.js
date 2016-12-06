@@ -10,9 +10,9 @@ export default Ember.Service.extend({
   duration: 100,
   timeToFinish: 85,
   rewind(seconds) {
-    console.log('TODO: implement rewind', arguments);
+    console.log('TODO: implement rewind', seconds);
   },
   forward(seconds) {
-    console.log('TODO: implement forward', arguments);
+    console.log('TODO: implement forward', seconds);
   }
 });

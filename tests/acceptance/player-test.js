@@ -1,3 +1,5 @@
+/* global server */
+
 import { skip, test } from 'qunit';
 import moduleForAcceptance from 'ponypod-frontend/tests/helpers/module-for-acceptance';
 
@@ -27,7 +29,7 @@ test('open mini player when click play on episode page', function(assert) {
 
 test('player shows correct episode info', function(assert) {
   let podcast = server.create('podcast', { image: 'testme.png' });
-  let ep = server.create('episode', {
+  server.create('episode', {
     podcast,
     title: 'Testme',
     pubDate: new Date("Mon, 4 Nov 2016 9:57:12 +0000")
@@ -43,7 +45,7 @@ test('player shows correct episode info', function(assert) {
 });
 
 test('expand to maxi player when expand button clicked', function(assert) {
-  let ep = server.create('episode');
+  server.create('episode');
   visit('/episode/1');
   click('.episode-details a.play');
   click('#player .expand-player');
@@ -56,7 +58,7 @@ test('expand to maxi player when expand button clicked', function(assert) {
 });
 
 test('collapse to mini player when collapse button clicked', function(assert) {
-  let ep = server.create('episode');
+  server.create('episode');
   visit('/episode/1');
   click('.episode-details a.play');
   click('#player .expand-player');
@@ -71,7 +73,7 @@ test('collapse to mini player when collapse button clicked', function(assert) {
 
 test('shows correct info on maxi player', function(assert) {
   let podcast = server.create('podcast', { image: 'testme.png' });
-  let ep = server.create('episode', {
+  server.create('episode', {
     podcast,
     title: 'Testme',
     pubDate: new Date("Mon, 4 Nov 2016 9:57:12 +0000"),
