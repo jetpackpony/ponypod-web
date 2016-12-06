@@ -8,9 +8,9 @@ export default Ember.Component.extend({
     this.set('thumbWidth', this.$('.thumb').outerWidth());
 
     // Handle mouse thumb drag
-    let onMouseMove = (event, coords) => {
+    let onMouseMove = (e, coords) => {
       Ember.run(() => {
-        let pageX = (event.pageX === undefined) ? coords.pageX : event.pageX;
+        let pageX = (e.pageX === undefined) ? coords.pageX : e.pageX;
         this.set('_updatingProgress', this._calculateProgress(pageX));
       });
     };
@@ -23,20 +23,24 @@ export default Ember.Component.extend({
         this.set('_updatingProgress', false);
       });
     };
-    this.$('.thumb').on('mousedown', (e) => {
+    this.$('.thumb').on('mousedown', (e, coords) => {
       Ember.run(() => {
         e.preventDefault();
         this.$(e.target).addClass('focus');
         this.$(document).on('mousemove', onMouseMove);
         this.$(document).on('mouseup', onMouseUp);
+        let pageX = (e.pageX === undefined) ? coords.pageX : e.pageX;
+        this.set('_updatingProgress', this._calculateProgress(pageX));
       });
     });
 
     // Handle touch thumb drag
-    this.$('.thumb').on('touchstart', (e) => {
+    this.$('.thumb').on('touchstart', (e, coords) => {
       Ember.run(() => {
         e.stopPropagation();
         this.$(e.target).addClass('focus');
+        let touches = e.touches === undefined ? coords.touches : e.touches;
+        this.set('_updatingProgress', this._calculateProgress(touches[0].pageX));
       });
     });
     this.$('.thumb').on('touchmove', (e, coords) => {
@@ -69,9 +73,18 @@ export default Ember.Component.extend({
   thumbPosition: Ember.computed('barProgress', 'thumbWidth', function() {
     return `calc(${this.get('barProgress')}% - ${this.get('thumbWidth') / 2}px)`;
   }),
+  thumbTime: Ember.computed('_updatingProgress', function() {
+    let progress = this.get('_updatingProgress');
+    let duration = this.get('player.duration');
+    if (!progress) {
+      return 0;
+    } else {
+      return Math.round(duration * progress / 100);
+    }
+  }),
   actions: {
-    jumpTo(event, coords) {
-      let pageX = (event.pageX === undefined) ? coords.pageX : event.pageX;
+    jumpTo(e, coords) {
+      let pageX = (e.pageX === undefined) ? coords.pageX : e.pageX;
       this.set('player.progress', this._calculateProgress(pageX));
     }
   }

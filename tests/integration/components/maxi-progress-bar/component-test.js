@@ -70,7 +70,7 @@ test('it calls jump-to with value when progress thumb dragged', function(assert)
   let thumb = this.$('.thumb')
   let x = thumb.offset().left + thumb.outerWidth() / 2;
   let dest = progress.offset().left + progress.width() / 4;
-  thumb.trigger('mousedown');
+  thumb.trigger('mousedown', { pageX: dest });
   thumb.trigger('mousemove', { pageX: dest });
   thumb.trigger('mouseup');
 
@@ -87,7 +87,7 @@ test('it calls jump-to with value when progress thumb touch-dragged', function(a
   let thumb = this.$('.thumb');
   let x = thumb.offset().left + thumb.outerWidth() / 2;
   let dest = progress.offset().left + progress.width() / 4;
-  thumb.trigger('touchstart');
+  thumb.trigger('touchstart', { touches: [ { pageX: dest } ] });
   thumb.trigger('touchmove', { touches: [ { pageX: dest } ] });
   thumb.trigger('touchend');
 
@@ -98,7 +98,35 @@ test('it calls jump-to with value when progress thumb touch-dragged', function(a
 });
 
 test('it diplays the time when dragging the progress thumb', function(assert) {
+  this.set('player.progress', 50);
+  this.set('player.duration', 100);
+  this.render(hbs`{{maxi-progress-bar}}`);
+  let progress = this.$('.progress-wrapper');
+  let thumb = this.$('.thumb')
+  let x = thumb.offset().left + thumb.outerWidth() / 2;
+  let dest = progress.offset().left + progress.width() / 4;
+  thumb.trigger('mousedown', { pageX: dest });
+  thumb.trigger('mousemove', { pageX: dest });
+
+  let text = this.$('.thumb .time-tooltip:visible').text().trim();
+  assert.equal(text, '00:25', 'should display the correct time position');
+
+  thumb.trigger('mouseup');
 });
 
 test('it diplays the time when touch-dragging the progress thumb', function(assert) {
+  this.set('player.progress', 50);
+  this.set('player.duration', 100);
+  this.render(hbs`{{maxi-progress-bar}}`);
+  let progress = this.$('.progress-wrapper');
+  let thumb = this.$('.thumb');
+  let x = thumb.offset().left + thumb.outerWidth() / 2;
+  let dest = progress.offset().left + progress.width() / 4;
+  thumb.trigger('touchstart', { touches: [ { pageX: dest } ] });
+  thumb.trigger('touchmove', { touches: [ { pageX: dest } ] });
+
+  let text = this.$('.thumb .time-tooltip:visible').text().trim();
+  assert.equal(text, '00:25', 'should display the correct time position');
+
+  thumb.trigger('touchend');
 });
