@@ -23,3 +23,8 @@ test('it formats negative time', function(assert) {
   let result = formatTime([-7200]);
   assert.equal(result, '-2:00:00', 'should format negative time correctly');
 });
+
+test('it rounds up the time', function(assert) {
+  let result = formatTime([333.333434234]);
+  assert.equal(result, '05:33', 'should format fractional time correctly');
+});
