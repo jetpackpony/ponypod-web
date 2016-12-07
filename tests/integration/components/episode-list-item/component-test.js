@@ -33,28 +33,30 @@ test('it shows the episode title and date', function(assert) {
 });
 
 test('it starts playing the episode when play button clicked', function(assert) {
+  assert.expect(2);
+  this.set('player.play', () => {
+    assert.ok(true, 'player.play() is called');
+  });
   this.set('episode', Ember.Object.create({ id: 2 }));
 
   this.render(hbs`{{episode-list-item episode=episode}}`);
   this.$('a.play').click();
 
   let playingEpisode = this.get('player.playingEpisode.id');
-  let isPlaying = this.get('player.isPlaying');
   assert.equal(playingEpisode, 2, 'the playing epissode id is wrong');
-  assert.ok(isPlaying, 'should start playing');
 });
 
 test('it pauses the playback when the pause button is clicked', function(assert) {
+  assert.expect(1);
   let ep = Ember.Object.create({ id: 2 });
   this.set('player.playingEpisode', ep);
-  this.set('player.isPlaying', true);
+  this.set('player.pause', () => {
+    assert.ok(true, 'player.pause() is called');
+  });
   this.set('episode', ep);
 
   this.render(hbs`{{episode-list-item episode=episode}}`);
   this.$('a.pause').click();
-
-  let isPlaying = this.get('player.isPlaying');
-  assert.notOk(isPlaying, 'pause button should pause the playback');
 });
 
 test('it shows play button next to episode by default', function(assert) {

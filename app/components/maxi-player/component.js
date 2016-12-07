@@ -12,10 +12,10 @@ export default Ember.Component.extend({
       this.get('transitionToEpisode')(this.get('player.playingEpisode'));
     },
     play() {
-      this.set('player.isPlaying', true);
+      this.get('player').play();
     },
     pause() {
-      this.set('player.isPlaying', false);
+      this.get('player').pause();
     },
     rewind() {
       this.get('player').rewind(10);

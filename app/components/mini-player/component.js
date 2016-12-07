@@ -5,10 +5,10 @@ export default Ember.Component.extend({
   player: Ember.inject.service(),
   actions: {
     play() {
-      this.set('player.isPlaying', true);
+      this.get('player').play();
     },
     pause() {
-      this.set('player.isPlaying', false);
+      this.get('player').pause();
     },
     expandPlayer() {
       this.set('player.showExpandedPlayer', true);

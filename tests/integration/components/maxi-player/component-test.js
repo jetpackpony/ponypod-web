@@ -75,17 +75,23 @@ test('it shows the play button if the episode is not playing', function(assert) 
 });
 
 test('it pauses playback when pause is clicked', function(assert) {
+  assert.expect(1);
+  this.set('player.pause', () => {
+    assert.ok(true, 'player.pause is called');
+  });
   this.set('player.isPlaying', true);
   this.render(hbs`{{maxi-player}}`);
   this.$('.maxi-player .controls .pause:visible').click();
-  assert.notOk(this.get('player.isPlaying'), 'should not be playing');
 });
 
 test('it starts playback when play is clicked', function(assert) {
+  assert.expect(1);
+  this.set('player.play', () => {
+    assert.ok(true, 'player.play is called');
+  });
   this.set('player.isPlaying', false);
   this.render(hbs`{{maxi-player}}`);
   this.$('.maxi-player .controls .play:visible').click();
-  assert.ok(this.get('player.isPlaying'), 'should be playing');
 });
 
 test('it calls rewind-10 when rewind is clicked', function(assert) {
