@@ -10,10 +10,10 @@ export default Ember.Component.extend({
   actions: {
     play() {
       this.set('player.playingEpisode', this.get('episode'));
-      this.set('player.isPlaying', true);
+      this.get('player').play();
     },
     pause() {
-      this.set('player.isPlaying', false);
+      this.get('player').pause();
     }
   }
 });

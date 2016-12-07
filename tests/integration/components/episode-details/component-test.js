@@ -5,7 +5,9 @@ import hbs from 'htmlbars-inline-precompile';
 const playerService = Ember.Service.extend({
   playingEpisode: null,
   isPlaying: false,
-  showExpandedPlayer: false
+  showExpandedPlayer: false,
+  play() {},
+  pause() {}
 });
 
 moduleForComponent('episode-details', 'Integration | Component | episode details', {
@@ -49,16 +51,26 @@ test('it should display episode description', function(assert) {
 });
 
 test('it should start playback when play button clicked', function(assert) {
+  assert.expect(2);
+  this.set('player.play', () => {
+    assert.ok(true, 'player.play() is called');
+  });
   this.set('episode', Ember.Object.create({ id: 1 }));
 
   this.render(hbs`{{episode-details episode=episode}}`);
   this.$('.play').click();
 
   assert.equal(this.get('player.playingEpisode.id'), 1, 'should match ep id');
-  assert.ok(this.get('player.isPlaying'), 'should start playback');
 });
 
 test('it should pause playback when pause button clicked', function(assert) {
+  assert.expect(3);
+  this.set('player.play', () => {
+    assert.ok(true, 'player.pause() is called');
+  });
+  this.set('player.pause', () => {
+    assert.ok(true, 'player.play() is called');
+  });
   this.set('episode', Ember.Object.create({ id: 1 }));
 
   this.render(hbs`{{episode-details episode=episode}}`);
@@ -66,7 +78,6 @@ test('it should pause playback when pause button clicked', function(assert) {
   this.$('.pause').click();
 
   assert.equal(this.get('player.playingEpisode.id'), 1, 'should match ep id');
-  assert.notOk(this.get('player.isPlaying'), 'should start playback');
 });
 
 test('it should display play button when nothing is playing', function(assert) {
