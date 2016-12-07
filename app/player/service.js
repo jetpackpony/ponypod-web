@@ -14,5 +14,7 @@ export default Ember.Service.extend({
   },
   forward(seconds) {
     console.log('TODO: implement forward', seconds);
+  },
+  getAudioElement() {
   }
 });

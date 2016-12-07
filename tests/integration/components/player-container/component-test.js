@@ -5,7 +5,10 @@ import hbs from 'htmlbars-inline-precompile';
 const playerService = Ember.Service.extend({
   playingEpisode: null,
   isPlaying: false,
-  showExpandedPlayer: false
+  showExpandedPlayer: false,
+  getAudioElement() {
+    return document.createElement('audio');
+  }
 });
 
 moduleForComponent('player-container', 'Integration | Component | player container', {
@@ -56,3 +59,8 @@ test('open a mini player when expand is unset', function(assert) {
   assert.ok(maxi, 'should not show maxi player');
 });
 
+test('it appends audio element when loaded', function(assert) {
+  this.render(hbs`{{player-container id='player'}}`);
+  let audio = this.$('#player audio');
+  assert.equal(audio.length, 1, 'should append audio element');
+});
