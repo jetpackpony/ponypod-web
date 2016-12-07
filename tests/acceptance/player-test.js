@@ -113,17 +113,92 @@ test('goes to an episode page when click read more', function(assert) {
 /* Playback things */
 
 
-skip('start playback of a chosen episode', function(assert) {
+test('start playback of a chosen episode', function(assert) {
+  let podcast = server.create('podcast');
+  server.create('episode', { podcast, file: '/audio/testing.mp3' });
+  visit('/podcast/1');
+  click('.episode a.play-button.play');
+  andThen(() => {
+    let audio = find('audio')[0];
+    assert.ok(audio, 'audio tag should exist');
+    assert.equal(audio.src, 'http://localhost:7357/audio/testing.mp3', 'audio should be setup to episode');
+    assert.notOk(audio.paused, 'audio should not be paused');
+  });
 });
 
-skip('pauses the playback when click pause', function(assert) {
+test('pauses the playback when click pause', function(assert) {
+  let podcast = server.create('podcast');
+  server.create('episode', { podcast, file: '/audio/testing.mp3' });
+  visit('/podcast/1');
+  click('.episode a.play-button.play');
+  click('.episode a.play-button.pause');
+  andThen(() => {
+    let audio = find('audio')[0];
+    assert.ok(audio.paused, 'audio should be paused');
+  });
 });
 
-skip('pauses the playback when hit pause on maxi player', function(assert) {
+test('pauses the playback when hit pause on maxi player', function(assert) {
+  let podcast = server.create('podcast');
+  server.create('episode', { podcast, file: '/audio/testing.mp3' });
+  visit('/podcast/1');
+  click('.episode a.play-button.play');
+  click('.mini-player a.expand-player');
+  click('.maxi-player .controls a.pause');
+  andThen(() => {
+    let audio = find('audio')[0];
+    assert.ok(audio.paused, 'audio should be paused');
+  });
 });
 
-skip('rewinds 10s when rewind button clicked', function(assert) {
+test('forwards 30s when forward button clicked', function(assert) {
+  let podcast = server.create('podcast');
+  server.create('episode', { podcast, file: '/audio/testing.mp3' });
+  visit('/podcast/1');
+  click('.episode a.play-button.play');
+  click('.mini-player a.expand-player');
+  click('.maxi-player .controls a.forward');
+  andThen(() => {
+    let audioTime = Math.round(find('audio')[0].currentTime);
+    assert.ok(audioTime === 30, 'audio should be paused');
+  });
 });
 
-skip('forwards 30s when forward button clicked', function(assert) {
+test('rewinds 10s when rewind button clicked', function(assert) {
+  let podcast = server.create('podcast');
+  server.create('episode', { podcast, file: '/audio/testing.mp3' });
+  visit('/podcast/1');
+  click('.episode a.play-button.play');
+  click('.mini-player a.expand-player');
+  click('.maxi-player .controls a.forward');
+  click('.maxi-player .controls a.rewind');
+  andThen(() => {
+    let audioTime = Math.round(find('audio')[0].currentTime);
+    assert.ok(audioTime === 20, 'audio should be paused');
+  });
+});
+
+test('jumps to the middle when click on me progress bar', function(assert) {
+  assert.expect(1);
+  let podcast = server.create('podcast');
+  server.create('episode', { podcast, file: '/audio/testing.mp3' });
+  visit('/podcast/1');
+  click('.episode a.play-button.play');
+  click('.mini-player a.expand-player');
+  andThen(() => {
+    Ember.run.later(() => {
+      let progress = $('.maxi-player .progress-wrapper');
+      let x = progress.width() * 0.5 + progress.offset().left;
+      let y = progress.height() / 2 + progress.offset().top;
+      progress.trigger('click', { pageX: x, pageY: y });
+    }, 2000);
+  });
+  andThen(() => {
+    Ember.run.later(() => {
+      let audioTime = Math.round(find('audio')[0].currentTime);
+      let duration = find('audio')[0].duration;
+      let diff = Math.abs(audioTime - duration / 2);
+      assert.ok(diff < 4, 'time should be half of duration');
+    }, 1000);
+  });
 });
