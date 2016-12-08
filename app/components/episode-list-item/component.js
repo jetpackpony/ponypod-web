@@ -1,11 +1,13 @@
 import Ember from 'ember';
 
 export default Ember.Component.extend({
+  tagName: 'li',
+  classNames: ["episode","collection-item","avatar"],
   player: Ember.inject.service(),
-  classNames: ['episode-details'],
+  classNameBindings: ['isPlaying:playing'],
   isPlaying: Ember.computed('player.{playingEpisode,isPlaying}', function() {
-    let epId = this.get('player.playingEpisode.id');
-    return epId === this.get('episode.id') && this.get('player.isPlaying');
+    let playingId = this.get('player.playingEpisode.id');
+    return this.get('episode.id') === playingId && this.get('player.isPlaying');
   }),
   actions: {
     play() {

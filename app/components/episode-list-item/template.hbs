@@ -1,0 +1,16 @@
+<a href="#!" class="play-button play" {{action 'play' on='click'}}>
+  <i class="material-icons">play_arrow</i>
+</a>
+<a href="#!" class="play-button pause" {{action 'pause' on='click'}}>
+  <i class="material-icons">pause</i>
+</a>
+{{#link-to 'episode' episode classNames='title'}}
+  <span>{{episode.title}}</span>
+  <p class="secondary">{{format-date episode.pubDate}}</p>
+{{/link-to}}
+{{!--
+<a href="#!" class="secondary-content">
+  <i class="material-icons">more_vert</i>
+</a>
+{{> options-menu class="episode-options" options=../episodeOptions}}
+--}}

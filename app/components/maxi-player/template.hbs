@@ -1,0 +1,47 @@
+<div class="top-end">
+  <header>
+    <div class="title">
+      <h2>{{player.playingEpisode.title}}</h2>
+      <div class="secondary">
+        <div class="date">{{format-date player.playingEpisode.pubDate}}</div>
+        <div class="duration">{{format-duration player.playingEpisode.duration}}</div>
+      </div>
+    </div>
+    <div class="collapse-button">
+      <a href="#!" class="collapse-player" {{action 'collapsePlayer' on='click'}}>
+        <i class="material-icons">expand_more</i>
+      </a>
+    </div>
+  </header>
+  <div class="description">
+    <p>{{player.playingEpisode.summary}}</p>
+    <div class="actions">
+      <a href="#!" class="waves-effect btn-flat" {{action 'readMore' on='click'}}>
+        Read More
+      </a>
+    </div>
+  </div>
+</div>
+<div class="bottom-end">
+  {{maxi-progress-bar}}
+  <div class="controls">
+    <div>
+      <a href="#!" class="rewind" {{action 'rewind'}}>
+        <i class="material-icons">replay_10</i>
+      </a>
+    </div>
+    <div class="play-pause {{if player.isPlaying 'playing' ''}}">
+      <a href="#!" class="play" {{action 'play' on='click'}}>
+        <i class="material-icons">play_arrow</i>
+      </a>
+      <a href="#!" class="pause" {{action 'pause' on='click'}}>
+        <i class="material-icons">pause</i>
+      </a>
+    </div>
+    <div>
+      <a href="#!" class="forward" {{action 'forward'}}>
+        <i class="material-icons">forward_30</i>
+      </a>
+    </div>
+  </div>
+</div>

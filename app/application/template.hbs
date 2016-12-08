@@ -3,5 +3,5 @@
   {{side-menu}}
   {{nav-bar}}
   <main>{{outlet}}</main>
-  {{!> player}}
+  {{player-container id='player' transitionToEpisode=(action 'transitionToEpisode')}}
 </div>

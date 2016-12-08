@@ -29,9 +29,6 @@
       a.play-button {
         display: inline-block;
         color: $secondary-color;
-        &.hidden {
-          display: none;
-        }
         i {
           font-size: 2.5rem;
         }

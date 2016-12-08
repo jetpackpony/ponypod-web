@@ -1,9 +1,9 @@
-<div class="card-image">
+<div class="episode-details-image card-image {{if isPlaying 'playing' ''}}">
   <img src="{{episode.podcast.image}}">
-  <a class="play-button play waves-effect waves-light">
+  <a class="play-button play waves-effect waves-light" {{action 'play' on='click'}}>
     <i class="material-icons">play_arrow</i>
   </a>
-  <a class="play-button pause waves-effect waves-light hidden">
+  <a class="play-button pause waves-effect waves-light" {{action 'pause' on='click'}}>
     <i class="material-icons">pause</i>
   </a>
 </div>

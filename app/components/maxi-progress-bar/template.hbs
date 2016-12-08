@@ -1,0 +1,14 @@
+<div class="time">
+  <span class="passed">{{format-time player.position}}</span>
+  <span class="remaining">-{{format-time player.timeToFinish}}</span>
+</div>
+<div class="progress-container">
+  <div class="thumb" style="left: {{thumbPosition}}">
+    <div class="time-tooltip">{{format-time thumbTime}}</div>
+  </div>
+  <div class="progress-wrapper" onclick={{action 'jumpTo'}}>
+    <div class="progress">
+      <div class="determinate" style="width: {{barProgress}}%"></div>
+    </div>
+  </div>
+</div>

@@ -6,5 +6,7 @@ export default DS.Model.extend({
   title: DS.attr('string'),
   pubDate: DS.attr('date'),
   duration: DS.attr('number'),
-  description: DS.attr('string')
+  description: DS.attr('string'),
+  summary: DS.attr('string'),
+  file: DS.attr('string')
 });

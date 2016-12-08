@@ -12,5 +12,10 @@ export default Factory.extend({
   },
   description() {
     return faker.lorem.paragraphs(10);
-  }
+  },
+  summary() {
+    return faker.lorem.paragraphs(1);
+  },
+  //file: "test.mp3"
+  file: "http://www.noiseaddicts.com/samples_1w72b820/2226.mp3"
 });
