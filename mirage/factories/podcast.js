@@ -9,9 +9,10 @@ const imageList = [
  "http://golangshow.com/images/cover_big.png"
 ];
 
+
 export default Factory.extend({
-  title(i) {
-    return `Podcast - ${i + 1}`;
+  title() {
+    return faker.company.companyName();
   },
   image: faker.list.cycle(...imageList),
   summary() {
