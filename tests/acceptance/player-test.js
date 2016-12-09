@@ -161,7 +161,7 @@ test('forwards 30s when forward button clicked', function(assert) {
   click('.maxi-player .controls a.forward');
   andThen(() => {
     let audioTime = Math.round(find('audio')[0].currentTime);
-    assert.ok(audioTime === 30, 'audio should be paused');
+    assert.equal(audioTime, 30, 'audio should be forwarded to correct time');
   });
 });
 
@@ -175,7 +175,7 @@ test('rewinds 10s when rewind button clicked', function(assert) {
   click('.maxi-player .controls a.rewind');
   andThen(() => {
     let audioTime = Math.round(find('audio')[0].currentTime);
-    assert.ok(audioTime === 20, 'audio should be paused');
+    assert.equal(audioTime, 20, 'audio should be rewinded to correct time');
   });
 });
 
