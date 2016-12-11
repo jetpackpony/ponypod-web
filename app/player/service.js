@@ -1,49 +1,50 @@
 import Ember from 'ember';
 
+const eventHandlers = {
+  'durationchange': function(service, e) {
+    let newDur = e.target.duration || e.detail || 0;
+    service.set('duration', newDur);
+  },
+  'timeupdate': function(service, e) {
+    let newPos = e.target.currentTime || e.detail || 0;
+    service.set('position', newPos);
+  },
+  'ended': function(service) {
+    service.set('isPlaying', false);
+  }
+};
+
 export default Ember.Service.extend({
   position: 0,
   duration: 0,
   isPlaying: false,
   showExpandedPlayer: false,
   _handlers: {},
-  _durationChangeHandler(e) {
-    Ember.run(() => {
-      let newDur = e.target.duration || e.detail || 0;
-      this.set('duration', newDur);
+  _addListeners() {
+    Object.keys(eventHandlers).forEach((event) => {
+      this._handlers[event] = (...args) => {
+        Ember.run(() => {
+          return eventHandlers[event].call(this, this, ...args);
+        });
+      };
+      this.get('audio').addEventListener(event, this._handlers[event]);
     });
   },
-  _timeUpdateHandler(e) {
-    Ember.run(() => {
-      let newPos = e.target.currentTime || e.detail || 0;
-      this.set('position', newPos);
-    });
-  },
-  _endedHandler() {
-    Ember.run(() => {
-      this.set('isPlaying', false);
-    });
+  _removeListeners() {
+    if (typeof(this.get('audio').removeEventListener) === 'function') {
+      Object.keys(eventHandlers).forEach((event) => {
+        this.get('audio').removeEventListener(event, this._handlers[event]);
+      });
+    }
   },
   init() {
-    let h = this._handlers;
-    h['durationchange'] = this._durationChangeHandler.bind(this);
-    h['timeupdate'] = this._timeUpdateHandler.bind(this);
-    h['ended'] = this._endedHandler.bind(this);
-    let audio = this.get('audio');
-    if (!audio) {
+    if (!this.get('audio')) {
       this.set('audio', document.createElement('audio'));
-      this.get('audio').addEventListener('durationchange', h['durationchange']);
-      this.get('audio').addEventListener('timeupdate', h['timeupdate']);
-      this.get('audio').addEventListener('ended', h['ended']);
+      this._addListeners();
     }
   },
   willDestroy() {
-    let h = this._handlers;
-    let audio = this.get('audio');
-    if (typeof(audio.removeEventListener) === 'function') {
-      this.get('audio').removeEventListener('durationchange', h['durationchange']);
-      this.get('audio').removeEventListener('timeupdate', h['timeupdate']);
-      this.get('audio').removeEventListener('ended', h['ended']);
-    }
+    this._removeListeners();
     this.set('audio', null);
   },
   playingEpisode: null,
