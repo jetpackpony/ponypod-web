@@ -4,7 +4,7 @@
   </a>
 </div>
 <div class="nav-search">
-  <input id="search" type="search" required onkeyup={{action 'search'}}>
+  {{input id="search" value=navigation.searchQuery type="search"}}
   <a href="#!" {{action 'closeSearch'}}>
     <i id="close-search" class="material-icons">close</i>
   </a>

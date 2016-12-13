@@ -35,13 +35,28 @@ test('it collapses search bar on click on close search', function(assert) {
   assert.notOk(inputInVisible, 'search field should not be visible');
 });
 
-test('it calls a callback from nav service when submitted', function(assert) {
-  assert.expect(1);
-  this.set('navigation.search', (query) => {
-    assert.equal(query, 'testme', 'search query should match');
-  });
+test('it sets a search query in the nav service', function(assert) {
   this.render(hbs`{{search-bar}}`);
   this.$('#open-search').click();
-  this.$('input#search').val('testme').trigger('keyup', { keyCode: 13 });
+  this.$('input#search').val('testme').change();
+  let query = this.get('navigation.searchQuery');
+  assert.equal(query, 'testme', 'search query should match');
+});
+
+test('it unsets a search query if the search is open', function(assert) {
+  this.render(hbs`{{search-bar}}`);
+  this.$('#open-search').click();
+  this.$('input#search').val('testme').change();
+  this.$('#close-search').click();
+  let query = this.get('navigation.searchQuery');
+  assert.equal(query, '', 'search query should be empty');
+});
+
+test('it shows the search bar expanded if the query is not empty', function(assert) {
+  this.set('navigation.searchQuery', 'testme');
+  this.render(hbs`{{search-bar}}`);
+  let input= this.$('input#search:visible');
+  assert.equal(input.length, 1, 'search field should be visible');
+  assert.equal(input.val(), 'testme', 'search field value should be set');
 });
 
