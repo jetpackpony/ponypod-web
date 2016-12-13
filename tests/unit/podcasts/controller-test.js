@@ -23,3 +23,11 @@ test('updates the query param when search query changes', function(assert) {
   controller.set('navigation.searchQuery', 'testme');
   assert.equal(controller.get('search'), 'testme', 'query param should match');
 });
+
+test('does not update query param if query is less than 2 letters', function(assert) {
+  let controller = this.subject({
+    navigation: navigationService.create()
+  });
+  controller.set('navigation.searchQuery', 'te');
+  assert.equal(controller.get('search'), null, 'query param should not change');
+});

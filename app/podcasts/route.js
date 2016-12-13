@@ -14,7 +14,7 @@ export default Ember.Route.extend({
   },
   model(params) {
     let query = params.search;
-    if (query) {
+    if (query && query.length > 2) {
       return this.get('store').query('podcast', { title: params.search });
     } else {
       return this.get('store').findAll('podcast');

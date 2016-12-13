@@ -5,7 +5,10 @@ export default Ember.Controller.extend({
   queryParams: ['search'],
   search: null,
   _updateSearchQuery() {
-    this.set('search', this.get('navigation.searchQuery'));
+    let query = this.get('navigation.searchQuery');
+    if (query.length > 2) {
+      this.set('search', query);
+    }
   },
   onSearchQueryChange: Ember.observer('navigation.searchQuery', function() {
     Ember.run.debounce(this, this._updateSearchQuery, 300);

@@ -38,3 +38,33 @@ test('it sets nav search query if query param is set', function(assert) {
   let query = route.get('navigation.searchQuery');
   assert.equal(query, 'testme', 'queries should match');
 });
+
+test('it does not filter results if query is short', function(assert) {
+  assert.expect(1);
+  let route = this.subject({
+    store: Ember.Object.create({
+      findAll() {
+        assert.ok(true, 'should run findAll')
+      },
+      query() {
+        assert.ok(false, 'should not run query')
+      }
+    })
+  });
+  route.model({ search: "te" });
+});
+
+test('it filters the results if query is short', function(assert) {
+  assert.expect(1);
+  let route = this.subject({
+    store: Ember.Object.create({
+      findAll() {
+        assert.ok(false, 'should not run findAll')
+      },
+      query(model, params) {
+        assert.equal(params.title, 'testme', 'should run query with params')
+      }
+    })
+  });
+  route.model({ search: "testme" });
+});
