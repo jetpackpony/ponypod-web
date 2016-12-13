@@ -8,6 +8,8 @@ const navService = Ember.Service.extend({
 moduleForComponent('search-bar', 'Integration | Component | search bar', {
   integration: true,
   beforeEach() {
+    this.register('service:navigation', navService);
+    this.inject.service('navigation', { as: 'navigation' });
     this.$().addClass('nav-wrapper');
   }
 });
@@ -34,5 +36,12 @@ test('it collapses search bar on click on close search', function(assert) {
 });
 
 test('it calls a callback from nav service when submitted', function(assert) {
+  assert.expect(1);
+  this.set('navigation.search', (query) => {
+    assert.equal(query, 'testme', 'search query should match');
+  });
+  this.render(hbs`{{search-bar}}`);
+  this.$('#open-search').click();
+  this.$('input#search').val('testme').trigger('keyup', { keyCode: 13 });
 });
 
