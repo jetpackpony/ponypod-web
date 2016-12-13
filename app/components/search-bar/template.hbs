@@ -1,1 +1,11 @@
-{{yield}}
+<div class="nav-item">
+  <a href="#!" id="open-search" {{action 'openSearch'}}>
+    <i class="material-icons">search</i>
+  </a>
+</div>
+<div class="nav-search">
+  <input id="search" type="search" required>
+  <a href="#!" {{action 'closeSearch'}}>
+    <i id="close-search" class="material-icons">close</i>
+  </a>
+</div>
