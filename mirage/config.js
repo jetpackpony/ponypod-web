@@ -26,7 +26,16 @@ export default function() {
 
   this.namespace = "/api";
 
-  this.get('/podcasts');
+  this.get('/podcasts', function(schema, request) {
+    let search = request.queryParams.title;
+    if (search) {
+      return schema.podcasts.all().filter((item) => {
+        return item.title.indexOf(search) !== -1;
+      });
+    } else {
+      return schema.podcasts.all();
+    }
+  });
   this.get('/podcasts/:id');
   this.get('/episodes/:id');
 }
