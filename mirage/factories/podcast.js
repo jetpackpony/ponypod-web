@@ -11,7 +11,7 @@ const imageList = [
 
 const titleList = [
   "Hello Internet", "Stuff You Should Know", "Freakonomics Radio", "The Art of Manliness", "Golang Show", "99% invisible"
-]
+];
 
 export default Factory.extend({
   title: faker.list.cycle(...titleList),

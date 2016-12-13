@@ -1,3 +1,5 @@
+/* global server */
+
 import { test } from 'qunit';
 import moduleForAcceptance from 'ponypod-frontend/tests/helpers/module-for-acceptance';
 

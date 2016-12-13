@@ -20,7 +20,7 @@ export default Ember.Route.extend({
       return this.get('store').findAll('podcast');
     }
   },
-  afterModel(model, transition) {
+  afterModel() {
     this.set('navigation.navTitle', 'PonyPod');
     this.set('navigation.showBackArrow', false);
     this.set('navigation.navBarSearch', true);

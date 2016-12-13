@@ -44,10 +44,10 @@ test('it does not filter results if query is short', function(assert) {
   let route = this.subject({
     store: Ember.Object.create({
       findAll() {
-        assert.ok(true, 'should run findAll')
+        assert.ok(true, 'should run findAll');
       },
       query() {
-        assert.ok(false, 'should not run query')
+        assert.ok(false, 'should not run query');
       }
     })
   });
@@ -59,10 +59,10 @@ test('it filters the results if query is short', function(assert) {
   let route = this.subject({
     store: Ember.Object.create({
       findAll() {
-        assert.ok(false, 'should not run findAll')
+        assert.ok(false, 'should not run findAll');
       },
       query(model, params) {
-        assert.equal(params.title, 'testme', 'should run query with params')
+        assert.equal(params.title, 'testme', 'should run query with params');
       }
     })
   });
