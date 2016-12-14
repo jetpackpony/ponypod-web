@@ -6,7 +6,7 @@ export default Ember.Route.extend({
     return tokens.join(' - ') + ' - PonyPod';
   },
   actions: {
-    willTransition(transition) {
+    willTransition() {
       this.set('player.showExpandedPlayer', false);
     }
   }
