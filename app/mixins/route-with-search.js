@@ -18,6 +18,7 @@ export default Ember.Mixin.create({
         this.set('navigation.searchQuery', '');
         this.set('navigation.searchOpen', false);
       }
+      return true;
     }
   }
 });
