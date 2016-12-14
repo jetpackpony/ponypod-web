@@ -75,7 +75,7 @@ test('closes and clears search when transtions to another route', function(asser
 test('shows episodes matching search query', function(assert) {
   let podcast = server.create('podcast');
   server.createList('episode', 2, { podcast });
-  server.create('episode', { podcast, title: 'testme' })
+  server.create('episode', { podcast, title: 'testme' });
   visit('/podcast/1');
   click('#open-search');
   fillIn('input#search', 'testme');
@@ -91,11 +91,11 @@ test('shows episodes matching search query', function(assert) {
 test('shows multi episodes matching search query', function(assert) {
   let podcast = server.create('podcast');
   server.createList('episode', 2, { podcast });
-  server.create('episode', { podcast, title: 'test' })
-  server.create('episode', { podcast, title: 'testme' })
+  server.create('episode', { podcast, title: 'test' });
+  server.create('episode', { podcast, title: 'testme' });
   visit('/podcast/1');
   click('#open-search');
-  fillIn('input#search', 'testme');
+  fillIn('input#search', 'test');
 
   andThen(function() {
     let epNumber = find('.episode').length;
@@ -110,8 +110,8 @@ test('shows multi episodes matching search query', function(assert) {
 test('shows no episodes if nothing is found', function(assert) {
   let podcast = server.create('podcast');
   server.createList('episode', 2, { podcast });
-  server.create('episode', { podcast, title: 'test' })
-  server.create('episode', { podcast, title: 'testme' })
+  server.create('episode', { podcast, title: 'test' });
+  server.create('episode', { podcast, title: 'testme' });
   visit('/podcast/1');
   click('#open-search');
   fillIn('input#search', 'ololo');
