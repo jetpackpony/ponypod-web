@@ -1,16 +1,10 @@
 import Ember from 'ember';
+import RouteWithSearchMixin from '../mixins/route-with-search'
 
-export default Ember.Route.extend({
+export default Ember.Route.extend(RouteWithSearchMixin, {
   queryParams: {
     search: {
       refreshModel: true
-    }
-  },
-  beforeModel(transition) {
-    let search = transition.queryParams.search;
-    if (search) {
-      this.set('navigation.searchQuery', search);
-      this.set('navigation.searchOpen', true);
     }
   },
   model(params) {
@@ -24,15 +18,5 @@ export default Ember.Route.extend({
   afterModel() {
     this.set('navigation.navTitle', 'PonyPod');
     this.set('navigation.showBackArrow', false);
-    this.set('navigation.navBarSearch', true);
-  },
-  actions: {
-    willTransition(transition) {
-      this._super(...arguments);
-      if (transition.targetName !== 'podcasts') {
-        this.set('navigation.searchQuery', '');
-        this.set('navigation.searchOpen', false);
-      }
-    }
   }
 });
