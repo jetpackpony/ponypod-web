@@ -9,11 +9,12 @@ const imageList = [
  "http://golangshow.com/images/cover_big.png"
 ];
 
+const titleList = [
+  "Hello Internet", "Stuff You Should Know", "Freakonomics Radio", "The Art of Manliness", "Golang Show", "99% invisible"
+];
 
 export default Factory.extend({
-  title() {
-    return faker.company.companyName();
-  },
+  title: faker.list.cycle(...titleList),
   image: faker.list.cycle(...imageList),
   summary() {
     return faker.lorem.paragraph();

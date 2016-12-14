@@ -1,11 +1,24 @@
 import Ember from 'ember';
+import RouteWithSearchMixin from 'ponypod-frontend/mixins/route-with-search';
+import RSVP from 'rsvp';
 
-export default Ember.Route.extend({
-  model(params) {
-    return this.get('store').findRecord('podcast', params.podcast_id);
+export default Ember.Route.extend(RouteWithSearchMixin, {
+  queryParams: {
+    search: {
+      refreshModel: true
+    }
   },
-  afterModel(podcast) {
-    this.set('navigation.navTitle', podcast.get('title'));
+  model(params) {
+    if (!params.search || params.search.length <= 2) {
+      params.search = '';
+    }
+    return RSVP.hash({
+      podcast: this.get('store').findRecord('podcast', params.podcast_id),
+      episodes: this.get('store').query('episode', params)
+    });
+  },
+  afterModel(model) {
+    this.set('navigation.navTitle', model.podcast.get('title'));
     this.set('navigation.showBackArrow', true);
   }
 });

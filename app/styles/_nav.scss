@@ -11,19 +11,12 @@ nav {
   .nav-wrapper {
     display: flex;
     justify-content: space-between;
-
-    .nav-search {
-      display: none;
-    }
     &.search-open {
       .left-side {
         display: none;
       }
       .right-side {
         width: 100%;
-      }
-      .nav-search {
-        display: block;
       }
     }
   }
@@ -43,19 +36,6 @@ nav {
     overflow: hidden;
     text-overflow: ellipsis;
   }
-  .nav-search {
-    width: 100%;
-    margin-right: 1rem;
-    position: relative;
-    i {
-      position: absolute;
-      top: 0;
-      right: 0;
-    }
-    input[type=search] {
-      margin: 0;
-    }
-  }
 }
 
 // Pretty styles
@@ -74,19 +54,5 @@ nav {
   }
   .nav-title {
     font-size: 1.25rem;
-  }
-  .nav-search {
-    i {
-      cursor: pointer;
-    }
-    input[type=search] {
-      font-size: 1.25rem;
-      border-bottom: 1px solid color($secondary, "lighten-3");
-
-      &:focus {
-        border-bottom: 1px solid color($secondary, "lighten-3");
-        box-shadow: 0 1px 0 0 color($secondary, "lighten-3");
-      }
-    }
   }
 }

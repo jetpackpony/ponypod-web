@@ -1,3 +1,5 @@
+import Mirage from 'ember-cli-mirage';
+
 export default function() {
 
   // These comments are here to help you get started. Feel free to delete them.
@@ -26,7 +28,36 @@ export default function() {
 
   this.namespace = "/api";
 
-  this.get('/podcasts');
+  this.get('/podcasts', function(schema, request) {
+    let search = request.queryParams.title;
+    if (search) {
+      return schema.podcasts.all().filter((item) => {
+        return item.title.indexOf(search) !== -1;
+      });
+    } else {
+      return schema.podcasts.all();
+    }
+  });
+  this.get('/episodes', function(schema, request) {
+    let podcast = request.queryParams.podcast_id;
+    let search = request.queryParams.search;
+    if (podcast) {
+      let res = schema.podcasts.find(podcast).episodes;
+      if (search) {
+        return res.filter((item) => {
+          return item.title.indexOf(search) !== -1;
+        });
+      } else {
+        return res;
+      }
+    } else {
+      return new Mirage.Response(400, {}, {
+        "errors": [
+          { "detail":"No podcast ID is set" }
+        ]
+      });
+    }
+  });
   this.get('/podcasts/:id');
   this.get('/episodes/:id');
 }

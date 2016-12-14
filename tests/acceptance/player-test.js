@@ -122,7 +122,8 @@ test('start playback of a chosen episode', function(assert) {
   andThen(() => {
     let audio = find('audio')[0];
     assert.ok(audio, 'audio tag should exist');
-    assert.equal(audio.src, 'http://localhost:7357/audio/testing.mp3', 'audio should be setup to episode');
+    let srcExists = audio.src.indexOf('/audio/testing.mp3') !== -1;
+    assert.ok(srcExists, 'audio should be setup to episode');
     assert.notOk(audio.paused, 'audio should not be paused');
   });
 });
