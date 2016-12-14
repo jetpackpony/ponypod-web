@@ -3,11 +3,6 @@ import RouteWithSearchMixin from 'ponypod-frontend/mixins/route-with-search';
 
 export default Ember.Route.extend(RouteWithSearchMixin, {
   titleToken: "Podcasts",
-  queryParams: {
-    search: {
-      refreshModel: true
-    }
-  },
   model(params) {
     let query = params.search;
     if (query && query.length > 2) {

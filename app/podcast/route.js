@@ -6,11 +6,6 @@ export default Ember.Route.extend(RouteWithSearchMixin, {
   titleToken: function(model) {
     return model.podcast.get('title');
   },
-  queryParams: {
-    search: {
-      refreshModel: true
-    }
-  },
   model(params) {
     if (!params.search || params.search.length <= 2) {
       params.search = '';

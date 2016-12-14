@@ -1,6 +1,12 @@
 import Ember from 'ember';
 
 export default Ember.Mixin.create({
+  queryParams: {
+    search: {
+      refreshModel: true,
+      replace: true
+    }
+  },
   beforeModel(transition) {
     this.set('navigation.navBarSearch', true);
     let search = transition.queryParams.search;

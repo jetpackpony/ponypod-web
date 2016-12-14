@@ -8,6 +8,6 @@ export default Ember.Service.extend({
   searchOpen: false,
   navBarSearch: false,
   back() {
-    console.log('going back');
+    window.history.back();
   }
 });
