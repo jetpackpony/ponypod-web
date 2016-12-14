@@ -5,18 +5,31 @@ export default Ember.Component.extend({
   classNames: ['nav-search-wrapper'],
   didInsertElement() {
     this._super(...arguments);
-    if (this.get('navigation.searchQuery')) {
-      this.$().parents('.nav-wrapper').addClass('search-open');
+    if (this.get('navigation.searchOpen')) {
+      this._openSearch();
     }
+  },
+  onStateChange: Ember.observer('navigation.searchOpen', function() {
+    if (this.get('navigation.searchOpen')) {
+      this._openSearch();
+    } else {
+      this._closeSearch();
+    }
+  }),
+  _openSearch() {
+    this.$().parents('.nav-wrapper').addClass('search-open');
+    this.$('input#search').focus();
+  },
+  _closeSearch() {
+    this.set('navigation.searchQuery', '');
+    this.$().parents('.nav-wrapper').removeClass('search-open');
   },
   actions: {
     openSearch() {
-      this.$().parents('.nav-wrapper').addClass('search-open');
-      this.$('input#search').focus();
+      this._openSearch();
     },
     closeSearch() {
-      this.set('navigation.searchQuery', '');
-      this.$().parents('.nav-wrapper').removeClass('search-open');
+      this._closeSearch();
     }
   }
 });

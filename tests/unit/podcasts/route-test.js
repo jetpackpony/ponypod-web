@@ -54,7 +54,7 @@ test('it does not filter results if query is short', function(assert) {
   route.model({ search: "te" });
 });
 
-test('it filters the results if query is short', function(assert) {
+test('it filters the results if query is not short', function(assert) {
   assert.expect(1);
   let route = this.subject({
     store: Ember.Object.create({
@@ -67,4 +67,17 @@ test('it filters the results if query is short', function(assert) {
     })
   });
   route.model({ search: "testme" });
+});
+
+test('it clears and closed the nav search when transitioning', function(assert) {
+  let route = this.subject({
+    navigation: navigationService.create()
+  });
+  route.set('navigation.searchQuery', 'test');
+  route.set('navigation.searchOpen', true);
+  route.actions.willTransition.call(route, { targetName: "podcast" });
+
+  let query = route.get('navigation.searchQuery');
+  assert.equal(query, '', 'queries should be emptied');
+  assert.notOk(route.get('navigation.searchOpen'), 'search should be closed');
 });

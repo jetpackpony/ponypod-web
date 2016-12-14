@@ -53,6 +53,22 @@ test('shows no podcasts if nothing is found', function(assert) {
   });
 });
 
+test('closes and clears search when transtions to another route', function(assert) {
+  server.createList('podcast', 2);
+  server.create('podcast', { title: "testme" });
+  visit('/podcasts');
+  click('#open-search');
+  fillIn('input#search', 'testme');
+  click('.podcast a');
+
+  andThen(function() {
+    assert.equal(currentURL(), '/podcast/3', 'should transfer to a podcast page');
+    let searchClosed = find('input#search:visible').length === 0;
+    let query = find('input#search').val();
+    assert.ok(searchClosed, 'search bar should be closed');
+    assert.equal(query, '', 'search query should be empty');
+  });
+});
 
 /* Episodes search */
 

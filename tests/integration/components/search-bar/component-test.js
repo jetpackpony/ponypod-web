@@ -53,7 +53,8 @@ test('it unsets a search query if the search is open', function(assert) {
   assert.equal(query, '', 'search query should be empty');
 });
 
-test('it shows the search bar expanded if the query is not empty', function(assert) {
+test('it shows the search bar expanded if the state is set', function(assert) {
+  this.set('navigation.searchOpen', true);
   this.set('navigation.searchQuery', 'testme');
   this.render(hbs`{{search-bar}}`);
   let input= this.$('input#search:visible');
@@ -61,3 +62,10 @@ test('it shows the search bar expanded if the query is not empty', function(asse
   assert.equal(input.val(), 'testme', 'search field value should be set');
 });
 
+test('it closes search bar if the state is not set', function(assert) {
+  this.set('navigation.searchOpen', true);
+  this.render(hbs`{{search-bar}}`);
+  this.set('navigation.searchOpen', false);
+  let input= this.$('input#search:visible');
+  assert.equal(input.length, 0, 'search field should not be visible');
+});

@@ -10,6 +10,7 @@ export default Ember.Route.extend({
     let search = transition.queryParams.search;
     if (search) {
       this.set('navigation.searchQuery', search);
+      this.set('navigation.searchOpen', true);
     }
   },
   model(params) {
@@ -24,5 +25,14 @@ export default Ember.Route.extend({
     this.set('navigation.navTitle', 'PonyPod');
     this.set('navigation.showBackArrow', false);
     this.set('navigation.navBarSearch', true);
+  },
+  actions: {
+    willTransition(transition) {
+      this._super(...arguments);
+      if (transition.targetName !== 'podcasts') {
+        this.set('navigation.searchQuery', '');
+        this.set('navigation.searchOpen', false);
+      }
+    }
   }
 });
