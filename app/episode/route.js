@@ -2,6 +2,9 @@ import Ember from 'ember';
 
 export default Ember.Route.extend({
   player: Ember.inject.service(),
+  titleToken: function(model) {
+    return `${model.get('title')} - ${model.get('podcast').get('title')}`;
+  },
   model(params) {
     return this.get('store').findRecord('episode', params.episode_id);
   },

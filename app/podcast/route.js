@@ -3,6 +3,9 @@ import RouteWithSearchMixin from 'ponypod-frontend/mixins/route-with-search';
 import RSVP from 'rsvp';
 
 export default Ember.Route.extend(RouteWithSearchMixin, {
+  titleToken: function(model) {
+    return model.podcast.get('title');
+  },
   queryParams: {
     search: {
       refreshModel: true
