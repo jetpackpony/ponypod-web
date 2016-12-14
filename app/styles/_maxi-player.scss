@@ -20,6 +20,9 @@ $thumb-inner-size: 1rem;
       }
     }
     .collapse-button {
+      a {
+        color: $secondary-color;
+      }
       i {
         font-size: 3.5rem;
       }
