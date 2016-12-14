@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import RouteWithSearchMixin from '../mixins/route-with-search'
+import RouteWithSearchMixin from 'ponypod-frontend/mixins/route-with-search';
 
 export default Ember.Route.extend(RouteWithSearchMixin, {
   queryParams: {
