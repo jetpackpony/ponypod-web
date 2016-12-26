@@ -70,8 +70,14 @@ export default Ember.Component.extend({
   barProgress: Ember.computed('player.progress', '_updatingProgress', function() {
     return this.get('_updatingProgress') || this.get('player.progress');
   }),
-  thumbPosition: Ember.computed('barProgress', 'thumbWidth', function() {
-    return `calc(${this.get('barProgress')}% - ${this.get('thumbWidth') / 2}px)`;
+  barProgressCss: Ember.computed('barProgress', function() {
+    let progress = parseInt(this.get('barProgress'), 10);
+    return Ember.String.htmlSafe(`width: ${progress}%`);
+  }),
+  thumbPositionCss: Ember.computed('barProgress', 'thumbWidth', function() {
+    let prog = parseInt(this.get('barProgress'), 10);
+    let width = parseInt(this.get('thumbWidth'), 10) / 2;
+    return Ember.String.htmlSafe(`left: calc(${prog}% - ${width}px)`);
   }),
   thumbTime: Ember.computed('_updatingProgress', function() {
     let progress = this.get('_updatingProgress');
