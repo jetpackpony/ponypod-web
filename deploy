@@ -2,9 +2,9 @@
 # Show help
 show_help() {
    cat <<EOF
-Usage: ./deploy [-e] [-d] [-h]
+Usage: ./deploy [-e] [-p] [-h]
    -e   ember environment to build
-   -d   domain to deploy to
+   -p   project to deploy to (default = production)
    -h   displays basic help
 EOF
 }
@@ -14,9 +14,9 @@ OPTIND=1
 
 # Initialize our own variables:
 environment="development"
-domain="ponypod.surge.sh"
+project="staging"
 
-while getopts "h?e:d:" opt; do
+while getopts "h?e:p:" opt; do
     case "$opt" in
     h|\?)
         show_help
@@ -24,7 +24,7 @@ while getopts "h?e:d:" opt; do
         ;;
     e)  environment=$OPTARG
         ;;
-    d)  domain=$OPTARG
+    p)  project=$OPTARG
         ;;
     esac
 done
@@ -34,6 +34,4 @@ shift $((OPTIND-1))
 [ "$1" = "--" ] && shift
 
 ember build --environment=$environment
-cd dist
-cp index.html 200.html
-surge ./ $domain
+firebase deploy -P $project

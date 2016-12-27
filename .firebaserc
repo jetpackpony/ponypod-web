@@ -1,0 +1,6 @@
+{
+  "projects": {
+    "default": "pony-pod",
+    "staging": "pony-pod-staging"
+  }
+}
