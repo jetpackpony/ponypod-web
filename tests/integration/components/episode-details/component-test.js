@@ -30,7 +30,7 @@ test('it should display podcast cover image', function(assert) {
 test('it should display episode title, date, dration', function(assert) {
   this.set('episode', Ember.Object.create({
     title: "Test Episode",
-    pubDate: new Date('Mon, 4 Nov 2016 9:57:12 +0000'),
+    publishedAt: new Date('Mon, 4 Nov 2016 9:57:12 +0000'),
     duration: 1380
   }));
   this.render(hbs`{{episode-details episode=episode}}`);

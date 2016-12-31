@@ -48,7 +48,7 @@ test('displays the episode description', function(assert) {
 test('displays the episode info', function(assert) {
   server.create('episode', {
     title: "Test Episode",
-    pubDate: new Date('Mon, 4 Nov 2016 9:57:12 +0000'),
+    publishedAt: new Date('Mon, 4 Nov 2016 9:57:12 +0000'),
     duration: 7400
   });
   visit('/episode/1');

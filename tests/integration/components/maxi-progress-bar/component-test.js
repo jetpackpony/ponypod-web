@@ -7,7 +7,7 @@ const playerService = Ember.Service.extend({
     id: 2,
     podcast: Ember.Object.create({ image: 'testme.png' }),
     title: 'Testme',
-    pubDate: new Date("Mon, 4 Nov 2016 9:57:12 +0000"),
+    publishedAt: new Date("Mon, 4 Nov 2016 9:57:12 +0000"),
     duration: 3000,
     summary: 'Testme summary'
   }),

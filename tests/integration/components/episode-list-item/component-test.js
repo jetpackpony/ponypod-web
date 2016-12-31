@@ -21,7 +21,7 @@ moduleForComponent('episode-list-item', 'Integration | Component | episode list 
 test('it shows the episode title and date', function(assert) {
   this.set('episode', Ember.Object.create({
     title: 'Episode-1',
-    pubDate: new Date("Mon, 4 Nov 2016 9:57:12 +0000")
+    publishedAt: new Date("Mon, 4 Nov 2016 9:57:12 +0000")
   }));
 
   this.render(hbs`{{episode-list-item episode=episode}}`);

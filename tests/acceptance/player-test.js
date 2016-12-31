@@ -33,7 +33,7 @@ test('player shows correct episode info', function(assert) {
   server.create('episode', {
     podcast,
     title: 'Testme',
-    pubDate: new Date("Mon, 4 Nov 2016 9:57:12 +0000")
+    publishedAt: new Date("Mon, 4 Nov 2016 9:57:12 +0000")
   });
   visit('/episode/1');
   click('.episode-details a.play');
@@ -77,7 +77,7 @@ test('shows correct info on maxi player', function(assert) {
   server.create('episode', {
     podcast,
     title: 'Testme',
-    pubDate: new Date("Mon, 4 Nov 2016 9:57:12 +0000"),
+    publishedAt: new Date("Mon, 4 Nov 2016 9:57:12 +0000"),
     duration: 7000,
     summary: 'testme summary'
   });

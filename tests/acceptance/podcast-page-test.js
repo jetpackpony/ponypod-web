@@ -69,7 +69,7 @@ test('doesn\'t show other podcasts\' episodes', function(assert) {
 
 test('shows a correct episode air date', function(assert) {
   let podcast = server.create('podcast');
-  server.create('episode', { podcast, pubDate: new Date("Mon, 4 Nov 2016 9:57:12 +0000") });
+  server.create('episode', { podcast, publishedAt: new Date("Mon, 4 Nov 2016 9:57:12 +0000") });
   visit('/podcast/1');
   andThen(() => {
     let date = find('.episode .title .secondary').text();

@@ -5,7 +5,7 @@ import hbs from 'htmlbars-inline-precompile';
 const playerService = Ember.Service.extend({
   playingEpisode: Ember.Object.create({
     title: 'Testme',
-    pubDate: new Date("Mon, 4 Nov 2016 9:57:12 +0000"),
+    publishedAt: new Date("Mon, 4 Nov 2016 9:57:12 +0000"),
     podcast: Ember.Object.create({ image: 'testme.png' })
   }),
   isPlaying: false,

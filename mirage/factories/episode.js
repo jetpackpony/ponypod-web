@@ -12,7 +12,7 @@ export default Factory.extend({
   title() {
     return faker.company.catchPhrase();
   },
-  pubDate() {
+  publishedAt() {
     return faker.date.past();
   },
   duration() {
