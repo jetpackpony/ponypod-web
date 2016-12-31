@@ -27,7 +27,7 @@ test('it starts the playback when playingEpisode is set', function(assert) {
       }
     }
   });
-  service.set('playingEpisode', Ember.Object.create({ file: "testme.mp3" }));
+  service.set('playingEpisode', Ember.Object.create({ mp3Link: "testme.mp3" }));
   let src = service.get('audio').src;
   assert.equal(src, "testme.mp3");
 });

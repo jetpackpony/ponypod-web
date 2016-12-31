@@ -51,7 +51,7 @@ export default Ember.Service.extend({
   onEpisodeChange: Ember.observer('playingEpisode', function() {
     let ep = this.get('playingEpisode');
     this.set('duration', ep.get('duration'));
-    this.set('audio.src', ep.get('file'));
+    this.set('audio.src', ep.get('mp3Link'));
     this.set('progress', 0);
     this.get('audio').load();
     this.play();

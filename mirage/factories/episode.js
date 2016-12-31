@@ -24,5 +24,5 @@ export default Factory.extend({
   summary() {
     return faker.lorem.paragraphs(1);
   },
-  file: faker.list.cycle(...mp3List)
+  mp3Link: faker.list.cycle(...mp3List)
 });
