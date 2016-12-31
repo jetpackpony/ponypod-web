@@ -18,7 +18,7 @@ export default Factory.extend({
   duration() {
     return faker.random.number(10000);
   },
-  description() {
+  fullDescription() {
     return faker.lorem.paragraphs(10);
   },
   summary() {

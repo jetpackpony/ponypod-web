@@ -37,7 +37,7 @@ test('displays the podcast cover image', function(assert) {
 });
 
 test('displays the episode description', function(assert) {
-  server.create('episode', { description: "Full description" });
+  server.create('episode', { fullDescription: "Full description" });
   visit('/episode/1');
   andThen(() => {
     let descr = find('.description:visible').text().trim();

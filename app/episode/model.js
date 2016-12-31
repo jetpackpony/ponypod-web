@@ -6,7 +6,7 @@ export default DS.Model.extend({
   title: DS.attr('string'),
   publishedAt: DS.attr('date'),
   duration: DS.attr('number'),
-  description: DS.attr('string'),
+  fullDescription: DS.attr('string'),
   summary: DS.attr('string'),
   mp3Link: DS.attr('string')
 });

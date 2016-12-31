@@ -44,7 +44,7 @@ test('it should display episode title, date, dration', function(assert) {
 });
 
 test('it should display episode description', function(assert) {
-  this.set('episode', Ember.Object.create({ description: "Full description" }));
+  this.set('episode', Ember.Object.create({ fullDescription: "Full description" }));
   this.render(hbs`{{episode-details episode=episode}}`);
   let descr = this.$('.description:visible').text().trim();
   assert.equal(descr, 'Full description', 'description does not match');
