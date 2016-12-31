@@ -38,8 +38,8 @@ export default function() {
       return schema.podcasts.all();
     }
   });
-  this.get('/episodes', function(schema, request) {
-    let podcast = request.queryParams.podcast_id;
+  this.get('/podcasts/:podcast_id/episodes', function(schema, request) {
+    let podcast = request.params.podcast_id;
     let search = request.queryParams.search;
     if (podcast) {
       let res = schema.podcasts.find(podcast).episodes;
