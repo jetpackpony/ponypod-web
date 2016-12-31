@@ -42,5 +42,10 @@ module.exports = function(environment) {
 
   }
 
+  ENV.ponypod = {
+    apiEndPoint: "//localhost:3000",
+    apiNameSpace: ""
+  };
+
   return ENV;
 };

@@ -1,4 +1,5 @@
 import Mirage from 'ember-cli-mirage';
+import ENV from '../config/environment';
 
 export default function() {
 
@@ -26,7 +27,7 @@ export default function() {
     http://www.ember-cli-mirage.com/docs/v0.2.x/shorthands/
   */
 
-  this.namespace = "/api";
+  this.namespace = `${ENV.ponypod.apiEndPoint}/${ENV.ponypod.apiNameSpace}`;
 
   this.get('/podcasts', function(schema, request) {
     let search = request.queryParams.title;
