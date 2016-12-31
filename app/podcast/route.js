@@ -10,10 +10,14 @@ export default Ember.Route.extend(RouteWithSearchMixin, {
     if (!params.search || params.search.length <= 2) {
       params.search = '';
     }
-    return RSVP.hash({
-      podcast: this.get('store').findRecord('podcast', params.podcast_id),
-      episodes: this.get('store').query('episode', params)
-    });
+    return this.get('store')
+              .findRecord('podcast', params.podcast_id)
+              .then((podcast) => {
+                return RSVP.hash({
+                  podcast,
+                  episodes: podcast.query('episodes', params)
+                });
+              });
   },
   afterModel(model) {
     this.set('navigation.navTitle', model.podcast.get('title'));
