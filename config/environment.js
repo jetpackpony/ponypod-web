@@ -19,6 +19,11 @@ module.exports = function(environment) {
     }
   };
 
+  ENV.ponypod = {
+    apiEndPoint: "//localhost:3000",
+    apiNameSpace: ""
+  };
+
   if (environment === 'development') {
     // ENV.APP.LOG_RESOLVER = true;
     // ENV.APP.LOG_ACTIVE_GENERATION = true;
@@ -39,13 +44,8 @@ module.exports = function(environment) {
   }
 
   if (environment === 'production') {
-
+    ENV.ponypod.apiEndPoint = "https://ponypod-staging.herokuapp.com";
   }
-
-  ENV.ponypod = {
-    apiEndPoint: "//localhost:3000",
-    apiNameSpace: ""
-  };
 
   return ENV;
 };
