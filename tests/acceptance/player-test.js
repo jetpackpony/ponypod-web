@@ -116,13 +116,13 @@ test('goes to an episode page when click read more', function(assert) {
 
 test('start playback of a chosen episode', function(assert) {
   let podcast = server.create('podcast');
-  server.create('episode', { podcast, mp3Link: '/audio/testing.mp3' });
+  server.create('episode', { podcast, mp3Link: '/assets/testing.mp3' });
   visit('/podcast/1');
   click('.episode a.play-button.play');
   andThen(() => {
     let audio = find('audio')[0];
     assert.ok(audio, 'audio tag should exist');
-    let srcExists = audio.src.indexOf('/audio/testing.mp3') !== -1;
+    let srcExists = audio.src.indexOf('/assets/testing.mp3') !== -1;
     assert.ok(srcExists, 'audio should be setup to episode');
     assert.notOk(audio.paused, 'audio should not be paused');
   });
@@ -130,7 +130,7 @@ test('start playback of a chosen episode', function(assert) {
 
 test('pauses the playback when click pause', function(assert) {
   let podcast = server.create('podcast');
-  server.create('episode', { podcast, mp3Link: '/audio/testing.mp3' });
+  server.create('episode', { podcast, mp3Link: '/assets/testing.mp3' });
   visit('/podcast/1');
   click('.episode a.play-button.play');
   click('.episode a.play-button.pause');
@@ -142,7 +142,7 @@ test('pauses the playback when click pause', function(assert) {
 
 test('pauses the playback when hit pause on maxi player', function(assert) {
   let podcast = server.create('podcast');
-  server.create('episode', { podcast, mp3Link: '/audio/testing.mp3' });
+  server.create('episode', { podcast, mp3Link: '/assets/testing.mp3' });
   visit('/podcast/1');
   click('.episode a.play-button.play');
   click('.mini-player a.expand-player');
@@ -155,7 +155,7 @@ test('pauses the playback when hit pause on maxi player', function(assert) {
 
 test('forwards 30s when forward button clicked', function(assert) {
   let podcast = server.create('podcast');
-  server.create('episode', { podcast, mp3Link: '/audio/testing.mp3' });
+  server.create('episode', { podcast, mp3Link: '/assets/testing.mp3' });
   visit('/podcast/1');
   click('.episode a.play-button.play');
   click('.mini-player a.expand-player');
@@ -168,7 +168,7 @@ test('forwards 30s when forward button clicked', function(assert) {
 
 test('rewinds 10s when rewind button clicked', function(assert) {
   let podcast = server.create('podcast');
-  server.create('episode', { podcast, mp3Link: '/audio/testing.mp3' });
+  server.create('episode', { podcast, mp3Link: '/assets/testing.mp3' });
   visit('/podcast/1');
   click('.episode a.play-button.play');
   click('.mini-player a.expand-player');
@@ -183,7 +183,7 @@ test('rewinds 10s when rewind button clicked', function(assert) {
 test('jumps to the middle when click on me progress bar', function(assert) {
   assert.expect(1);
   let podcast = server.create('podcast');
-  server.create('episode', { podcast, mp3Link: '/audio/testing.mp3' });
+  server.create('episode', { podcast, mp3Link: '/assets/testing.mp3' });
   visit('/podcast/1');
   click('.episode a.play-button.play');
   click('.mini-player a.expand-player');
