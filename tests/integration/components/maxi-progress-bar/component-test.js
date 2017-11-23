@@ -36,9 +36,10 @@ test('it shows the playback progress', function(assert) {
 test('it shows progress thumb on progress position', function(assert) {
   this.set('player.progress', 75);
   this.render(hbs`{{maxi-progress-bar}}`);
-  let container = this.$('.progress').width();
+  // Dividing by 2 because of jquery bug which returns double the value
+  let container = this.$('.progress').width() / 2;
   let thumb = this.$('.thumb').position().left;
-  let thumbWidth = this.$('.thumb').outerWidth();
+  let thumbWidth = this.$('.thumb').outerWidth() / 2;
   let diff = Math.abs((thumb + thumbWidth / 2) / container * 100 - 75);
   assert.ok(diff < 1, 'should be withing 1% of set progress');
 });
@@ -75,8 +76,10 @@ test('it calls jump-to with value when progress thumb dragged', function(assert)
   thumb.trigger('mouseup');
 
   let newValue = this.get('player.progress');
-  let newX = thumb.offset().left + thumb.outerWidth() / 2;
-  let diff = Math.abs(newX - dest);
+  let newX = thumb.offset().left + thumb.outerWidth() / 2 / 2;
+  // We need to use halved calculations because of jquery bug
+  let newDest = progress.offset().left + progress.width() / 2 / 4;
+  let diff = Math.abs(newX - newDest);
   assert.equal(newValue, 25, 'should jump to the pointed progress');
   assert.ok(diff < 10, 'thumb should be moved to around dest');
 });
@@ -92,8 +95,10 @@ test('it calls jump-to with value when progress thumb touch-dragged', function(a
   thumb.trigger('touchend');
 
   let newValue = this.get('player.progress');
-  let newX = thumb.offset().left + thumb.outerWidth() / 2;
-  let diff = Math.abs(newX - dest);
+  let newX = thumb.offset().left + thumb.outerWidth() / 2 / 2;
+  // We need to use halved calculations because of jquery bug
+  let newDest = progress.offset().left + progress.width() / 2 / 4;
+  let diff = Math.abs(newX - newDest);
   assert.equal(newValue, 25, 'should jump to the pointed progress');
   assert.ok(diff < 10, 'thumb should be moved to around dest');
 });
