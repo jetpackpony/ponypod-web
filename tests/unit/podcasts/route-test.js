@@ -33,12 +33,12 @@ test('it sets navbar hamburger button', function(assert) {
 test('it does not filter results if query is short', function(assert) {
   assert.expect(1);
   let route = this.subject({
+    infinityModel(model, params) {
+      assert.ok(Object.keys(params).indexOf('title') !== 1, 'should not add search term to params');
+    },
     store: Ember.Object.create({
-      findAll() {
-        assert.ok(true, 'should run findAll');
-      },
       query() {
-        assert.ok(false, 'should not run query');
+        assert.ok(true, 'should run query');
       }
     })
   });
@@ -48,12 +48,12 @@ test('it does not filter results if query is short', function(assert) {
 test('it filters the results if query is not short', function(assert) {
   assert.expect(1);
   let route = this.subject({
-    store: Ember.Object.create({
-      findAll() {
-        assert.ok(false, 'should not run findAll');
-      },
-      query(model, params) {
+    infinityModel(model, params) {
         assert.equal(params.title, 'testme', 'should run query with params');
+    },
+    store: Ember.Object.create({
+      query() {
+        assert.ok(true, 'should run query');
       }
     })
   });
