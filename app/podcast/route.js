@@ -36,6 +36,9 @@ export default Ember.Route.extend(
             }
           )
         )
+      }).then((res) => {
+        this.controllerFor('podcast').set('searchTerm', params.search);
+        return res;
       });
     },
     afterModel(model) {

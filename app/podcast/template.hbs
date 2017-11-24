@@ -2,9 +2,19 @@
   <div class="flex-col sm12 md8 lg5">
     {{podcast-details podcast=model.podcast}}
   </div>
-  <div class="flex-col sm12 md8 lg5">
-    {{episode-list episodes=model.episodes}}
-  </div>
+
+  {{#if showZeroResults}}
+    <div class="flex-col sm12 md8 lg5">
+      <div class="card-panel white">
+        Sorry, we couldn't find any episodes for "{{searchTerm}}"
+      </div>
+    </div>
+  {{else}}
+    <div class="flex-col sm12 md8 lg5">
+      {{episode-list episodes=model.episodes}}
+    </div>
+  {{/if}}
+
   <div class="flex-col sm12 md8 lg5">
     <div class="load-more-container">
       {{#if hasClickedLoadMore}}
