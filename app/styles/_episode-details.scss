@@ -16,6 +16,9 @@
       color: rgba(0,0,0,.54);
       .new {
         color: $secondary-color;
+        &.hidden {
+          display: none;
+        }
       }
     }
     .description {
