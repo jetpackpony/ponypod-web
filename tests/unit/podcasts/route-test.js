@@ -49,7 +49,7 @@ test('it filters the results if query is not short', function(assert) {
   assert.expect(1);
   let route = this.subject({
     infinityModel(model, params) {
-        assert.equal(params.title, 'testme', 'should run query with params');
+        assert.equal(params.search, 'testme', 'should run query with params');
     },
     store: Ember.Object.create({
       query() {

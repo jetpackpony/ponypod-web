@@ -22,7 +22,7 @@ export default Ember.Route.extend(
         R.merge(
           { perPage: podcastsPerPage, startingPage: 0 },
           ((params.search && params.search.length > 2)
-            ? { title: params.search }
+            ? { search: params.search }
             : {})
         )
       );
