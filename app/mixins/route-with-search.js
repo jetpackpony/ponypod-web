@@ -7,6 +7,10 @@ export default Ember.Mixin.create({
       replace: true
     }
   },
+
+  searchTerm: Ember.computed('navigation.searchQuery', function() {
+    return this.get('navigation.searchQuery');
+  }),
   beforeModel(transition) {
     this.set('navigation.navBarSearch', true);
     let search = transition.queryParams.search;

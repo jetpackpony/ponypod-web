@@ -1,16 +1,21 @@
-{{#each podcasts as |podcast|}}
-  <div class="podcast" id="podcast-{{podcast.id}}">
-    {{#link-to 'podcast' podcast.id (query-params search='null') title=podcast.title}}
-      <img src="{{podcast.image}}">
-    {{/link-to}}
+{{#if showSearchSpinner}}
+  <div class="row load-spinner-container">
+    {{infinity-loader-spinner}}
   </div>
 {{else}}
-<div class="row empty-search-results">
-  <div class="col s12">
-    <div class="card-panel white">
-      Sorry, we couldn't find any podcasts for "{{searchTerm}}"
+  {{#each podcasts as |podcast|}}
+    <div class="podcast" id="podcast-{{podcast.id}}">
+      {{#link-to 'podcast' podcast.id (query-params search='null') title=podcast.title}}
+        <img src="{{podcast.image}}">
+      {{/link-to}}
+    </div>
+  {{else}}
+  <div class="row empty-search-results">
+    <div class="col s12">
+      <div class="card-panel white">
+        Sorry, we couldn't find any podcasts for "{{searchTerm}}"
+      </div>
     </div>
   </div>
-</div>
-{{/each}}
-
+  {{/each}}
+{{/if}}

@@ -19,6 +19,11 @@ export default Ember.Route.extend(
     perPageParam: "page[size]",
     totalPagesParam: "meta.totalPages",
 
+    beforeModel() {
+      this._super(...arguments);
+      this.controllerFor('podcast').set('showSearchSpinner', true);
+      this.controllerFor('podcast').set('showLoadMoreButton', false);
+    },
     model(params) {
       if (!params.search || params.search.length <= 2) {
         params.search = '';
@@ -36,12 +41,12 @@ export default Ember.Route.extend(
             }
           )
         )
-      }).then((res) => {
-        this.controllerFor('podcast').set('searchTerm', params.search);
-        return res;
       });
     },
     afterModel(model) {
+      this._super(...arguments);
+      this.controllerFor('podcast').set('searchTerm', this.get('searchTerm'));
+      this.controllerFor('podcast').set('showSearchSpinner', false);
       this.set('navigation.navTitle', model.podcast.get('title'));
       this.set('navigation.showBackArrow', true);
     }

@@ -3,7 +3,13 @@
     {{podcast-details podcast=model.podcast}}
   </div>
 
-  {{#if showZeroResults}}
+  {{#if showSearchSpinner}}
+    <div class="flex-col sm12 md8 lg5">
+      <div class="load-spinner-container">
+        {{infinity-loader-spinner}}
+      </div>
+    </div>
+  {{else if showZeroResults}}
     <div class="flex-col sm12 md8 lg5">
       <div class="card-panel white">
         Sorry, we couldn't find any episodes for "{{searchTerm}}"

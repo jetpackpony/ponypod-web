@@ -11,7 +11,7 @@ const navigationService = Ember.Service.extend({
 
 moduleFor('route:podcasts', 'Unit | Route | podcasts', {
   // Specify the other units that are required for this test.
-  // needs: ['controller:foo']
+  needs: ['controller:podcasts', 'service:navigation']
 });
 
 test('it sets navbar title', function(assert) {
