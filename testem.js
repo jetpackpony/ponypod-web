@@ -5,10 +5,19 @@ module.exports = {
   "disable_watching": true,
   "phantomjs_debug_port": 9001,
   "launch_in_ci": [
-    "PhantomJS"
+    "Chrome"
   ],
   "launch_in_dev": [
-    "PhantomJS",
     "Chrome"
-  ]
+  ],
+  /*
+  "browser_args": {
+    "Chrome": [
+      '--headless',
+      '--disable-gpu',
+      '--remote-debugging-port=9222',
+      '--window-size=1440,900'
+    ]
+  }
+  */
 };
