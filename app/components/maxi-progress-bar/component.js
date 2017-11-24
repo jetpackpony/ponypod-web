@@ -3,6 +3,7 @@ import Ember from 'ember';
 export default Ember.Component.extend({
   player: Ember.inject.service(),
   classNames: ['playback-progress'],
+  thumbWidth: 40,
   didInsertElement() {
     this._super(...arguments);
     this.set('thumbWidth', this.$('.thumb').outerWidth());
@@ -74,7 +75,7 @@ export default Ember.Component.extend({
     let progress = parseInt(this.get('barProgress'), 10);
     return Ember.String.htmlSafe(`width: ${progress}%`);
   }),
-  thumbPositionCss: Ember.computed('barProgress', 'thumbWidth', function() {
+  thumbPositionCss: Ember.computed('barProgress', function() {
     let prog = parseInt(this.get('barProgress'), 10);
     let width = parseInt(this.get('thumbWidth'), 10) / 2;
     return Ember.String.htmlSafe(`left: calc(${prog}% - ${width}px)`);

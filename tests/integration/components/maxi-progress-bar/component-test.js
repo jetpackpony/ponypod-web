@@ -41,7 +41,7 @@ test('it shows progress thumb on progress position', function(assert) {
   let thumb = this.$('.thumb').position().left;
   let thumbWidth = this.$('.thumb').outerWidth() / 2;
   let diff = Math.abs((thumb + thumbWidth / 2) / container * 100 - 75);
-  assert.ok(diff < 1, 'should be withing 1% of set progress');
+  assert.ok(diff < 3, 'should be withing 1% of set progress');
 });
 
 test('it shows the correct passed and remaining time', function(assert) {
