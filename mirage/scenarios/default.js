@@ -9,6 +9,6 @@ export default function(server) {
 
   let pods = server.createList('podcast', 70);
   pods.forEach((pod) => {
-    server.createList('episode', 3, { podcast: pod });
+    server.createList('episode', ((pod.id === "1") ? 70 : 3), { podcast: pod });
   });
 }

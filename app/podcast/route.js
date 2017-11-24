@@ -1,26 +1,46 @@
 import Ember from 'ember';
 import RouteWithSearchMixin from 'ponypod-frontend/mixins/route-with-search';
 import RSVP from 'rsvp';
+import InfinityRoute from "ember-infinity/mixins/route";
+import R from 'npm:ramda';
 
-export default Ember.Route.extend(RouteWithSearchMixin, {
-  titleToken: function(model) {
-    return model.podcast.get('title');
-  },
-  model(params) {
-    if (!params.search || params.search.length <= 2) {
-      params.search = '';
+const episodesPerPage = 30;
+
+export default Ember.Route.extend(
+  RouteWithSearchMixin,
+  InfinityRoute,
+  {
+    titleToken: function(model) {
+      return model.podcast.get('title');
+    },
+
+    // ember-infinity variables
+    pageParam: "page[number]",
+    perPageParam: "page[size]",
+    totalPagesParam: "meta.totalPages",
+
+    model(params) {
+      if (!params.search || params.search.length <= 2) {
+        params.search = '';
+      }
+      return RSVP.hash({
+        podcast: this.get('store').findRecord('podcast', params.podcast_id),
+        episodes: this.infinityModel(
+          "episode",
+          R.merge(
+            params,
+            {
+              perPage: episodesPerPage,
+              startingPage: 0,
+              modelPath: 'controller.model.episodes'
+            }
+          )
+        )
+      });
+    },
+    afterModel(model) {
+      this.set('navigation.navTitle', model.podcast.get('title'));
+      this.set('navigation.showBackArrow', true);
     }
-    return this.get('store')
-              .findRecord('podcast', params.podcast_id)
-              .then((podcast) => {
-                return RSVP.hash({
-                  podcast,
-                  episodes: podcast.query('episodes', params)
-                });
-              });
-  },
-  afterModel(model) {
-    this.set('navigation.navTitle', model.podcast.get('title'));
-    this.set('navigation.showBackArrow', true);
   }
-});
+);

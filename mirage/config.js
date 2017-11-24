@@ -46,18 +46,27 @@ export default function() {
     json.meta = { totalPages: Math.ceil(all.models.length / size) };
     return json;
   });
-  this.get('/podcasts/:podcast_id/episodes', function(schema, request) {
-    let podcast = request.params.podcast_id;
-    let search = request.queryParams.search;
+
+  this.get('/episodes', function({ podcasts, episodes }, { queryParams }) {
+    let podcast = queryParams.podcast_id;
+    let search = (queryParams.search || "").toLowerCase();
+    let number = parseInt(queryParams['page[number]']);
+    let size = parseInt(queryParams['page[size]']);
     if (podcast) {
-      let res = schema.podcasts.find(podcast).episodes;
-      if (search) {
-        return res.filter((item) => {
-          return item.title.indexOf(search) !== -1;
-        });
-      } else {
-        return res;
-      }
+      let eps = episodes.find(podcasts.find(podcast).episodes.models.map(m => m.id));
+      let all = (
+        (search !== '')
+        ? eps.filter((item) => (
+          item.title.toLowerCase().indexOf(search) !== -1
+        ))
+        : eps
+      );
+
+      let ids = all.models.map((m) => m.id)
+        .slice(number * size, (number + 1) * size);
+      let json = this.serialize(episodes.find(ids));
+      json.meta = { totalPages: Math.ceil(all.models.length / size) };
+      return json;
     } else {
       return new Mirage.Response(400, {}, {
         "errors": [
