@@ -5,4 +5,21 @@
   <div class="flex-col sm12 md8 lg5">
     {{episode-list episodes=model.episodes}}
   </div>
+  <div class="flex-col sm12 md8 lg5">
+    <div class="load-more-container">
+      {{#if hasClickedLoadMore}}
+        {{#infinity-loader infinityModel=model.episodes}}
+          {{infinity-loader-spinner}}
+        {{/infinity-loader}}
+      {{else}}
+        {{#if showLoadMoreButton}}
+          <a id="load-more"
+             class="waves-effect waves-light btn"
+             {{action 'loadMoreClick' on='click'}}>
+            Load more
+          </a>
+        {{/if}}
+      {{/if}}
+    </div>
+  </div>
 </div>

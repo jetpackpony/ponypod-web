@@ -27,11 +27,11 @@ test('shows toggle menu button when on home page', function(assert) {
   });
 });
 
-test('should show all the podcasts', function(assert) {
-  server.createList('podcast', 3);
+test('should show first 30 podcasts', function(assert) {
+  server.createList('podcast', 50);
   visit('/');
   andThen(() => {
-    assert.equal(find('.podcast').length, 3, 'should see 3 podcasts');
+    assert.equal(find('.podcast').length, 30, 'should see 30 podcasts');
   });
 });
 

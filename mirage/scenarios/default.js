@@ -7,8 +7,8 @@ export default function(server) {
     Make sure to define a factory for each model you want to create.
   */
 
-  let pods = server.createList('podcast', 6);
+  let pods = server.createList('podcast', 70);
   pods.forEach((pod) => {
-    server.createList('episode', 3, { podcast: pod });
+    server.createList('episode', ((pod.id === "1") ? 70 : 3), { podcast: pod });
   });
 }

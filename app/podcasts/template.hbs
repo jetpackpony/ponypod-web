@@ -1,1 +1,15 @@
 {{podcast-grid podcasts=model}}
+
+<div class="load-more-container">
+  {{#if hasClickedLoadMore}}
+    {{#infinity-loader infinityModel=model}}
+      {{infinity-loader-spinner}}
+    {{/infinity-loader}}
+  {{else}}
+    <a id="load-more"
+      class="waves-effect waves-light btn"
+      {{action 'loadMoreClick' on='click'}}>
+      Load more
+    </a>
+  {{/if}}
+</div>
