@@ -52,10 +52,16 @@ $thumb-inner-size: 1rem;
     align-items: center;
 
     a {
-      @extend .icon-button;
+      display: inline-block;
       color: $secondary-color;
       margin: 1rem;
       transition: background-color .3s;
+      &:active {
+        background-color: rgba($secondary-color, 0.26);
+      }
+      border-radius: 50%;
+      outline: 0;
+
       i { font-size: 3rem; }
     }
     .play-pause a i {

@@ -47,15 +47,6 @@
   box-shadow: 0 -4px 5px 0 rgba(0, 0, 0, 0.14), 0 -1px 10px 0 rgba(0, 0, 0, 0.12), 0 -2px 4px -1px rgba(0, 0, 0, 0.3);
 }
 
-.icon-button {
-  display: inline-block;
-  &:focus {
-    outline: 0;
-    background-color: rgba($secondary-color, 0.26);
-    border-radius: 50%;
-  }
-}
-
 main {
   padding-bottom: $mini-player-height;
 }
