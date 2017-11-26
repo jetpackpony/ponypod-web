@@ -1,6 +1,6 @@
 <div class="flex-row">
   <div class="flex-col sm12 md8 lg5">
-    {{podcast-details podcast=model.podcast}}
+    {{podcast-details podcast=model}}
   </div>
 
   {{#if showSearchSpinner}}
@@ -17,14 +17,14 @@
     </div>
   {{else}}
     <div class="flex-col sm12 md8 lg5">
-      {{episode-list episodes=model.episodes}}
+      {{episode-list episodes=episodes}}
     </div>
   {{/if}}
 
   <div class="flex-col sm12 md8 lg5">
     <div class="load-more-container">
       {{#if hasClickedLoadMore}}
-        {{#infinity-loader infinityModel=model.episodes}}
+        {{#infinity-loader infinityModel=episodes}}
           {{infinity-loader-spinner}}
         {{/infinity-loader}}
       {{else}}
