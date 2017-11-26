@@ -14,6 +14,7 @@ export default Ember.Component.extend({
       this._openSearch();
     } else {
       this._closeSearch();
+      this.set('navigation.searchQuery', '');
     }
   }),
   _openSearch() {
@@ -21,15 +22,14 @@ export default Ember.Component.extend({
     this.$('input#search').focus();
   },
   _closeSearch() {
-    this.set('navigation.searchQuery', '');
     this.$().parents('.nav-wrapper').removeClass('search-open');
   },
   actions: {
     openSearch() {
-      this._openSearch();
+      this.set('navigation.searchOpen', true);
     },
     closeSearch() {
-      this._closeSearch();
+      this.set('navigation.searchOpen', false);
     }
   }
 });
