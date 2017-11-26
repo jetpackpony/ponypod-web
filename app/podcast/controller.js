@@ -3,7 +3,6 @@ import ControllerWithSearchMixin from 'ponypod-frontend/mixins/controller-with-s
 
 export default Ember.Controller.extend(ControllerWithSearchMixin, {
   hasClickedLoadMore: false,
-  searchTerm: '',
   showLoadMoreButton: Ember.computed('model.episodes.[]', {
     get() {
       return this.get('model.episodes.meta.totalPages') > 1;

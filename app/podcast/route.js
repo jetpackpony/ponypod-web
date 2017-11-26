@@ -45,7 +45,6 @@ export default Ember.Route.extend(
     },
     afterModel(model) {
       this._super(...arguments);
-      this.controllerFor('podcast').set('searchTerm', this.get('searchTerm'));
       this.controllerFor('podcast').set('showSearchSpinner', false);
       this.set('navigation.navTitle', model.podcast.get('title'));
       this.set('navigation.showBackArrow', true);
