@@ -5,8 +5,8 @@ const Storage = StorageObject.extend();
 Storage.reopenClass({
   initialState() {
     return {
-      'episode-id': null,
-      position: 0,
+      lastPlayingId: null,
+      episodes: {}
     };
   }
 });

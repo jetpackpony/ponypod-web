@@ -55,8 +55,12 @@ export default Ember.Service.extend({
     }
   },
   _savePlayerState() {
-    this.set('localStorage.episode-id', this.get('playingEpisode.id'));
-    this.set('localStorage.position', this.get('position'));
+    let id = this.get('playingEpisode.id');
+    this.set('localStorage.lastPlayingId', id);
+    this.set(`localStorage.episodes.${id}`, {
+      episodeId: id,
+      position: this.get('position')
+    });
   },
   init() {
     this.playNewEpisode = this.playNewEpisode.bind(this);
@@ -66,13 +70,14 @@ export default Ember.Service.extend({
     }
 
     // Load the episode if any is stored in localstorage
-    if (this.get('localStorage.episode-id')) {
+    let lastPlayingId = this.get('localStorage.lastPlayingId');
+    if (lastPlayingId) {
       this.set('loading', true);
       this.get('store')
-        .findRecord('episode', this.get('localStorage.episode-id'))
+        .findRecord('episode', lastPlayingId)
         .then((episode) => {
           this.set('playWhenLoaded', false);
-          this.set('rewindToPositionWhenLoaded', this.get('localStorage.position'));
+          this.set('rewindToPositionWhenLoaded', this._getEpisodePosition(lastPlayingId));
           this._setupEpisode(episode);
         });
     }
@@ -100,13 +105,16 @@ export default Ember.Service.extend({
     if (episode.id !== this.get('playingEpisode.id')) {
       this.set('loading', true);
       this.set('playWhenLoaded', true);
-      this.set('rewindToPositionWhenLoaded', 0);
+      this.set('rewindToPositionWhenLoaded', this._getEpisodePosition(episode.id));
       this._setupEpisode(episode);
     } else {
       if (!this.get('loading')) {
         this.play();
       }
     }
+  },
+  _getEpisodePosition(id) {
+    return this.get(`localStorage.episodes.${id}.position`) || 0;
   },
 
   progress: Ember.computed('position', 'duration', {
