@@ -11,7 +11,7 @@ export default Ember.Component.extend({
   }),
   actions: {
     play() {
-      this.set('player.playingEpisode', this.get('episode'));
+      this.get('player.playNewEpisode')(this.get('episode'));
       this.get('player').play();
     },
     pause() {
