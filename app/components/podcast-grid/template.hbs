@@ -5,7 +5,7 @@
 {{else}}
   {{#each podcasts as |podcast|}}
     <div class="podcast" id="podcast-{{podcast.id}}">
-      {{#link-to 'podcast' podcast.id (query-params search='null') title=podcast.title}}
+      {{#link-to 'podcast' podcast.id title=podcast.title}}
         <img src="{{podcast.image}}">
       {{/link-to}}
     </div>
