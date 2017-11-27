@@ -97,10 +97,16 @@ export default Ember.Service.extend({
     this._savePlayerState();
   }),
   playNewEpisode(episode) {
-    this.set('loading', true);
-    this.set('playWhenLoaded', true);
-    this.set('rewindToPositionWhenLoaded', 0);
-    this._setupEpisode(episode);
+    if (episode.id !== this.get('playingEpisode.id')) {
+      this.set('loading', true);
+      this.set('playWhenLoaded', true);
+      this.set('rewindToPositionWhenLoaded', 0);
+      this._setupEpisode(episode);
+    } else {
+      if (!this.get('loading')) {
+        this.play();
+      }
+    }
   },
 
   progress: Ember.computed('position', 'duration', {
