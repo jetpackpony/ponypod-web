@@ -3,6 +3,13 @@
   flex-direction: column;
   height: $navbar-height-mobile + $mini-progress-height;
 
+  .preloader-container {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+  }
+
   .mini-progress {
     height: $mini-progress-height;
     width: 100%;

@@ -1,23 +1,42 @@
-<div class="mini-progress">
-  <div class="bar" style={{progressCss}}></div>
-</div>
+{{#if player.loading}}
+{{else}}
+  <div class="mini-progress">
+    <div class="bar" style={{progressCss}}></div>
+  </div>
+{{/if}}
 <div class="mini-wrapper">
-  <div class="control {{if player.isPlaying 'playing' ''}}">
-    <a href="#!" class="play-button play" {{action 'play' on='click'}}>
-      <i class="material-icons">play_arrow</i>
-    </a>
-    <a href="#!" class="play-button pause" {{action 'pause' on='click'}}>
-      <i class="material-icons">pause</i>
-    </a>
-  </div>
-  <div class="title" {{action 'expandPlayer' on='click'}}>
-    <span>{{player.playingEpisode.title}}</span>
-    <p class="secondary">{{format-date player.playingEpisode.publishedAt}}</p>
-  </div>
-  <div class="expand-button">
-    <a href="#!" class="expand-player" {{action 'expandPlayer' on='click'}}>
-      <i class="material-icons">expand_less</i>
-    </a>
-  </div>
-  <div class="logo"><img src="{{player.playingEpisode.podcast.image}}"></div>
+  {{#if player.loading}}
+    <div class="preloader-container">
+      <div class="preloader-wrapper small active">
+        <div class="spinner-layer spinner-red-only">
+          <div class="circle-clipper left">
+            <div class="circle"></div>
+          </div><div class="gap-patch">
+            <div class="circle"></div>
+          </div><div class="circle-clipper right">
+            <div class="circle"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  {{else}}
+    <div class="control {{if player.isPlaying 'playing' ''}}">
+      <a href="#!" class="play-button play" {{action 'play' on='click'}}>
+        <i class="material-icons">play_arrow</i>
+      </a>
+      <a href="#!" class="play-button pause" {{action 'pause' on='click'}}>
+        <i class="material-icons">pause</i>
+      </a>
+    </div>
+    <div class="title" {{action 'expandPlayer' on='click'}}>
+      <span>{{player.playingEpisode.title}}</span>
+      <p class="secondary">{{format-date player.playingEpisode.publishedAt}}</p>
+    </div>
+    <div class="expand-button">
+      <a href="#!" class="expand-player" {{action 'expandPlayer' on='click'}}>
+        <i class="material-icons">expand_less</i>
+      </a>
+    </div>
+    <div class="logo"><img src="{{player.playingEpisode.podcast.image}}"></div>
+  {{/if}}
 </div>

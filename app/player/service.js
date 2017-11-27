@@ -24,6 +24,7 @@ const eventHandlers = {
       service.play();
       service.set('playWhenLoaded', false);
     }
+    this.set('loading', false);
   }
 };
 
@@ -66,6 +67,7 @@ export default Ember.Service.extend({
 
     // Load the episode if any is stored in localstorage
     if (this.get('localStorage.episode-id')) {
+      this.set('loading', true);
       this.get('store')
         .findRecord('episode', this.get('localStorage.episode-id'))
         .then((episode) => {
@@ -95,6 +97,7 @@ export default Ember.Service.extend({
     this._savePlayerState();
   }),
   playNewEpisode(episode) {
+    this.set('loading', true);
     this.set('playWhenLoaded', true);
     this.set('rewindToPositionWhenLoaded', 0);
     this._setupEpisode(episode);
