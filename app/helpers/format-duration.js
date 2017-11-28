@@ -1,5 +1,6 @@
 import Ember from 'ember';
 import R from 'npm:ramda';
+import getHrsMinsSecs from './time-functions';
 
 export function formatDuration([value]) {
   return R.compose(
@@ -27,19 +28,4 @@ const composeDurationString = (value, label) => (
 
 const pluralize = (value, string) => (
   `${string}${(value > 1) ? 's' : ''}`
-);
-
-const getHrsMinsSecs = (value) => ({
-  hours: getHours(value),
-  mins: getMinutes(value),
-  secs: getSeconds(value)
-});
-const getHours = (value) => (
-  Math.floor(value / 3600)
-);
-const getMinutes = (value) => (
-  Math.floor((value - getHours(value) * 3600) / 60)
-);
-const getSeconds = (value) => (
-  value - getHours(value) * 3600 - getMinutes(value) * 60
 );

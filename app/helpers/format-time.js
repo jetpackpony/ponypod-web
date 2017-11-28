@@ -1,10 +1,12 @@
 import Ember from 'ember';
 import R from 'npm:ramda';
+import getHrsMinsSecs from './time-functions';
 
 export function formatTime([value]) {
   return R.compose(
     addSignToTimeString(value),
     composeTimeString,
+    padMinutesAndSeconds,
     getHrsMinsSecs,
     Math.round,
     Math.abs
@@ -23,21 +25,12 @@ const composeTimeString = ({ hours, mins, secs }) => (
   : `${hours}:${mins}:${secs}`
 );
 
-const getHrsMinsSecs = (value) => ({
-  hours: getHours(value),
-  mins: padWithZeros(getMinutes(value)),
-  secs: padWithZeros(getSeconds(value))
+const padMinutesAndSeconds = ({ hours, mins, secs }) => ({
+  hours,
+  mins: padWithZeros(mins),
+  secs: padWithZeros(secs)
 });
 
-const getHours = (value) => (
-  Math.floor(value / 3600)
-);
-const getMinutes = (value) => (
-  Math.floor((value - getHours(value) * 3600) / 60)
-);
-const getSeconds = (value) => (
-  value - getHours(value) * 3600 - getMinutes(value) * 60
-);
 const padWithZeros = (value) => (
   `${(value < 10) ? '0' : ''}${value}`
 );
