@@ -8,7 +8,7 @@ const eventHandlers = {
   },
   'timeupdate': function(service, e) {
     let newPos = e.target.currentTime || e.detail || 0;
-    if (service.get('position') !== newPos) {
+    if (service.get('position') !== newPos && newPos !== 0) {
       service.set('position', newPos);
     }
   },
