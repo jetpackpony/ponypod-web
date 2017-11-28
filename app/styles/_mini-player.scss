@@ -8,12 +8,14 @@
     background-color: $secondary-color;
   }
 }
-.avatar .mini-progress {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background-color: transparent;
+.avatar, .episode-details-image {
+  .mini-progress {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: transparent;
+  }
 }
 .avatar.played .mini-progress {
   //display: none;
