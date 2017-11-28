@@ -59,7 +59,8 @@ export default Ember.Service.extend({
     this.set('localStorage.lastPlayingId', id);
     this.set(`localStorage.episodes.${id}`, {
       episodeId: id,
-      position: this.get('position')
+      position: this.get('position'),
+      duration: this.get('duration')
     });
   },
   init() {
