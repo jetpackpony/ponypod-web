@@ -1,20 +1,40 @@
+.mini-progress {
+  height: $mini-progress-height;
+  width: 100%;
+  background-color: rgba($secondary-color, .1);
+  .bar {
+    width: 30%;
+    height: 100%;
+    background-color: $secondary-color;
+  }
+}
+.avatar, .episode-details-image {
+  .mini-progress {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: transparent;
+  }
+}
+.avatar.played .mini-progress {
+  //display: none;
+}
 .mini-player {
   display: flex;
   flex-direction: column;
   height: $navbar-height-mobile + $mini-progress-height;
 
-  .mini-progress {
-    height: $mini-progress-height;
+  .preloader-container {
     width: 100%;
-    background-color: rgba($secondary-color, .1);
-    .bar {
-      width: 30%;
-      height: 100%;
-      background-color: $secondary-color;
-    }
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
   }
+
   .mini-wrapper {
     display: flex;
+    justify-content: space-between;
     height: $navbar-height-mobile;
     width: 100%;
     & > div {
@@ -62,7 +82,7 @@
         font-size: 3.5rem;
       }
     }
-    .logo, img {
+    img {
       height: 100%;
     }
   }

@@ -5,12 +5,40 @@
   a.pause {
     display: none !important;
   }
+  a.replay {
+    display: none !important;
+  }
   &.playing {
     a.play {
       display: none !important;
     }
     a.pause {
       display: inline-block !important;
+    }
+    a.replay {
+      display: none !important;
+    }
+  }
+  &.played {
+    a.play {
+      display: none !important;
+    }
+    a.pause {
+      display: none !important;
+    }
+    a.replay {
+      display: inline-block !important;
+    }
+  }
+  &.playing.played {
+    a.play {
+      display: none !important;
+    }
+    a.pause {
+      display: inline-block !important;
+    }
+    a.replay {
+      display: none !important;
     }
   }
 }
@@ -77,6 +105,20 @@
         text-overflow: ellipsis;
         color: rgba(#000, .87);
         display: block;
+      }
+      .episode-list-item-progress {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        width: 21%;
+        background-color: rgba(244, 67, 54, 0.1);
+      }
+      &.played {
+        opacity: .28;
+        &:hover, &:active {
+          opacity: 1;
+        }
       }
     }
   }

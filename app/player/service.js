@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import { storageFor } from 'ember-local-storage';
 
 const eventHandlers = {
   'durationchange': function(service, e) {
@@ -7,14 +8,30 @@ const eventHandlers = {
   },
   'timeupdate': function(service, e) {
     let newPos = e.target.currentTime || e.detail || 0;
-    service.set('position', newPos);
+    if (service.get('position') !== newPos && newPos !== 0) {
+      service.set('position', newPos);
+    }
   },
   'ended': function(service) {
     service.set('isPlaying', false);
+  },
+  'canplaythrough': function(service) {
+    if (service.get('rewindToPositionWhenLoaded') > -1) {
+      service.set('position', service.get('rewindToPositionWhenLoaded'));
+      service.set('rewindToPositionWhenLoaded', -1);
+    }
+    if (service.get('playWhenLoaded')) {
+      service.play();
+      service.set('playWhenLoaded', false);
+    }
+    this.set('loading', false);
   }
 };
 
 export default Ember.Service.extend({
+  store: Ember.inject.service(),
+  localStorage: storageFor('player'),
+  rewindToPositionWhenLoaded: 0,
   position: 0,
   duration: 0,
   isPlaying: false,
@@ -37,10 +54,33 @@ export default Ember.Service.extend({
       });
     }
   },
+  _savePlayerState() {
+    let id = this.get('playingEpisode.id');
+    this.set('localStorage.lastPlayingId', id);
+    this.set(`localStorage.episodes.${id}`, {
+      episodeId: id,
+      position: this.get('position'),
+      duration: this.get('duration')
+    });
+  },
   init() {
+    this.playNewEpisode = this.playNewEpisode.bind(this);
     if (!this.get('audio')) {
       this.set('audio', document.createElement('audio'));
       this._addListeners();
+    }
+
+    // Load the episode if any is stored in localstorage
+    let lastPlayingId = this.get('localStorage.lastPlayingId');
+    if (lastPlayingId) {
+      this.set('loading', true);
+      this.get('store')
+        .findRecord('episode', lastPlayingId)
+        .then((episode) => {
+          this.set('playWhenLoaded', false);
+          this.set('rewindToPositionWhenLoaded', this._getEpisodePosition(lastPlayingId));
+          this._setupEpisode(episode);
+        });
     }
   },
   willDestroy() {
@@ -48,25 +88,46 @@ export default Ember.Service.extend({
     this.set('audio', null);
   },
   playingEpisode: null,
-  onEpisodeChange: Ember.observer('playingEpisode', function() {
-    let ep = this.get('playingEpisode');
+  _setupEpisode(ep, position) {
+    this.set('playingEpisode', ep);
     this.set('duration', ep.get('duration'));
     this.set('audio.src', ep.get('mp3Link'));
-    this.set('progress', 0);
     this.get('audio').load();
-    this.play();
+  },
+  onPositionChanged: Ember.observer('position', function() {
+    let pos = this.get('position');
+    let audioPos = this.get('audio').currentTime;
+    if (Math.round(pos) !== Math.round(audioPos)) {
+      this.get('audio').currentTime = pos;
+    }
+    this._savePlayerState();
   }),
+  playNewEpisode(episode, forceReplay) {
+    if (episode.id !== this.get('playingEpisode.id') || forceReplay) {
+      this.set('loading', true);
+      this.set('playWhenLoaded', true);
+      this.set('rewindToPositionWhenLoaded', this._getEpisodePosition(episode.id));
+      this._setupEpisode(episode);
+    } else {
+      if (!this.get('loading')) {
+        this.play();
+      }
+    }
+  },
+  _getEpisodePosition(id) {
+    return this.get(`localStorage.episodes.${id}.position`) || 0;
+  },
 
   progress: Ember.computed('position', 'duration', {
     get() {
-      let pos = this.get('position');
-      let dur = this.get('duration');
+      let pos = this.get('position') || 0;
+      let dur = this.get('duration') || 1;
       return pos / dur * 100;
     },
     set(k, val) {
       let dur = this.get('duration');
-      this.get('audio').currentTime = val * dur / 100;
-      return val;
+      this.set('position', val * dur / 100);
+      return val || 0;
     }
   }),
 
@@ -86,7 +147,7 @@ export default Ember.Service.extend({
     this.set('isPlaying', false);
   },
   jumpTo(position) {
-    this.get('audio').currentTime = position;
+    this.set('position', position);
   },
   rewind(seconds) {
     let newPos = this.get('audio').currentTime - seconds;

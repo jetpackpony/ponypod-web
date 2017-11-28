@@ -30,7 +30,7 @@ export default function() {
   this.namespace = `${ENV.ponypod.apiEndPoint}/${ENV.ponypod.apiNameSpace}`;
 
   this.get('/podcasts', function({ podcasts }, { queryParams }) {
-    let search = (queryParams.title || "").toLowerCase();
+    let search = (queryParams.search || "").toLowerCase();
     let number = parseInt(queryParams['page[number]']);
     let size = parseInt(queryParams['page[size]']);
     let all = (

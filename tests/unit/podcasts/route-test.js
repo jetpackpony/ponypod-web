@@ -11,7 +11,7 @@ const navigationService = Ember.Service.extend({
 
 moduleFor('route:podcasts', 'Unit | Route | podcasts', {
   // Specify the other units that are required for this test.
-  // needs: ['controller:foo']
+  needs: ['controller:podcasts', 'service:navigation']
 });
 
 test('it sets navbar title', function(assert) {
@@ -49,7 +49,7 @@ test('it filters the results if query is not short', function(assert) {
   assert.expect(1);
   let route = this.subject({
     infinityModel(model, params) {
-        assert.equal(params.title, 'testme', 'should run query with params');
+        assert.equal(params.search, 'testme', 'should run query with params');
     },
     store: Ember.Object.create({
       query() {

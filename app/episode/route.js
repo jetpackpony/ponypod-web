@@ -12,6 +12,7 @@ export default Ember.Route.extend({
     this._setNavParams(episode);
   },
   _setNavParams(episode) {
+    this.set('navigation.navBarSearch', false);
     this.set('navigation.navTitle', episode.get('podcast').get('title'));
     this.set('navigation.showBackArrow', true);
   }

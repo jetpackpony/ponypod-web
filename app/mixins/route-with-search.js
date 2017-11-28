@@ -7,15 +7,13 @@ export default Ember.Mixin.create({
       replace: true
     }
   },
+
   beforeModel(transition) {
     this.set('navigation.navBarSearch', true);
     let search = transition.queryParams.search;
     if (search) {
       this.set('navigation.searchQuery', search);
       this.set('navigation.searchOpen', true);
-    } else {
-      this.set('navigation.searchQuery', '');
-      this.set('navigation.searchOpen', false);
     }
   },
   actions: {

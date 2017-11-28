@@ -28,7 +28,7 @@ test('it shows the current episode info', function(assert) {
 
   let title = this.$('.mini-player .title span').text().trim();
   let date = this.$('.mini-player .title .secondary').text().trim();
-  let img = this.$('.mini-player .logo img').attr('src');
+  let img = this.$('.mini-player img').attr('src');
   assert.equal(title, 'Testme', 'title does not match');
   assert.equal(date, '4 Nov 2016', 'date does not match');
   assert.equal(img, 'testme.png', 'image does not match');

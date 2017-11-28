@@ -1,4 +1,8 @@
-{{podcast-grid podcasts=model}}
+{{podcast-grid
+podcasts=model
+searchQuery=navigation.searchQuery
+showSearchSpinner=showSearchSpinner
+}}
 
 <div class="load-more-container">
   {{#if hasClickedLoadMore}}
@@ -6,10 +10,12 @@
       {{infinity-loader-spinner}}
     {{/infinity-loader}}
   {{else}}
-    <a id="load-more"
-      class="waves-effect waves-light btn"
-      {{action 'loadMoreClick' on='click'}}>
-      Load more
-    </a>
+    {{#if showLoadMoreButton}}
+      <a id="load-more"
+        class="waves-effect waves-light btn"
+        {{action 'loadMoreClick' on='click'}}>
+        Load more
+      </a>
+    {{/if}}
   {{/if}}
 </div>
