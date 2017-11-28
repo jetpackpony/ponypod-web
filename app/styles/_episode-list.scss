@@ -5,12 +5,40 @@
   a.pause {
     display: none !important;
   }
+  a.replay {
+    display: none !important;
+  }
   &.playing {
     a.play {
       display: none !important;
     }
     a.pause {
       display: inline-block !important;
+    }
+    a.replay {
+      display: none !important;
+    }
+  }
+  &.played {
+    a.play {
+      display: none !important;
+    }
+    a.pause {
+      display: none !important;
+    }
+    a.replay {
+      display: inline-block !important;
+    }
+  }
+  &.playing.played {
+    a.play {
+      display: none !important;
+    }
+    a.pause {
+      display: inline-block !important;
+    }
+    a.replay {
+      display: none !important;
     }
   }
 }

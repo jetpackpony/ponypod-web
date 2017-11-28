@@ -102,8 +102,8 @@ export default Ember.Service.extend({
     }
     this._savePlayerState();
   }),
-  playNewEpisode(episode) {
-    if (episode.id !== this.get('playingEpisode.id')) {
+  playNewEpisode(episode, forceReplay) {
+    if (episode.id !== this.get('playingEpisode.id') || forceReplay) {
       this.set('loading', true);
       this.set('playWhenLoaded', true);
       this.set('rewindToPositionWhenLoaded', this._getEpisodePosition(episode.id));

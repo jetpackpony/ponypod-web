@@ -46,8 +46,12 @@ export default Ember.Component.extend({
   },
 
   actions: {
+    replay() {
+      this.get('player.playNewEpisode')(this.get('episode'), true);
+      this.get('player').play();
+    },
     play() {
-      this.get('player.playNewEpisode')(this.get('episode'));
+      this.get('player.playNewEpisode')(this.get('episode'), false);
       this.get('player').play();
     },
     pause() {
