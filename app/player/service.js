@@ -96,7 +96,7 @@ export default Ember.Service.extend({
   onPositionChanged: Ember.observer('position', function() {
     let pos = this.get('position');
     let audioPos = this.get('audio').currentTime;
-    if (pos !== audioPos) {
+    if (Math.round(pos) !== Math.round(audioPos)) {
       this.get('audio').currentTime = pos;
     }
     this._savePlayerState();
