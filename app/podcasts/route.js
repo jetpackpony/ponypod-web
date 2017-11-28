@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import ENV from '../config/environment';
 import RouteWithSearchMixin from 'ponypod-frontend/mixins/route-with-search';
 import InfinityRoute from "ember-infinity/mixins/route";
 import R from 'npm:ramda';
@@ -36,7 +37,7 @@ export default Ember.Route.extend(
     afterModel() {
       this._super(...arguments);
       this.controllerFor('podcasts').set('showSearchSpinner', false);
-      this.set('navigation.navTitle', 'PonyPod');
+      this.set('navigation.navTitle', ENV.APP.appTitle);
       this.set('navigation.showBackArrow', false);
     },
   });
