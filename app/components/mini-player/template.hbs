@@ -1,9 +1,3 @@
-{{#if player.loading}}
-{{else}}
-  <div class="mini-progress">
-    <div class="bar" style={{progressCss}}></div>
-  </div>
-{{/if}}
 <div class="mini-wrapper">
   {{#if player.loading}}
     <div class="preloader-container">
@@ -40,3 +34,9 @@
     <img src="{{player.playingEpisode.podcast.image}}">
   {{/if}}
 </div>
+{{#if player.loading}}
+{{else}}
+  <div class="mini-progress">
+    <div class="bar" style={{progressCss}}></div>
+  </div>
+{{/if}}
