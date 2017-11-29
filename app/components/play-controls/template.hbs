@@ -1,0 +1,11 @@
+{{#if withReplay}}
+  <a class="play-button replay" {{action 'replay' on='click'}}>
+    <i class="material-icons">refresh</i>
+  </a>
+{{/if}}
+<a class="play-button play" {{action 'play' on='click'}}>
+  <i class="material-icons">play_arrow</i>
+</a>
+<a class="play-button pause" {{action 'pause' on='click'}}>
+  <i class="material-icons">pause</i>
+</a>

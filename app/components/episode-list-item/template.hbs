@@ -1,15 +1,16 @@
 <div class="mini-progress">
   <div class="bar" style={{progressCss}}></div>
 </div>
-<a href="#!" class="play-button replay" {{action 'replay' on='click'}}>
-  <i class="material-icons">refresh</i>
-</a>
-<a href="#!" class="play-button play" {{action 'play' on='click'}}>
-  <i class="material-icons">play_arrow</i>
-</a>
-<a href="#!" class="play-button pause" {{action 'pause' on='click'}}>
-  <i class="material-icons">pause</i>
-</a>
+
+{{play-controls
+withReplay=true
+replay=(action 'replay')
+play=(action 'play')
+pause=(action 'pause')
+isPlaying=isPlaying
+isPlayed=isPlayed
+}}
+
 {{#link-to 'episode' episode classNames='title'}}
   <span>{{episode.title}}</span>
   <p class="secondary">{{format-date episode.publishedAt}}</p>

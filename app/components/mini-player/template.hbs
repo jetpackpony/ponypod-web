@@ -14,14 +14,15 @@
       </div>
     </div>
   {{else}}
-    <div class="control {{if player.isPlaying 'playing' ''}}">
-      <a href="#!" class="play-button play" {{action 'play' on='click'}}>
-        <i class="material-icons">play_arrow</i>
-      </a>
-      <a href="#!" class="play-button pause" {{action 'pause' on='click'}}>
-        <i class="material-icons">pause</i>
-      </a>
-    </div>
+
+    {{play-controls
+    withReplay=false
+    isPlaying=player.isPlaying
+    isPlayed=false
+    play=(action 'play')
+    pause=(action 'pause')
+    }}
+
     <div class="title" {{action 'expandPlayer' on='click'}}>
       <span>{{player.playingEpisode.title}}</span>
       <p class="secondary">{{format-date player.playingEpisode.publishedAt}}</p>

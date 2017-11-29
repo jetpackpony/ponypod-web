@@ -1,19 +1,15 @@
-<div class="episode-details-image
-     card-image
-     {{if isPlaying 'playing' ''}}
-     {{if isPlayed 'played' ''}}
-     ">
+<div class="episode-details-image card-image">
   <img src="{{episode.podcast.image}}">
 
-  <a class="play-button replay waves-effect waves-light" {{action 'replay' on='click'}}>
-    <i class="material-icons">refresh</i>
-  </a>
-  <a class="play-button play waves-effect waves-light" {{action 'play' on='click'}}>
-    <i class="material-icons">play_arrow</i>
-  </a>
-  <a class="play-button pause waves-effect waves-light" {{action 'pause' on='click'}}>
-    <i class="material-icons">pause</i>
-  </a>
+  {{play-controls
+  withReplay=true
+  replay=(action 'replay')
+  play=(action 'play')
+  pause=(action 'pause')
+  isPlaying=isPlaying
+  isPlayed=isPlayed
+  }}
+
   <div class="mini-progress">
     <div class="bar" style={{progressCss}}></div>
   </div>

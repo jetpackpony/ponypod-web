@@ -1,4 +1,7 @@
-.episode, .control, .episode-details-image, .play-pause {
+a.play-button {
+  cursor: pointer;
+}
+.control, .play-pause {
   a.play {
     display: inline-block !important;
   }

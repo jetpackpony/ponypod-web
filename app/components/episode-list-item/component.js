@@ -4,7 +4,7 @@ export default Ember.Component.extend({
   tagName: 'li',
   classNames: ["episode","collection-item","avatar"],
   player: Ember.inject.service(),
-  classNameBindings: ['isPlaying:playing', 'isPlayed:played'],
+  classNameBindings: ['isPlayed:played'],
   isPlaying: Ember.computed('player.{playingEpisode,isPlaying}', function() {
     let playingId = this.get('player.playingEpisode.id');
     return this.get('episode.id') === playingId && this.get('player.isPlaying');
