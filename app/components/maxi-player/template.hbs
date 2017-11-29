@@ -3,14 +3,16 @@
     <div class="title">
       <h2>{{player.playingEpisode.title}}</h2>
       <div class="secondary">
-        <div class="date">{{format-date player.playingEpisode.publishedAt}}</div>
-        <div class="duration">{{format-duration player.playingEpisode.duration}}</div>
+        <div class="date">
+          {{format-date player.playingEpisode.publishedAt}}
+        </div>
+        <div class="duration">
+          {{format-duration player.playingEpisode.duration}}
+        </div>
       </div>
     </div>
     <div class="collapse-button">
-      <a class="collapse-player"
-         {{action 'collapsePlayer' on='click'}}
-         >
+      <a class="collapse-player" {{action 'collapsePlayer' on='click'}}>
         <i class="material-icons">expand_more</i>
       </a>
     </div>
@@ -18,9 +20,7 @@
   <div class="description">
     <p>{{player.playingEpisode.summary}}</p>
     <div class="actions">
-      <a class="waves-effect btn-flat"
-         {{action 'readMore' on='click'}}
-         >
+      <a class="waves-effect btn-flat" {{action 'readMore' on='click'}}>
         Read More
       </a>
     </div>
@@ -34,13 +34,14 @@
         <i class="material-icons">replay_10</i>
       </a>
     </div>
-    <div class="play-pause {{if player.isPlaying 'playing' ''}}">
-      <a class="play" {{action 'play' on='click'}}>
-        <i class="material-icons">play_arrow</i>
-      </a>
-      <a class="pause" {{action 'pause' on='click'}}>
-        <i class="material-icons">pause</i>
-      </a>
+    <div class="play-pause">
+      {{play-controls
+      withReplay=false
+      isPlaying=player.isPlaying
+      isPlayed=false
+      play=(action 'play')
+      pause=(action 'pause')
+      }}
     </div>
     <div>
       <a class="forward" {{action 'forward'}}>
