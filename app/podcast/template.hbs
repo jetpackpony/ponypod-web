@@ -3,23 +3,20 @@
     {{podcast-details podcast=model}}
   </div>
 
-  {{#if showSearchSpinner}}
-    <div class="flex-col sm12 md8 lg5">
+  <div class="flex-col sm12 md8 lg5">
+    {{#if showSearchSpinner}}
       <div class="load-spinner-container">
         {{infinity-loader-spinner}}
       </div>
-    </div>
-  {{else if showZeroResults}}
-    <div class="flex-col sm12 md8 lg5">
-      <div class="card-panel white">
-        Sorry, we couldn't find any episodes for "{{navigation.searchQuery}}"
-      </div>
-    </div>
-  {{else}}
-    <div class="flex-col sm12 md8 lg5">
+    {{else if isEpisodeListEmpty}}
+      {{empty-search-results
+      entity="episodes"
+      searchQuery=searchQuery
+      }}
+    {{else}}
       {{episode-list episodes=episodes}}
-    </div>
-  {{/if}}
+    {{/if}}
+  </div>
 
   <div class="flex-col sm12 md8 lg5">
     {{load-more

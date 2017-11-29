@@ -10,12 +10,13 @@
       {{/link-to}}
     </div>
   {{else}}
-  <div class="row empty-search-results">
-    <div class="col s12">
-      <div class="card-panel white">
-        Sorry, we couldn't find any podcasts for "{{searchQuery}}"
+    <div class="row empty-search-results">
+      <div class="col s12">
+        {{empty-search-results
+        entity="podcasts"
+        searchQuery=searchQuery
+        }}
       </div>
     </div>
-  </div>
   {{/each}}
 {{/if}}
