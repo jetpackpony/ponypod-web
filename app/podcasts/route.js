@@ -17,21 +17,28 @@ export default Ember.Route.extend(
     perPageParam: "page[size]",
     totalPagesParam: "meta.totalPages",
 
-    model(params) {
-      return this.infinityModel("podcast", R.merge(
-        {
-          perPage: podcastsPerPage,
-          startingPage: 0
-        },
-        this.prepareSearchQuery(params.search)
-      ));
-    },
-    afterModel() {
-      this._super(...arguments);
-      this.controllerFor(this.routeName).set('showSearchSpinner', false);
-      this.set('navigation.navTitle', ENV.APP.appTitle);
-      this.set('navigation.showBackArrow', false);
-    },
+    actions: {
+      didTransition() {
+        this.infinityModel(
+          "podcast",
+          R.merge(
+            {
+              perPage: podcastsPerPage,
+              startingPage: 0
+            },
+            this.prepareSearchQuery(this.get('navigation.searchQuery'))
+          )
+        ).then((podcasts) => {
+          this.controllerFor(this.routeName)
+            .setProperties({
+              model: podcasts,
+              showSearchSpinner: false
+            });
+          this.set('navigation.navTitle', ENV.APP.appTitle);
+          this.set('navigation.showBackArrow', false);
+        });
+      }
+    }
   }
 );
 
