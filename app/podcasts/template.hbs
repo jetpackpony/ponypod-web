@@ -1,11 +1,17 @@
-{{podcast-grid
-podcasts=model
-searchQuery=navigation.searchQuery
-showSearchSpinner=showSearchSpinner
-}}
+<div class="podcasts-page">
+  {{#if showSearchSpinner}}
+    {{infinity-loader-spinner}}
+  {{else}}
+    {{podcast-grid
+    podcasts=model
+    searchQuery=navigation.searchQuery
+    }}
+  {{/if}}
 
-{{load-more
-model=model
-infinityLoad='infinityLoad'
-showSearchSpinner=showSearchSpinner
-}}
+  {{#if (not showSearchSpinner)}}
+    {{load-more
+    model=model
+    infinityLoad='infinityLoad'
+    }}
+  {{/if}}
+</div>

@@ -3,7 +3,7 @@ import ControllerWithSearchMixin from 'ponypod-frontend/mixins/controller-with-s
 
 export default Ember.Controller.extend(ControllerWithSearchMixin, {
   episodes: Ember.A([]),
-  showZeroResults: Ember.computed('episodes.[]', function() {
+  isEpisodeListEmpty: Ember.computed('episodes.[]', function() {
     return this.get('episodes.length') === 0;
   })
 });

@@ -1,28 +1,30 @@
 <div class="flex-row">
+  {{! Podcast cover and details}}
   <div class="flex-col sm12 md8 lg5">
     {{podcast-details podcast=model}}
   </div>
 
+  {{! Episodes list or spinner or "nothing found"}}
   <div class="flex-col sm12 md8 lg5">
     {{#if showSearchSpinner}}
-      <div class="load-spinner-container">
-        {{infinity-loader-spinner}}
-      </div>
+      {{infinity-loader-spinner}}
     {{else if isEpisodeListEmpty}}
       {{empty-search-results
       entity="episodes"
-      searchQuery=searchQuery
+      searchQuery=navigation.searchQuery
       }}
     {{else}}
       {{episode-list episodes=episodes}}
     {{/if}}
   </div>
 
-  <div class="flex-col sm12 md8 lg5">
-    {{load-more
-    model=episodes
-    infinityLoad='infinityLoad'
-    showSearchSpinner=showSearchSpinner
-    }}
-  </div>
+  {{! Load More button and infinity-loader}}
+  {{#if (not showSearchSpinner)}}
+    <div class="flex-col sm12 md8 lg5">
+      {{load-more
+      model=episodes
+      infinityLoad='infinityLoad'
+      }}
+    </div>
+  {{/if}}
 </div>
