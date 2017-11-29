@@ -7,7 +7,7 @@
   {{! Episodes list or spinner or "nothing found"}}
   <div class="flex-col sm12 md8 lg5">
     {{#if showSearchSpinner}}
-      {{infinity-loader-spinner}}
+      {{loading-spinner}}
     {{else if isEpisodeListEmpty}}
       {{empty-search-results
       entity="episodes"
