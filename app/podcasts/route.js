@@ -20,7 +20,6 @@ export default Ember.Route.extend(
     beforeModel() {
       this._super(...arguments);
       this.controllerFor('podcasts').set('showSearchSpinner', true);
-      this.controllerFor('podcasts').set('showLoadMoreButton', false);
     },
     model(params) {
       return this.infinityModel(

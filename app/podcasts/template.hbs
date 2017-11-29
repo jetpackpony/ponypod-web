@@ -4,14 +4,8 @@ searchQuery=navigation.searchQuery
 showSearchSpinner=showSearchSpinner
 }}
 
-<div class="load-more-container">
-  {{#if hasClickedLoadMore}}
-    {{#infinity-loader infinityModel=model}}
-      {{infinity-loader-spinner}}
-    {{/infinity-loader}}
-  {{else}}
-    {{#if showLoadMoreButton}}
-      {{load-more-button click=(action 'loadMoreClick')}}
-    {{/if}}
-  {{/if}}
-</div>
+{{load-more
+model=model
+infinityLoad='infinityLoad'
+showSearchSpinner=showSearchSpinner
+}}
