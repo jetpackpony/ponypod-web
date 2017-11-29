@@ -21,7 +21,6 @@
     <img src="{{player.playingEpisode.podcast.image}}">
   {{/if}}
 </div>
-{{#if player.loading}}
-{{else}}
+{{#if (not player.loading)}}
   {{mini-progress-bar progress=player.progress}}
 {{/if}}
