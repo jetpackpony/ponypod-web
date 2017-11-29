@@ -11,11 +11,7 @@ showSearchSpinner=showSearchSpinner
     {{/infinity-loader}}
   {{else}}
     {{#if showLoadMoreButton}}
-      <a id="load-more"
-        class="waves-effect waves-light btn"
-        {{action 'loadMoreClick' on='click'}}>
-        Load more
-      </a>
+      {{load-more-button click=(action 'loadMoreClick')}}
     {{/if}}
   {{/if}}
 </div>
