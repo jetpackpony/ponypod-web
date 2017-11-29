@@ -28,13 +28,6 @@ export default Ember.Component.extend({
     );
     Ember.defineProperty(
       this,
-      'progressCss',
-      Ember.computed('progress', function() {
-        return Ember.String.htmlSafe(`width: ${this.get('progress')}%`);
-      })
-    );
-    Ember.defineProperty(
-      this,
       'isPlayed',
       Ember.computed('progress', function() {
         return this.get('progress') >= 99;

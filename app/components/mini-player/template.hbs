@@ -37,7 +37,5 @@
 </div>
 {{#if player.loading}}
 {{else}}
-  <div class="mini-progress">
-    <div class="bar" style={{progressCss}}></div>
-  </div>
+  {{mini-progress-bar progress=player.progress}}
 {{/if}}
