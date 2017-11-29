@@ -21,7 +21,9 @@ export default Ember.Component.extend({
         this.$(document).unbind('mousemove', onMouseMove);
         this.$(document).unbind('mouseup', onMouseUp);
         this.set('player.progress', this.get('_updatingProgress'));
-        this.set('_updatingProgress', false);
+        Ember.run.later(this, function() {
+          this.set('_updatingProgress', false);
+        }, 500);
       });
     };
     this.$('.thumb').on('mousedown', (e, coords) => {
@@ -54,7 +56,9 @@ export default Ember.Component.extend({
       Ember.run(() => {
         this.$(e.target).removeClass('focus');
         this.set('player.progress', this.get('_updatingProgress'));
-        this.set('_updatingProgress', false);
+        Ember.run.later(this, function() {
+          this.set('_updatingProgress', false);
+        }, 500);
       });
     });
 
