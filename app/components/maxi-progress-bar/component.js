@@ -10,10 +10,7 @@ export default Ember.Component.extend({
     this._super(...arguments);
     this.set('thumbWidth', this.$('.thumb').outerWidth());
     // Handle mouse thumb drag
-    this.$('.thumb').on('mousedown', (e) => {
-      this.thumbDragStart(e);
-      this.bindMouseEvents();
-    });
+    this.$('.thumb').on('mousedown', this.thumbDragStart);
     // Handle touch thumb drag
     this.$('.thumb').on('touchstart', this.thumbDragStart);
     this.$('.thumb').on('touchmove', this.thumbDragMove);
@@ -41,45 +38,46 @@ export default Ember.Component.extend({
     (progress, duration) => Math.round(progress * duration / 100)
   ),
   actions: {
-    jumpTo(e) {
-      this.updateTmpProgress(e);
+    jumpTo(event) {
+      this.updateTmpProgress(getXCoordFromEvent(event));
       this.updatePlayerProgress();
     }
   },
   init() {
     this._super(...arguments);
-    this.thumbMouseUp = this.thumbMouseUp.bind(this);
     this.thumbDragStart = this.thumbDragStart.bind(this);
     this.thumbDragMove = this.thumbDragMove.bind(this);
     this.thumbDragEnd = this.thumbDragEnd.bind(this);
   },
-  thumbDragStart(e) {
-    e.preventDefault();
-    e.stopPropagation();
+  thumbDragStart(event) {
+    event.preventDefault();
+    event.stopPropagation();
     this.$('.thumb').addClass('focus');
-    this.thumbDragMove(e);
+    this.thumbDragMove(event);
+    if (!isTouchEvent(event)) {
+      this.bindMouseEvents();
+    }
   },
-  thumbDragMove(e) {
-    this.updateTmpProgress(e);
+  thumbDragMove(event) {
+    this.updateTmpProgress(getXCoordFromEvent(event));
   },
-  thumbDragEnd() {
+  thumbDragEnd(event) {
     this.$('.thumb').removeClass('focus');
     this.updatePlayerProgress();
     Ember.run.later(this, function() {
-      this.updateTmpProgress({ pageX: 0 });
+      this.updateTmpProgress(0);
     }, 500);
+    if (!isTouchEvent(event)) {
+      this.unbindMouseEvents();
+    }
   },
-  thumbMouseUp() {
-    this.thumbDragEnd();
-    this.unbindMouseEvents();
-  },
-  updateTmpProgress(event) {
+  updateTmpProgress(xCoordinate) {
     this.set(
       'tmpProgress',
       calcProgress(
         this.$('.progress-wrapper').offset().left,
         this.$('.progress-wrapper').width(),
-        getXCoordFromEvent(event)
+        xCoordinate
       )
     );
   },
@@ -88,16 +86,18 @@ export default Ember.Component.extend({
   },
   bindMouseEvents() {
     this.$(document).on('mousemove', this.thumbDragMove);
-    this.$(document).on('mouseup', this.thumbMouseUp);
+    this.$(document).on('mouseup', this.thumbDragEnd);
   },
   unbindMouseEvents() {
     this.$(document).unbind('mousemove', this.thumbDragMove);
-    this.$(document).unbind('mouseup', this.thumbMouseUp);
+    this.$(document).unbind('mouseup', this.thumbDragEnd);
   }
 });
 
-const getXCoordFromEvent = (e) => (
-  ((e.touches) ? e.touches[0] : e).pageX || 0
+const isTouchEvent = (event) => !R.isNil(event.touches);
+
+const getXCoordFromEvent = (event) => (
+  ((event.touches) ? event.touches[0] : event).pageX || 0
 );
 
 const trimValue = R.curry((min, max, value) => (
