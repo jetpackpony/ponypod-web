@@ -1,5 +1,6 @@
 import Ember from 'ember';
 import R from 'npm:ramda';
+import { trimValue } from '../../helpers/helper-functions';
 
 export default Ember.Component.extend({
   player: Ember.inject.service(),
@@ -101,14 +102,6 @@ const isTouchEvent = (event) => !R.isNil(event.touches);
 const getXCoordFromEvent = (event) => (
   ((event.touches) ? event.touches[0] : event).pageX || 0
 );
-
-const trimValue = R.curry((min, max, value) => (
-  (value > max)
-  ? max
-  : ((value < min)
-    ? min
-    : value)
-));
 
 const calcProgress = (barOffset, barWidth, xCoordinate) => (
   trimValue(0, 100, (xCoordinate - barOffset) / barWidth * 100)
