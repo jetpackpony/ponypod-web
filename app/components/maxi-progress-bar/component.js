@@ -1,6 +1,6 @@
 import Ember from 'ember';
 import R from 'npm:ramda';
-import { trimValue } from '../../helpers/helper-functions';
+import { trimValue, calcPercentage } from '../../helpers/helper-functions';
 
 export default Ember.Component.extend({
   player: Ember.inject.service(),
@@ -104,5 +104,5 @@ const getXCoordFromEvent = (event) => (
 );
 
 const calcProgress = (barOffset, barWidth, xCoordinate) => (
-  trimValue(0, 100, (xCoordinate - barOffset) / barWidth * 100)
+  calcPercentage(xCoordinate - barOffset, barWidth)
 );
