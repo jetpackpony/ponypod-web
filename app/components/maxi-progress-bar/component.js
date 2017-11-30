@@ -41,6 +41,7 @@ export default Ember.Component.extend({
     jumpTo(event) {
       this.updateTmpProgress(getXCoordFromEvent(event));
       this.updatePlayerProgress();
+      this.updateTmpProgress(0);
     }
   },
   init() {
