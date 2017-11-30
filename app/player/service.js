@@ -1,143 +1,72 @@
 import Ember from 'ember';
+import RSVP from 'rsvp';
+import R from 'npm:ramda';
 import { storageFor } from 'ember-local-storage';
-
-const eventHandlers = {
-  'durationchange': function(service, e) {
-    let newDur = e.target.duration || e.detail || 0;
-    service.set('duration', newDur);
-  },
-  'timeupdate': function(service, e) {
-    let newPos = e.target.currentTime || e.detail || 0;
-    if (service.get('position') !== newPos && newPos !== 0) {
-      service.set('position', newPos);
-    }
-  },
-  'ended': function(service) {
-    service.set('isPlaying', false);
-  },
-  'canplaythrough': function(service) {
-    if (service.get('rewindToPositionWhenLoaded') > -1) {
-      service.set('position', service.get('rewindToPositionWhenLoaded'));
-      service.set('rewindToPositionWhenLoaded', -1);
-    }
-    if (service.get('playWhenLoaded')) {
-      service.play();
-      service.set('playWhenLoaded', false);
-    }
-    this.set('loading', false);
-  }
-};
+import { trimValue, calcPercentage } from '../helpers/helper-functions';
 
 export default Ember.Service.extend({
   store: Ember.inject.service(),
   localStorage: storageFor('player'),
-  rewindToPositionWhenLoaded: 0,
-  position: 0,
+  rewindToTimeWhenLoaded: 0,
+  currentTime: 0,
   duration: 0,
   isPlaying: false,
   showExpandedPlayer: false,
-  _handlers: {},
-  _addListeners() {
-    Object.keys(eventHandlers).forEach((event) => {
-      this._handlers[event] = (...args) => {
-        Ember.run(() => {
-          return eventHandlers[event].call(this, this, ...args);
-        });
-      };
-      this.get('audio').addEventListener(event, this._handlers[event]);
-    });
-  },
-  _removeListeners() {
-    if (typeof(this.get('audio').removeEventListener) === 'function') {
-      Object.keys(eventHandlers).forEach((event) => {
-        this.get('audio').removeEventListener(event, this._handlers[event]);
-      });
-    }
-  },
-  _savePlayerState() {
-    let id = this.get('playingEpisode.id');
-    this.set('localStorage.lastPlayingId', id);
-    this.set(`localStorage.episodes.${id}`, {
-      episodeId: id,
-      position: this.get('position'),
-      duration: this.get('duration')
-    });
-  },
+  playingEpisode: null,
+  audioEventHandlers: {},
   init() {
-    this.playNewEpisode = this.playNewEpisode.bind(this);
-    if (!this.get('audio')) {
-      this.set('audio', document.createElement('audio'));
-      this._addListeners();
-    }
-
-    // Load the episode if any is stored in localstorage
-    let lastPlayingId = this.get('localStorage.lastPlayingId');
-    if (lastPlayingId) {
-      this.set('loading', true);
-      this.get('store')
-        .findRecord('episode', lastPlayingId)
-        .then((episode) => {
-          this.set('playWhenLoaded', false);
-          this.set('rewindToPositionWhenLoaded', this._getEpisodePosition(lastPlayingId));
-          this._setupEpisode(episode);
-        });
-    }
+    this._super(...arguments);
+    this.generateAudioEventHandlers();
+    this.initAudioElement();
+    this.playEpisode = this.playEpisode.bind(this);
+    this.playEpisode(this.get('localStorage.lastPlayingId'), false, false);
   },
   willDestroy() {
-    this._removeListeners();
-    this.set('audio', null);
-  },
-  playingEpisode: null,
-  _setupEpisode(ep, position) {
-    this.set('playingEpisode', ep);
-    this.set('duration', ep.get('duration'));
-    this.set('audio.src', ep.get('mp3Link'));
-    this.get('audio').load();
-  },
-  onPositionChanged: Ember.observer('position', function() {
-    let pos = this.get('position');
-    let audioPos = this.get('audio').currentTime;
-    if (Math.round(pos) !== Math.round(audioPos)) {
-      this.get('audio').currentTime = pos;
-    }
-    this._savePlayerState();
-  }),
-  playNewEpisode(episode, forceReplay) {
-    if (episode.id !== this.get('playingEpisode.id') || forceReplay) {
-      this.set('loading', true);
-      this.set('playWhenLoaded', true);
-      this.set('rewindToPositionWhenLoaded', this._getEpisodePosition(episode.id));
-      this._setupEpisode(episode);
-    } else {
-      if (!this.get('loading')) {
-        this.play();
-      }
-    }
-  },
-  _getEpisodePosition(id) {
-    return this.get(`localStorage.episodes.${id}.position`) || 0;
+    this.destroyAudioElement();
   },
 
-  progress: Ember.computed('position', 'duration', {
+  onCurrentTimeChanged: Ember.observer('currentTime', function() {
+    this.syncCurrentTime(
+      this.get('currentTime'),
+      this.get('audio').currentTime
+    );
+    this.saveEpisodeProgress(
+      this.get('playingEpisode.id'),
+      this.get('currentTime'),
+      this.get('duration')
+    );
+  }),
+  progress: Ember.computed('currentTime', 'duration', {
     get() {
-      let pos = this.get('position') || 0;
-      let dur = this.get('duration') || 1;
-      return pos / dur * 100;
+      return calcPercentage(
+        this.get('currentTime'),
+        this.get('duration')
+      );
     },
-    set(k, val) {
-      let dur = this.get('duration');
-      this.set('position', val * dur / 100);
-      return val || 0;
+    set(k, newValue) {
+      this.set('currentTime', (newValue * this.get('duration') / 100));
+      return newValue || 0;
     }
   }),
-
-  timeToFinish: Ember.computed('position', 'duration', function() {
-    return this.get('duration') - this.get('position');
+  timeToFinish: Ember.computed('currentTime', 'duration', function() {
+    return this.get('duration') - this.get('currentTime');
   }),
   getAudioElement() {
     return this.get('audio');
   },
-
+  playEpisode(episode_id, forceRewind = false, playWhenLoaded = true) {
+    this.set('loading', true);
+    this.set('playWhenLoaded', playWhenLoaded);
+    this.getEpisode(episode_id)
+      .then(
+        (episode) => (
+          (this.get('playingEpisode.id') === episode.id)
+          ? this.playCurrentEpisode(forceRewind)
+          : this.loadNewEpisode(episode, forceRewind)
+        ),
+        () => this.set('loading', false)
+      );
+  },
   play() {
     this.get('audio').play();
     this.set('isPlaying', true);
@@ -146,17 +75,122 @@ export default Ember.Service.extend({
     this.get('audio').pause();
     this.set('isPlaying', false);
   },
-  jumpTo(position) {
-    this.set('position', position);
+  jumpTo(time) {
+    this.set('currentTime', time);
   },
   rewind(seconds) {
-    let newPos = this.get('audio').currentTime - seconds;
-    newPos = newPos > 0 ? newPos : 0;
-    this.jumpTo(newPos);
+    this.jumpBy(-1 * seconds);
   },
   forward(seconds) {
-    let newPos = this.get('audio').currentTime + seconds;
-    newPos = newPos < this.get('duration') ? newPos : this.get('duration');
-    this.jumpTo(newPos);
-  }
+    this.jumpBy(seconds);
+  },
+
+  getEpisode(episode_id) {
+    return (episode_id)
+      ? this.get('store').findRecord('episode', episode_id)
+      : Promise.reject();
+  },
+  jumpBy(signedSeconds) {
+    this.jumpTo(
+      trimValue(
+        0,
+        this.get('duration'),
+        this.get('currentTime') + signedSeconds
+      )
+    );
+  },
+  syncCurrentTime(pos, audioPos) {
+    if (Math.round(pos) !== Math.round(audioPos)) {
+      this.get('audio').currentTime = pos;
+    }
+  },
+  saveEpisodeProgress(id, currentTime, duration) {
+    this.set('localStorage.lastPlayingId', id);
+    this.set(`localStorage.episodes.${id}`, {
+      episodeId: id,
+      currentTime,
+      duration
+    });
+  },
+  loadNewEpisode(episode, forceRewind) {
+    this.set('rewindToTimeWhenLoaded',
+      ((forceRewind)
+        ? 0
+        : this.get(`localStorage.episodes.${episode.id}.currentTime`))
+    );
+    this.set('playingEpisode', episode);
+    this.set('duration', episode.get('duration'));
+    this.set('audio.src', episode.get('mp3Link'));
+    this.get('audio').load();
+  },
+  playCurrentEpisode(forceRewind) {
+    if (forceRewind) {
+      this.jumpTo(0);
+    }
+    this.set('loading', false);
+    this.play();
+  },
+  initAudioElement() {
+    this.set('audio', document.createElement('audio'));
+    this.addAudioEventListeners();
+  },
+  destroyAudioElement() {
+    this.removeAudioEventListeners();
+    this.set('audio', null);
+  },
+  generateAudioEventHandlers() {
+    this.audioEventHandlers = R.map(
+      handlerName => this.get(handlerName).bind(this),
+      audioEventHandlers
+    );
+  },
+  addAudioEventListeners() {
+    addListenersToElement(this.get('audio'), this.audioEventHandlers);
+  },
+  removeAudioEventListeners() {
+    removeListenersFromElement(this.get('audio'), this.audioEventHandlers);
+  },
+  audioDurationChangeHandler(event) {
+    this.set('duration', event.target.duration || event.detail || 0);
+  },
+  audioTimeUpdateHandler(event) {
+    let newTime = event.target.currentTime || event.detail || 0;
+    if (this.get('currentTime') !== newTime && newTime !== 0) {
+      this.set('currentTime', newTime);
+    }
+  },
+  audioEndedHandler() {
+    this.set('isPlaying', false);
+  },
+  audioCanPlayThroughHandler() {
+    if (this.get('rewindToTimeWhenLoaded') > -1) {
+      this.set('currentTime', this.get('rewindToTimeWhenLoaded'));
+      this.set('rewindToTimeWhenLoaded', -1);
+    }
+    if (this.get('playWhenLoaded')) {
+      this.play();
+      this.set('playWhenLoaded', false);
+    }
+    this.set('loading', false);
+  },
 });
+
+const audioEventHandlers = {
+  'durationchange': 'audioDurationChangeHandler',
+  'timeupdate': 'audioTimeUpdateHandler',
+  'ended': 'audioEndedHandler',
+  'canplaythrough': 'audioCanPlayThroughHandler'
+};
+
+const addListenersToElement = (element, handlers) => (
+  R.forEachObjIndexed((handler, eventName) => {
+    element.addEventListener(eventName, handler);
+  }, handlers)
+);
+
+const removeListenersFromElement = (element, handlers) => (
+  R.forEachObjIndexed((handler, eventName) => {
+    element.removeEventListener(eventName, handler);
+  }, handlers)
+);
+

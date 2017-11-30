@@ -15,7 +15,7 @@ export default Mixin.create({
       `player.localStorage.episodes.${this.get('episode.id')}`,
       (epProgress) => (
         (epProgress)
-        ? calcProgress(epProgress.position, epProgress.duration)
+        ? calcProgress(epProgress.currentTime, epProgress.duration)
         : 0
       )
     );
@@ -27,12 +27,10 @@ export default Mixin.create({
   },
   actions: {
     replay() {
-      this.get('player.playNewEpisode')(this.get('episode'), true);
-      this.get('player').play();
+      this.get('player.playEpisode')(this.get('episode.id'), true, true);
     },
     play() {
-      this.get('player.playNewEpisode')(this.get('episode'), false);
-      this.get('player').play();
+      this.get('player.playEpisode')(this.get('episode.id'), false, true);
     },
     pause() {
       this.get('player').pause();
@@ -40,6 +38,6 @@ export default Mixin.create({
   }
 });
 
-const calcProgress = (position, duration) => (
-  Math.round((position || 0) / (duration || 1) * 100)
+const calcProgress = (currentTime, duration) => (
+  Math.round((currentTime || 0) / (duration || 1) * 100)
 );
