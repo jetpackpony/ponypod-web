@@ -50,6 +50,7 @@ export default Ember.Component.extend({
     this.thumbDragEnd = this.thumbDragEnd.bind(this);
   },
   thumbDragStart(event) {
+    Ember.run.cancel(this.resetTmpProgress);
     event.preventDefault();
     event.stopPropagation();
     this.$('.thumb').addClass('focus');
@@ -64,9 +65,9 @@ export default Ember.Component.extend({
   thumbDragEnd(event) {
     this.$('.thumb').removeClass('focus');
     this.updatePlayerProgress();
-    Ember.run.later(this, function() {
+    this.resetTmpProgress = Ember.run.later(this, function() {
       this.updateTmpProgress(0);
-    }, 500);
+    }, 300);
     if (!isTouchEvent(event)) {
       this.unbindMouseEvents();
     }
