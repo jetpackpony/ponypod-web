@@ -17,7 +17,7 @@ export default Ember.Component.extend({
     };
     let onMouseUp = (e) => {
       Ember.run(() => {
-        this.$(e.target).removeClass('focus');
+        this.$('.thumb').removeClass('focus');
         this.$(document).unbind('mousemove', onMouseMove);
         this.$(document).unbind('mouseup', onMouseUp);
         this.set('player.progress', this.get('_updatingProgress'));
@@ -29,7 +29,7 @@ export default Ember.Component.extend({
     this.$('.thumb').on('mousedown', (e, coords) => {
       Ember.run(() => {
         e.preventDefault();
-        this.$(e.target).addClass('focus');
+        this.$('.thumb').addClass('focus');
         this.$(document).on('mousemove', onMouseMove);
         this.$(document).on('mouseup', onMouseUp);
         let pageX = (e.pageX === undefined) ? coords.pageX : e.pageX;
@@ -41,7 +41,7 @@ export default Ember.Component.extend({
     this.$('.thumb').on('touchstart', (e, coords) => {
       Ember.run(() => {
         e.stopPropagation();
-        this.$(e.target).addClass('focus');
+        this.$('.thumb').addClass('focus');
         let touches = e.touches === undefined ? coords.touches : e.touches;
         this.set('_updatingProgress', this._calculateProgress(touches[0].pageX));
       });
@@ -54,7 +54,7 @@ export default Ember.Component.extend({
     });
     this.$('.thumb').on('touchend', (e) => {
       Ember.run(() => {
-        this.$(e.target).removeClass('focus');
+        this.$('.thumb').removeClass('focus');
         this.set('player.progress', this.get('_updatingProgress'));
         Ember.run.later(this, function() {
           this.set('_updatingProgress', false);
