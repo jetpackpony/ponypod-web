@@ -1,21 +1,17 @@
-{{podcast-grid
-podcasts=model
-searchQuery=navigation.searchQuery
-showSearchSpinner=showSearchSpinner
-}}
-
-<div class="load-more-container">
-  {{#if hasClickedLoadMore}}
-    {{#infinity-loader infinityModel=model}}
-      {{infinity-loader-spinner}}
-    {{/infinity-loader}}
+<div class="podcasts-page">
+  {{#if showSearchSpinner}}
+    {{loading-spinner}}
   {{else}}
-    {{#if showLoadMoreButton}}
-      <a id="load-more"
-        class="waves-effect waves-light btn"
-        {{action 'loadMoreClick' on='click'}}>
-        Load more
-      </a>
-    {{/if}}
+    {{podcast-grid
+    podcasts=model
+    searchQuery=navigation.searchQuery
+    }}
+  {{/if}}
+
+  {{#if (not showSearchSpinner)}}
+    {{load-more
+    model=model
+    infinityLoad='infinityLoad'
+    }}
   {{/if}}
 </div>

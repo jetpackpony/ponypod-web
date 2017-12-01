@@ -1,11 +1,5 @@
 <div class="card-image">
   <img src="{{podcast.image}}">
-  <a class="subscribe-button subscribe waves-effect waves-light hidden">
-    <i class="material-icons">add</i>
-  </a>
-  <a class="subscribe-button unsubscribe waves-effect waves-light hidden">
-    <i class="material-icons">check</i>
-  </a>
 </div>
 <div class="podcast-description">
   {{#if showSummary}}
@@ -19,7 +13,7 @@
   {{/if}}
 </div>
 <div class="podcast-action">
-  <a id="toggle-description" href="#!" {{action "toggleDescription"}}>
+  <a id="toggle-description" {{action "toggleDescription"}}>
     {{if showSummary 'Read More' 'Read Less'}}
   </a>
 </div>

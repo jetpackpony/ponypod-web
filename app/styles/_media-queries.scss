@@ -26,8 +26,10 @@
     .flex-row .flex-col.md8 {
       width: (100% / 12 * 8);
     }
-    .podcast-grid {
+    .podcasts-page {
       margin-top: $navbar-height;
+    }
+    .podcast-grid {
       .podcast {
         width: 25%;
       }

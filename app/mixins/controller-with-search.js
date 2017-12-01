@@ -4,14 +4,14 @@ export default Ember.Mixin.create({
   navigation: Ember.inject.service(),
   queryParams: ['search'],
   search: null,
-  _updateSearchQuery() {
-    let query = this.get('navigation.searchQuery');
-    if (query.length <= 2) {
-      query = null;
-    }
-    this.set('search', query);
-  },
   onSearchQueryChange: Ember.observer('navigation.searchQuery', function() {
-    Ember.run.debounce(this, this._updateSearchQuery, 300);
+    Ember.run.debounce(this, () => {
+      this.set('search',
+        truncateQuery(this.get('navigation.searchQuery')));
+    }, 300);
   })
 });
+
+const truncateQuery = (query) => (
+  (query.length <= 2) ? null : query
+);

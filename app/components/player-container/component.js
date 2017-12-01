@@ -7,7 +7,6 @@ export default Ember.Component.extend({
   isMaxiOpen: Ember.computed.and('player.{showExpandedPlayer,playingEpisode}'),
   didInsertElement() {
     this._super(...arguments);
-    let audio = this.get('player').getAudioElement();
-    this.$().append(audio);
+    this.$().append(this.get('player').getAudioElement());
   }
 });

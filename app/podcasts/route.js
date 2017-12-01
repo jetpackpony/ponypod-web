@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import ENV from '../config/environment';
 import RouteWithSearchMixin from 'ponypod-frontend/mixins/route-with-search';
 import InfinityRoute from "ember-infinity/mixins/route";
 import R from 'npm:ramda';
@@ -16,27 +17,28 @@ export default Ember.Route.extend(
     perPageParam: "page[size]",
     totalPagesParam: "meta.totalPages",
 
-    beforeModel() {
-      this._super(...arguments);
-      this.controllerFor('podcasts').set('showSearchSpinner', true);
-      this.controllerFor('podcasts').set('showLoadMoreButton', false);
-    },
-    model(params) {
-      return this.infinityModel(
-        "podcast",
-        R.merge(
-          { perPage: podcastsPerPage, startingPage: 0 },
-          ((params.search && params.search.length > 2)
-            ? { search: params.search }
-            : {})
-        )
-      );
+    actions: {
+      didTransition() {
+        this.infinityModel(
+          "podcast",
+          R.merge(
+            {
+              perPage: podcastsPerPage,
+              startingPage: 0
+            },
+            this.prepareSearchQuery(this.get('navigation.searchQuery'))
+          )
+        ).then((podcasts) => {
+          this.controllerFor(this.routeName)
+            .setProperties({
+              model: podcasts,
+              showSearchSpinner: false
+            });
+          this.set('navigation.navTitle', ENV.APP.appTitle);
+          this.set('navigation.showBackArrow', false);
+        });
+      }
+    }
+  }
+);
 
-    },
-    afterModel() {
-      this._super(...arguments);
-      this.controllerFor('podcasts').set('showSearchSpinner', false);
-      this.set('navigation.navTitle', 'PonyPod');
-      this.set('navigation.showBackArrow', false);
-    },
-  });

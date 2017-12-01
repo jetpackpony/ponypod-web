@@ -50,6 +50,10 @@ body {
 main {
   padding-bottom: $mini-player-height;
 }
+
+a {
+  cursor: pointer;
+}
 // _media-queries
 
 .flex-row {
@@ -70,10 +74,4 @@ main {
       // _media-queries
     }
   }
-}
-
-.load-spinner-container {
-  display: flex;
-  justify-content: space-around;
-  margin-top: 2rem;
 }

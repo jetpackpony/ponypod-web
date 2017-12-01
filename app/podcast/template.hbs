@@ -1,41 +1,30 @@
 <div class="flex-row">
+  {{! Podcast cover and details}}
   <div class="flex-col sm12 md8 lg5">
     {{podcast-details podcast=model}}
   </div>
 
-  {{#if showSearchSpinner}}
-    <div class="flex-col sm12 md8 lg5">
-      <div class="load-spinner-container">
-        {{infinity-loader-spinner}}
-      </div>
-    </div>
-  {{else if showZeroResults}}
-    <div class="flex-col sm12 md8 lg5">
-      <div class="card-panel white">
-        Sorry, we couldn't find any episodes for "{{navigation.searchQuery}}"
-      </div>
-    </div>
-  {{else}}
-    <div class="flex-col sm12 md8 lg5">
+  {{! Episodes list or spinner or "nothing found"}}
+  <div class="flex-col sm12 md8 lg5">
+    {{#if showSearchSpinner}}
+      {{loading-spinner}}
+    {{else if isEpisodeListEmpty}}
+      {{empty-search-results
+      entity="episodes"
+      searchQuery=navigation.searchQuery
+      }}
+    {{else}}
       {{episode-list episodes=episodes}}
+    {{/if}}
+  </div>
+
+  {{! Load More button and infinity-loader}}
+  {{#if (not showSearchSpinner)}}
+    <div class="flex-col sm12 md8 lg5">
+      {{load-more
+      model=episodes
+      infinityLoad='infinityLoad'
+      }}
     </div>
   {{/if}}
-
-  <div class="flex-col sm12 md8 lg5">
-    <div class="load-more-container">
-      {{#if hasClickedLoadMore}}
-        {{#infinity-loader infinityModel=episodes}}
-          {{infinity-loader-spinner}}
-        {{/infinity-loader}}
-      {{else}}
-        {{#if showLoadMoreButton}}
-          <a id="load-more"
-             class="waves-effect waves-light btn"
-             {{action 'loadMoreClick' on='click'}}>
-            Load more
-          </a>
-        {{/if}}
-      {{/if}}
-    </div>
-  </div>
 </div>

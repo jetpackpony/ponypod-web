@@ -1,10 +1,11 @@
 import Ember from 'ember';
+import ENV from '../config/environment';
 
 export default Ember.Route.extend({
   player: Ember.inject.service(),
-  title: function(tokens) {
-    return tokens.join(' - ') + ' - PonyPod';
-  },
+  title: (tokens) => (
+    `${tokens.join(' - ')} - ${ENV.APP.appTitle}`
+  ),
   actions: {
     willTransition() {
       this.set('player.showExpandedPlayer', false);

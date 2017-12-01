@@ -1,42 +1,26 @@
 <div class="mini-wrapper">
   {{#if player.loading}}
-    <div class="preloader-container">
-      <div class="preloader-wrapper small active">
-        <div class="spinner-layer spinner-red-only">
-          <div class="circle-clipper left">
-            <div class="circle"></div>
-          </div><div class="gap-patch">
-            <div class="circle"></div>
-          </div><div class="circle-clipper right">
-            <div class="circle"></div>
-          </div>
-        </div>
-      </div>
-    </div>
+    {{loading-spinner size='small'}}
   {{else}}
-    <div class="control {{if player.isPlaying 'playing' ''}}">
-      <a href="#!" class="play-button play" {{action 'play' on='click'}}>
-        <i class="material-icons">play_arrow</i>
-      </a>
-      <a href="#!" class="play-button pause" {{action 'pause' on='click'}}>
-        <i class="material-icons">pause</i>
-      </a>
-    </div>
+    {{play-controls
+    withReplay=false
+    isPlaying=player.isPlaying
+    isPlayed=false
+    play=(action 'play')
+    pause=(action 'pause')
+    }}
     <div class="title" {{action 'expandPlayer' on='click'}}>
       <span>{{player.playingEpisode.title}}</span>
       <p class="secondary">{{format-date player.playingEpisode.publishedAt}}</p>
     </div>
     <div class="expand-button">
-      <a href="#!" class="expand-player" {{action 'expandPlayer' on='click'}}>
+      <a class="expand-player" {{action 'expandPlayer' on='click'}}>
         <i class="material-icons">expand_less</i>
       </a>
     </div>
     <img src="{{player.playingEpisode.podcast.image}}">
   {{/if}}
 </div>
-{{#if player.loading}}
-{{else}}
-  <div class="mini-progress">
-    <div class="bar" style={{progressCss}}></div>
-  </div>
+{{#if (not player.loading)}}
+  {{mini-progress-bar progress=player.progress}}
 {{/if}}
