@@ -78,10 +78,10 @@ export default function() {
   this.get('/podcasts/:id');
   this.get('/episodes/:id');
 
-  /*
   this.passthrough('/podcasts');
+  this.passthrough('/episodes');
   this.passthrough('/podcasts/:id');
   this.passthrough('/episodes/:id');
-  this.passthrough('/podcasts/:podcast_id/episodes');
+  /*
   */
 }
