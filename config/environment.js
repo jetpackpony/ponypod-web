@@ -24,8 +24,8 @@ module.exports = function(environment) {
   };
 
   ENV.ponypod = {
-    apiEndPoint: "//localhost:3000",
-    apiNameSpace: ""
+    apiEndPoint: "//localhost:8080",
+    apiNameSpace: "api"
   };
 
   if (environment === 'development') {
@@ -48,7 +48,10 @@ module.exports = function(environment) {
   }
 
   if (environment === 'production') {
-    ENV.ponypod.apiEndPoint = "https://ponypod-staging.herokuapp.com";
+    ENV.ponypod.apiEndPoint = "https://pony-pod.appspot.com";
+    ENV['ember-cli-mirage'] = {
+      enabled: true
+    }
   }
 
   return ENV;

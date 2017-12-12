@@ -10,6 +10,7 @@ Router.map(function() {
   this.route('podcasts');
   this.route('podcast', { path: "podcast/:podcast_id" });
   this.route('episode', { path: "episode/:episode_id" });
+  this.route('about');
 });
 
 export default Router;
