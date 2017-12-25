@@ -2,18 +2,7 @@
   <img src="{{podcast.image}}">
 </div>
 <div class="podcast-description">
-  {{#if showSummary}}
-    <div class="summary">
-      <p>{{podcast.summary}}</p>
-    </div>
-  {{else}}
-    <div class="description">
-      <p>{{podcast.description}}</p>
-    </div>
-  {{/if}}
-</div>
-<div class="podcast-action">
-  <a id="toggle-description" {{action "toggleDescription"}}>
-    {{if showSummary 'Read More' 'Read Less'}}
-  </a>
+  <div class="description">
+    <p>{{podcast.description}}</p>
+  </div>
 </div>
