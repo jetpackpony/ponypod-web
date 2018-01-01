@@ -26,7 +26,7 @@
     }
   }
   &.maxi {
-    height: calc(100% - #{$maxi-player-top});
+    height: 90%;
     .maxi-player {
       display: flex;
     }
